@@ -1,7 +1,5 @@
 # devoirs.tn
 Online Education Website
-# platform
-
 
 # How to run the project locally
 #### Assuming python 3.8.1 is installed :
