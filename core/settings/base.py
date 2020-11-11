@@ -24,6 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 INSTALLED_APPS = [
     'scrape',
+    'pdfs',
 
     'django.contrib.admin',
     'django.contrib.auth',
