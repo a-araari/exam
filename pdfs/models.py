@@ -1,3 +1,134 @@
 from django.db import models
+from django.utils import timezone as tz
 
-# Create your models here.
+
+class Subject(models.Model):
+    name = models.CharField(
+        'Subject name',
+        max_length=100
+    )
+
+
+class Section(models.Model):
+    name = models.CharField(
+        'Section name',
+        max_length=100
+    )
+
+
+class Level(models.Model):
+    name = models.CharField(
+        'Level name',
+        max_length=100
+    )
+
+
+class Category(models.Model):
+    name = models.CharField(
+        'Category name',
+        max_length=100
+    )
+
+
+def pdf_upload_path(instance, filename):
+    try:
+        return 'docs/{}-{}.pdf'.format(filename, instance.date_stored)
+    except:
+        return 'docs/{}.pdf'.format(filename)
+
+
+class PDF(models.Model):
+    """
+    A model which stores data about a PDF.
+    """
+    subject = models.ForeignKey(
+        Subject,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    section = models.ForeignKey(
+        Section,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    Level = models.ForeignKey(
+        Level,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+    category = models.ForeignKey(
+        Category,
+        null=True,
+        on_delete=models.SET_NULL
+    )
+
+    name = models.CharField(
+        "File name",
+        max_length=100
+    )
+    slug = models.SlugField(
+        'SlugField'
+    )
+    title = models.CharField(
+        "Title",
+        max_length=100,
+        null=True,
+        blank=True
+    )
+    description = models.CharField(
+        "Description",
+        max_length=250,
+        null=True,
+        blank=True
+    )
+    size = models.CharField(
+        "Pdf size",
+        max_length=10,
+        null=True,
+        blank=True
+    )
+    file = models.FileField(
+        "PDF file",
+        null=True,
+        blank=True,
+        upload_to=pdf_upload_path
+    )
+    pages = models.IntegerField(
+        "Number of Pages in Document",
+        null=True,
+        blank=True
+    )
+    date_stored = models.DateTimeField(
+        "Date Stored Remotely",
+        default=tz.now,
+        null=True,
+        blank=True
+    )
+    dc_creator = models.CharField(
+        'MetaData: dc:creator',
+        max_length=250,
+        null=True,
+        blank=True
+    )
+    dc_title = models.CharField(
+        'MetaData: dc:title',
+        max_length=250,
+        null=True,
+        blank=True
+    )
+    dc_description = models.CharField(
+        'MetaData: dc:description',
+        max_length=250,
+        null=True,
+        blank=True
+    )
+    dc_subject = models.CharField(
+        'MetaData: dc:subject',
+        max_length=250,
+        null=True,
+        blank=True
+    )
+    
+    def __str__(self):
+        return f'{self.name}: By {self.description}'
+
