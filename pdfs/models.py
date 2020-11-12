@@ -51,7 +51,7 @@ class PDF(models.Model):
         null=True,
         on_delete=models.SET_NULL
     )
-    Level = models.ForeignKey(
+    level = models.ForeignKey(
         Level,
         null=True,
         on_delete=models.SET_NULL
