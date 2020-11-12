@@ -8,12 +8,18 @@ class Subject(models.Model):
         max_length=100
     )
 
+    def __str__(self):
+        return self.name
+
 
 class Section(models.Model):
     name = models.CharField(
         'Section name',
         max_length=100
     )
+
+    def __str__(self):
+        return self.name
 
 
 class Level(models.Model):
@@ -22,12 +28,18 @@ class Level(models.Model):
         max_length=100
     )
 
+    def __str__(self):
+        return self.name
+
 
 class Category(models.Model):
     name = models.CharField(
         'Category name',
         max_length=100
     )
+
+    def __str__(self):
+        return self.name
 
 
 def pdf_upload_path(instance, filename):
