@@ -23,6 +23,7 @@ from pdfs.models import (
 
 devoirat_url = 'https://www.devoirat.net/'
 pdf_link_re = r'^.+\.([pP][dD][fF])(.*)$'
+total = 0
 
 
 class Command(BaseCommand):
@@ -35,24 +36,21 @@ class Command(BaseCommand):
     """
 
     def handle(self, *args, **kwargs):
+        counter = 0
         for url in URLS:
-            print(f'crawling {url}:')
+            try:
+                counter += 1
+                print('-'*3 + str(counter) + '-'*3, f'crawling {url}:')
 
-            response = requests.get(url)
-            soup = BeautifulSoup(response.content, 'html.parser')
+                response = requests.get(url)
+                soup = BeautifulSoup(response.content, 'html.parser')
 
-            # getting section name
-            # document.getElementsByTagName('h1')[1].textContent.split(':')[0].includes('Section')
-            section_name = None
-            for h1 in soup.find_all('h1'):
-                contents = h1.contents
-                if contents:
-                    content = contents[0]
-                    splitted = content.split(':')
-                    if 'section' in splitted[0].strip().lower():
-                        section_name = splitted[1].strip()
+                # getting section name
+                section_name = self.get_section_name(soup)
 
-            self.extract_pdfs(soup, url, section_name)
+                self.extract_pdfs(soup, url, section_name)
+            except Exception as e:
+                print(repr(e))
 
     def extract_pdfs(self, soup, url, section_name):
         """
@@ -60,102 +58,144 @@ class Command(BaseCommand):
 
         @param: soup: BeautifulSoup4 object contains page data
         """
+        global total
+
+        sub_counter = 0
         for a in soup.find_all('a', {"class": "cc-m-download-link"}, href=True):
-            link_content= a['href']
+            sub_counter += 1
+            total += 1
 
-            if not re.match(pdf_link_re, link_content):
-                continue
+            try:
+                link_content= a['href']
 
-            pdf_href = f"{devoirat_url}{a['href']}"
-            response = requests.get(pdf_href)
+                if not re.match(pdf_link_re, link_content):
+                    continue
 
-            parent_div = a.parent.parent
+                pdf_href = f"{devoirat_url}{a['href']}"
+                response = requests.get(pdf_href)
 
-            title_div = parent_div.parent.find("div", {"class": "cc-m-download-title"})
-            description_div = parent_div.parent.find("div", {"class": "cc-m-download-description"})
-            file_name_div = parent_div.find("div", {"class": "cc-m-download-file-name"})
-            file_info_div = parent_div.find("div", {"class": "cc-m-download-file-info"})
-            file_type_div = file_info_div.find("span", {"class": "cc-m-download-file-type"}) if file_info_div else None
-            file_size_div = file_info_div.find("span", {"class": "cc-m-download-file-size"}) if file_info_div else None
+                parent_div = a.parent.parent
+                title_div = parent_div.parent.find("div", {"class": "cc-m-download-title"})
+                description_div = parent_div.parent.find("div", {"class": "cc-m-download-description"})
+                file_name_div = parent_div.find("div", {"class": "cc-m-download-file-name"})
+                file_info_div = parent_div.find("div", {"class": "cc-m-download-file-info"})
+                file_type_div = file_info_div.find("span", {"class": "cc-m-download-file-type"}) if file_info_div else None
+                file_size_div = file_info_div.find("span", {"class": "cc-m-download-file-size"}) if file_info_div else None
 
-            title = title_div.contents[0] if title_div else None
-            description = description_div.contents[0] if description_div else None
-            file_name = file_name_div.contents[0] if file_name_div else None
-            file_type = file_type_div.contents[0] if file_type_div else None
-            file_size = file_size_div.contents[0] if file_size_div else None
-            
-            # print ("File Data:")
+                title = title_div.contents[0] if title_div else None
+                description = description_div.contents[0] if description_div else None
+                file_name = file_name_div.contents[0] if file_name_div else None
+                file_type = file_type_div.contents[0] if file_type_div else None
+                file_size = file_size_div.contents[0] if file_size_div else None
 
-            # print("%-15s%-15s%-15s" % ('', 'title:', title))
-            # print("%-15s%-15s%-15s" % ('', 'file name:', description))
-            # print("%-15s%-15s%-15s" % ('', 'description:', file_name))
-            # print("%-15s%-15s%-15s" % ('', 'file type:', file_type))
-            # print("%-15s%-15s%-15s" % ('', 'file size:', file_size))
+                dc_creator = None
+                dc_title = None
+                dc_description = None
+                dc_subject = None
 
-            dc_creator = None
-            dc_title = None
-            dc_description = None
-            dc_subject = None
-            with io.BytesIO(response.content) as f:
-                # pdf = PdfFileReader(f)
+                with io.BytesIO(response.content) as f:
+                    pdfIO = pikepdf.open(f)
 
-                pdfIO = pikepdf.open(f)
-                # print()
-                # print("%-15s%-15s%-15s" % ('', 'pages count', len(pdfIO.pages)))
+                    meta_data = pdfIO.open_metadata()
+                    dc_creator = meta_data.get('dc:creator')
+                    dc_title = meta_data.get('dc:title')
+                    dc_description = meta_data.get('dc:description')
+                    dc_subject = meta_data.get('dc:subject')
 
-                meta_data = pdfIO.open_metadata()
-                dc_creator = meta_data.get('dc:creator')
-                dc_title = meta_data.get('dc:title')
-                dc_description = meta_data.get('dc:description')
-                dc_subject = meta_data.get('dc:subject')
+                self.save_pdf(
+                    title,
+                    description,
+                    file_name,
+                    file_type,
+                    file_size,
+                    dc_creator,
+                    dc_title,
+                    dc_description,
+                    dc_subject,
+                    url,
+                    response,
+                    section_name,
+                    pdf_href
+                )
 
-                # print("Meta Data:")
-                # print("%-15s%-15s%-15s" % ('', 'dc:creator', dc_creator))
-                # print("%-15s%-15s%-15s" % ('', 'dc:title', dc_title))
-                # print("%-15s%-15s%-15s" % ('', 'dc:description', dc_description))
-                # print("%-15s%-15s%-15s" % ('', 'dc:subject', dc_subject))
-                print()
+            except Exception as e:
+                print(repr(e))
 
-            pdf_instance = PDF(
-                title=title,
-                description=description,
-                name=file_name,
-                slug=file_name.replace(' ', '-').replace('--', '-'),
-                # type=file_type,
-                size=file_size,
-                dc_creator=dc_creator,
-                dc_title=dc_title,
-                dc_description=dc_description,
-                dc_subject=dc_subject,
+    def save_pdf(self,title, description, file_name, file_type, file_size, dc_creator, dc_title, dc_description, dc_subject, url, response, section_name, pdf_href):
+        pdf_instance = PDF(
+            title=title,
+            description=description,
+            name=file_name,
+            slug=file_name.replace(' ', '-').replace('--', '-'),
+            # type=file_type,
+            size=file_size,
+            dc_creator=dc_creator,
+            dc_title=dc_title,
+            dc_description=dc_description,
+            dc_subject=dc_subject,
+            parent_origin=url,
+            origin=pdf_href,
+        )
+
+        temporarylocation="file.pdf"
+        with open(temporarylocation,'wb') as out:
+            out.write(io.BytesIO(response.content).read())
+
+        with open(temporarylocation, 'rb') as read:
+            pdf_instance.file.save(file_name, read)
+
+        os.remove(temporarylocation) # Delete file when done
+        
+        subject_name = get_subject(url)
+        if subject_name:
+            subject, created = Subject.objects.get_or_create(name=subject_name)
+            pdf_instance.subject = subject
+
+        level_name = get_level(url)
+        if level_name:
+            level, created = Level.objects.get_or_create(name=level_name)
+            pdf_instance.level = level
+
+        category_name = get_category(url)
+        if category_name:
+            category, created = Category.objects.get_or_create(name=category_name)
+            pdf_instance.category = category
+
+        if section_name:
+            section, created = Section.objects.get_or_create(name=section_name)
+            pdf_instance.section = section
+
+        pdf_instance.save()
+        print()
+        print(
+            '     %-10s%-50s%-30s%-15s%-10s%-10s%-10s' % (
+                f"{'-'*3}{total}{'-'*3}",
+                file_name,
+                description,
+                subject_name,
+                section_name,
+                level_name,
+                category_name,
             )
+        )
 
-            temporarylocation="file.pdf"
-            with open(temporarylocation,'wb') as out:
-                out.write(io.BytesIO(response.content).read())
+    def get_section_name(self, soup):
+        try:
+            for h1 in soup.find_all('h1'):
+                contents = h1.contents
 
-            with open(temporarylocation, 'rb') as read:
-                pdf_instance.file.save(file_name, read)
+                if contents:
+                    content = contents[0]
+                    splitted = content.split(':')
 
-            os.remove(temporarylocation) # Delete file when done
-            
-            subject_name = get_subject(url)
-            if subject_name:
-                subject, created = Subject.objects.get_or_create(name=subject_name)
-                pdf_instance.subject = subject
+                    if 'section' in splitted[0].strip().lower():
+                        section_name = splitted[1].strip().lower()
 
-            level_name = get_level(url)
-            if level_name:
-                level, created = Level.objects.get_or_create(name=level_name)
-                pdf_instance.level = level
+                        if splitted[1].strip() in ('Sciences expérimentales', 'Sciences Exp', 'Sciences Expérimentales'):
+                            return 'sciences expérimentales'
 
-            category_name = get_category(url)
-            if category_name:
-                category, created = Category.objects.get_or_create(name=category_name)
-                pdf_instance.category = category
+                        return section_name
+        except:
+            return None
 
-            if section_name:
-                section, created = Section.objects.get_or_create(name=section_name)
-                pdf_instance.section = section
-
-            pdf_instance.save()
-            print('     %-50s%-30s%-15s%-10s%-10s%-10s' % (file_name, description, subject_name, section_name, level_name, category_name))
+        
