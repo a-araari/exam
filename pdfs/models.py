@@ -53,6 +53,15 @@ class PDF(models.Model):
     """
     A model which stores data about a PDF.
     """
+    ELEMENTARY_SCHOOL_STAGE = 'elementary'
+    MIDDLE_SCHOOL_STAGE = 'middle'
+    HIGH_SCHOOL_STAGE = 'high'
+    PDF_SCHOOL_STAGES = [
+        (ELEMENTARY_SCHOOL_STAGE, 'elementary'),
+        (MIDDLE_SCHOOL_STAGE, 'middle'),
+        (HIGH_SCHOOL_STAGE, 'high'),
+    ]
+
     subject = models.ForeignKey(
         Subject,
         null=True,
@@ -72,6 +81,12 @@ class PDF(models.Model):
         Category,
         null=True,
         on_delete=models.SET_NULL
+    )
+    stage = models.CharField(
+        'Schooling stage',
+        max_length=20,
+        choices=PDF_SCHOOL_STAGES,
+        default=HIGH_SCHOOL_STAGE,
     )
 
     name = models.CharField(
