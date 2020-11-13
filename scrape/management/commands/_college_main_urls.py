@@ -120,12 +120,17 @@ def get_category(url):
 
 def get_level(url):
     try:
-        levels = ['7-ème', '8-ème', '9-ème']
+        levels = ['7ème', '8ème', '9ème']
+        levels_v2 = ['7-ème', '8-ème', '9-ème']
         url = url[len('https://www.tunisiecollege.net/'):]
 
         for level in levels:
             if level in url:
                 return level
+
+        for i in range(len(levels_v2)):
+            if levels_v2[i] in url:
+                return levels[i]
 
     except Exception as e:
         pass
