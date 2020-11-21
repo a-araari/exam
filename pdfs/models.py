@@ -49,6 +49,13 @@ def pdf_upload_path(instance, filename):
         return 'docs/{}.pdf'.format(filename)
 
 
+def html_upload_path(instance, filename):
+    try:
+        return 'docs/{}-{}.html'.format(filename, instance.date_stored)
+    except:
+        return 'docs/{}.html'.format(filename)
+
+
 class PDF(models.Model):
     """
     A model which stores data about a PDF.
@@ -114,11 +121,17 @@ class PDF(models.Model):
         null=True,
         blank=True
     )
-    file = models.FileField(
+    pdf_file = models.FileField(
         "PDF file",
         null=True,
         blank=True,
         upload_to=pdf_upload_path
+    )
+    html_file = models.FileField(
+        "The HTML version of the PDF file",
+        null=True,
+        blank=True,
+        upload_to=html_upload_path,
     )
     origin = models.URLField(
         'The origin link that this PDF comes from'
