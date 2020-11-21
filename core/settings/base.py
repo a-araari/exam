@@ -23,8 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # Application definition
 
 INSTALLED_APPS = [
-    'scrape',
-    'pdfs',
+    'pdfs.apps.PdfsConfig',
 
     'django.contrib.admin',
     'django.contrib.auth',
