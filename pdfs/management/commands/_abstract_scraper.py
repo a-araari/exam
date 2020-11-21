@@ -1,12 +1,14 @@
 import io
 import os
 import re
+from sys import platform
 import pikepdf
 import requests
 from bs4 import BeautifulSoup
 
 from django.core.management.base import BaseCommand
 
+from ._pdf_to_html_converter import convert_pdf_to_html
 from pdfs.models import (
     PDF,
     Subject,
@@ -68,6 +70,8 @@ class AbstractScraper(BaseCommand):
                 pdf_href = f"{self.main_url}{a['href']}"
                 response = requests.get(pdf_href)
 
+                # GATHERING PDF INFORMATION
+
                 title, description, file_name, file_type, file_size = self.get_extra_pdf_info(a)
 
                 dc_creator = None
@@ -84,6 +88,8 @@ class AbstractScraper(BaseCommand):
                     dc_description = meta_data.get('dc:description')
                     dc_subject = meta_data.get('dc:subject')
 
+                # SAVING PDF INFORMATION
+
                 self.save_pdf(
                     title,
                     description,
@@ -97,7 +103,7 @@ class AbstractScraper(BaseCommand):
                     url,
                     response,
                     section_name,
-                    pdf_href
+                    pdf_href,
                 )
 
             except Exception as e:
@@ -124,9 +130,16 @@ class AbstractScraper(BaseCommand):
             out.write(io.BytesIO(response.content).read())
 
         with open(temporarylocation, 'rb') as read:
-            pdf_instance.file.save(file_name, read)
+            pdf_instance.pdf_file.save(file_name, read)
+
+        # CONVERTING PDF TO HTML FILE
+        html_file_path = convert_pdf_to_html(temporarylocation)
+        if html_file_path:
+            with open(html_file_path, 'rb') as read:
+                pdf_instance.html_file.save(file_name, read)
 
         os.remove(temporarylocation) # Delete file when done
+        os.remove(html_file_path) # Delete file when done
         
         subject_name = self.get_subject(url)
         if subject_name:
@@ -199,7 +212,6 @@ class AbstractScraper(BaseCommand):
         Must be overridden
         """
         pass
-
 
     def get_extra_pdf_info(self, pdf_anchor_tag):
         """
