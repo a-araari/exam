@@ -109,7 +109,7 @@ class AbstractScraper(BaseCommand):
             except Exception as e:
                 print(repr(e))
 
-    def save_pdf(self,title, description, file_name, file_type, file_size, dc_creator, dc_title, dc_description, dc_subject, url, response, section_name, pdf_href):
+    def save_pdf(self, title, description, file_name, file_type, file_size, dc_creator, dc_title, dc_description, dc_subject, url, response, section_name, pdf_href):
         pdf_instance = PDF(
             title=title,
             description=description,

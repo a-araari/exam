@@ -43,7 +43,7 @@ elif platform in ('linux', 'linux2', 'ubuntu'):
         FNULL = open(os.devnull, 'w')
         response = str(
             subprocess.run(
-                ['docker', 'run', '-ti', '--rm', '-v', str(BASE_DIR) + ':/pdf', 'bwits/pdf2htmlex', 'pdf2htmlEX', '--zoom', '1.3', pdf_location, temp_file_name],
+                ['docker', 'run', '-ti', '--rm', '-v', str(settings.BASE_DIR) + ':/pdf', 'bwits/pdf2htmlex', 'pdf2htmlEX', '--zoom', '1.3', pdf_location, temp_file_name],
                 stdout=FNULL,
                 stderr=subprocess.STDOUT
             )
