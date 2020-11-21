@@ -114,7 +114,7 @@ class AbstractScraper(BaseCommand):
             title=title,
             description=description,
             name=file_name,
-            slug=file_name.replace(' ', '-').replace('--', '-'),
+            slug=title.replace(' ', '-').replace('--', '-'),
             # type=file_type,
             size=file_size,
             dc_creator=dc_creator,
@@ -130,13 +130,13 @@ class AbstractScraper(BaseCommand):
             out.write(io.BytesIO(response.content).read())
 
         with open(temporarylocation, 'rb') as read:
-            pdf_instance.pdf_file.save(file_name, read)
+            pdf_instance.pdf_file.save(title, read)
 
         # CONVERTING PDF TO HTML FILE
         html_file_path = convert_pdf_to_html(temporarylocation)
         if html_file_path:
             with open(html_file_path, 'rb') as read:
-                pdf_instance.html_file.save(file_name, read)
+                pdf_instance.html_file.save(title, read)
 
         os.remove(temporarylocation) # Delete file when done
         os.remove(html_file_path) # Delete file when done
@@ -167,7 +167,7 @@ class AbstractScraper(BaseCommand):
         print(
             '     %-10s%-50s%-30s%-15s%-10s%-10s%-10s' % (
                 f"{'-'*3}{self.total}{'-'*3}",
-                file_name,
+                title,
                 description,
                 subject_name,
                 section_name,

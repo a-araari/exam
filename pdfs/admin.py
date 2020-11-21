@@ -11,7 +11,7 @@ from pdfs.models import (
 
 @admin.register(PDF)
 class PDFAdmin(admin.ModelAdmin):
-    list_display = ('name', 'description', 'subject', 'section', 'level', 'category')
+    list_display = ('title', 'description', 'subject', 'section', 'level', 'category')
     list_filter = ('stage', 'subject', 'section', 'level', 'category')
 
 
