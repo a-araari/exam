@@ -29,6 +29,7 @@ class AbstractScraper(BaseCommand):
     stage = PDF.HIGH_SCHOOL_STAGE # default stage
     pdf_link_re = r'^.+\.([pP][dD][fF])(.*)$'
     total = 0
+    pdf_download_button_class = 'cc-m-download-link' # default class
 
     def handle(self, *args, **kwargs):
         counter = 0
@@ -54,7 +55,7 @@ class AbstractScraper(BaseCommand):
         @param: soup: BeautifulSoup4 object contains page data
         """
         sub_counter = 0
-        for a in soup.find_all('a', {"class": "cc-m-download-link"}, href=True):
+        for a in soup.find_all('a', {"class": self.pdf_download_button_class}, href=True):
             sub_counter += 1
             self.total += 1
 
@@ -67,19 +68,7 @@ class AbstractScraper(BaseCommand):
                 pdf_href = f"{self.main_url}{a['href']}"
                 response = requests.get(pdf_href)
 
-                parent_div = a.parent.parent
-                title_div = parent_div.parent.find("div", {"class": "cc-m-download-title"})
-                description_div = parent_div.parent.find("div", {"class": "cc-m-download-description"})
-                file_name_div = parent_div.find("div", {"class": "cc-m-download-file-name"})
-                file_info_div = parent_div.find("div", {"class": "cc-m-download-file-info"})
-                file_type_div = file_info_div.find("span", {"class": "cc-m-download-file-type"}) if file_info_div else None
-                file_size_div = file_info_div.find("span", {"class": "cc-m-download-file-size"}) if file_info_div else None
-
-                title = title_div.contents[0] if title_div else None
-                description = description_div.contents[0] if description_div else None
-                file_name = file_name_div.contents[0] if file_name_div else None
-                file_type = file_type_div.contents[0] if file_type_div else None
-                file_size = file_size_div.contents[0] if file_size_div else None
+                title, description, file_name, file_type, file_size = self.get_extra_pdf_info(a)
 
                 dc_creator = None
                 dc_title = None
@@ -210,3 +199,24 @@ class AbstractScraper(BaseCommand):
         Must be overridden
         """
         pass
+
+
+    def get_extra_pdf_info(self, pdf_anchor_tag):
+        """
+        Can be overrided
+        """
+        parent_div = pdf_anchor_tag.parent.parent
+        title_div = parent_div.parent.find("div", {"class": "cc-m-download-title"})
+        description_div = parent_div.parent.find("div", {"class": "cc-m-download-description"})
+        file_name_div = parent_div.find("div", {"class": "cc-m-download-file-name"})
+        file_info_div = parent_div.find("div", {"class": "cc-m-download-file-info"})
+        file_type_div = file_info_div.find("span", {"class": "cc-m-download-file-type"}) if file_info_div else None
+        file_size_div = file_info_div.find("span", {"class": "cc-m-download-file-size"}) if file_info_div else None
+
+        title = title_div.contents[0] if title_div else None
+        description = description_div.contents[0] if description_div else None
+        file_name = file_name_div.contents[0] if file_name_div else None
+        file_type = file_type_div.contents[0] if file_type_div else None
+        file_size = file_size_div.contents[0] if file_size_div else None
+
+        return title, description, file_name, file_type, file_size
