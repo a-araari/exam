@@ -1,4 +1,4 @@
-# devoirs.tn
+# exercice.net
 Online Education Website
 
 # How to run the project locally
@@ -35,3 +35,11 @@ Now Visit http://127.0.0.1:8000/admin/ and login to be able to CRUD(create/retri
 Or you can run the scrape command to scrape PDFs
 
     $ py manage.py scrapedevoiratdata
+
+# Deploy:
+Use Nginx instead of Apache (Nginx the fastest)
+Use Docker to install and run pdf2htmlEX package and run it like this:
+```
+import subprocess
+subprocess.run(['docker', 'run', '-ti', '--rm', '-v', '[working file directory(dont use 'pwd'!)]:/pdf', 'bwits/pdf2htmlex', 'pdf2htmlEX', '[args]', 'file.pdf'])
+```
