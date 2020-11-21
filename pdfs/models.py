@@ -98,20 +98,20 @@ class PDF(models.Model):
 
     name = models.CharField(
         "File name",
-        max_length=100
+        max_length=250
     )
     slug = models.SlugField(
         'SlugField'
     )
     title = models.CharField(
         "Title",
-        max_length=100,
+        max_length=250,
         null=True,
         blank=True
     )
     description = models.CharField(
         "Description",
-        max_length=250,
+        max_length=300,
         null=True,
         blank=True
     )
