@@ -111,7 +111,7 @@ class AbstractScraper(BaseCommand):
             except Exception as e:        
                 print(repr(e))
                 pdf_error = PDFError(
-                    data=f'Pre save: url={a['href']}\nFrom parent_url={url}',
+                    data=f"Pre save: url={a['href']}\nFrom parent_url={url}",
                     traceback=str(traceback.format_exc())
                 )
                 pdf_error.save()
