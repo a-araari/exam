@@ -101,7 +101,8 @@ class PDF(models.Model):
         max_length=250
     )
     slug = models.SlugField(
-        'SlugField'
+        'SlugField',
+        max_length=250
     )
     title = models.CharField(
         "Title",
