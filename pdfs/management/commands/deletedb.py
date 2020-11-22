@@ -7,6 +7,7 @@ from pdfs.models import (
     Section,
     Level,
     Category,
+    PDFError
 )
 
 
@@ -35,4 +36,5 @@ class Command(BaseCommand):
         print('Deleting Sections:', Section.objects.all().delete())
         print('Deleting Levels:', Level.objects.all().delete())
         print('Deleting Categorys:', Category.objects.all().delete())
+        print('Deleting PDFError:', PDFError.objects.all().delete())
 

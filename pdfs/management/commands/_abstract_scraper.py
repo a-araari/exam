@@ -1,6 +1,7 @@
 import io
 import os
 import re
+import traceback
 from sys import platform
 import pikepdf
 import requests
@@ -14,7 +15,8 @@ from pdfs.models import (
     Subject,
     Level,
     Category,
-    Section
+    Section,
+    PDFError
 )
 
 
@@ -106,8 +108,14 @@ class AbstractScraper(BaseCommand):
                     pdf_href,
                 )
 
-            except Exception as e:
+            except Exception as e:        
                 print(repr(e))
+                pdf_error = PDFError(
+                    data='Pre save',
+                    traceback=str(traceback.format_exc())
+                )
+                pdf_error.save()
+
 
     def save_pdf(self, title, description, file_name, file_type, file_size, dc_creator, dc_title, dc_description, dc_subject, url, response, section_name, pdf_href):
         pdf_instance = PDF(
@@ -164,19 +172,41 @@ class AbstractScraper(BaseCommand):
 
         pdf_instance.stage = self.stage
 
-        pdf_instance.save()
-        print()
-        print(
-            '     %-10s%-100s%-40s%-15s%-10s%-10s%-10s' % (
-                f"{'-'*3}{self.total}{'-'*3}",
-                title,
-                description,
-                subject_name,
-                section_name,
-                level_name,
-                category_name,
+        try:
+            raise Exception('')
+            pdf_instance.save()
+            print()
+            print(
+                '     %-10s%-100s%-40s%-15s%-10s%-10s%-10s' % (
+                    f"{'-'*3}{self.total}{'-'*3}",
+                    title,
+                    description,
+                    subject_name,
+                    section_name,
+                    level_name,
+                    category_name,
+                )
             )
-        )
+        except Exception as ex:
+            pdf_error = PDFError()
+            pdf_error.data = f"""
+                title           = {str(title)           if title            else 'None'}
+                description     = {str(description)     if description      else 'None'}
+                file_name       = {str(file_name)       if file_name        else 'None'}
+                file_type       = {str(file_type)       if file_type        else 'None'}
+                file_size       = {str(file_size)       if file_size        else 'None'}
+                dc_creator      = {str(dc_creator)      if dc_creator       else 'None'}
+                dc_title        = {str(dc_title)        if dc_title         else 'None'}
+                dc_description  = {str(dc_description)  if dc_description   else 'None'}
+                dc_subject      = {str(dc_subject)      if dc_subject       else 'None'}
+                url             = {str(url)             if url              else 'None'}
+                response        = {str(response)        if response         else 'None'}
+                section_name    = {str(section_name)    if section_name     else 'None'}
+                pdf_href        = {str(pdf_href)        if pdf_href         else 'None'}
+            """
+            pdf_error.traceback = traceback.format_exc()
+            pdf_error.save()
+            raise Exception('Cannot save PDF')
 
     def get_section_name(self, soup):
         try:

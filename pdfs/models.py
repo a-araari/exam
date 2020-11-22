@@ -181,3 +181,9 @@ class PDF(models.Model):
     def __str__(self):
         return f'{self.name}: By {self.description}'
 
+
+class PDFError(models.Model):
+    data = models.TextField(
+        'PDF data'
+    )
+    traceback = models.TextField()

@@ -5,7 +5,8 @@ from pdfs.models import (
     Subject,
     Section,
     Level,
-    Category
+    Category,
+    PDFError,
 )
 
 
@@ -33,3 +34,8 @@ class LevelAdmin(admin.ModelAdmin):
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name',)
+
+
+@admin.register(PDFError)
+class PDFErrorAdmin(admin.ModelAdmin):
+    list_display = ('id',)
