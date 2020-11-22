@@ -111,18 +111,17 @@ class AbstractScraper(BaseCommand):
 
     def save_pdf(self, title, description, file_name, file_type, file_size, dc_creator, dc_title, dc_description, dc_subject, url, response, section_name, pdf_href):
         pdf_instance = PDF(
-            title=title,
-            description=description,
-            name=file_name,
-            slug=title.replace(' ', '-').replace('--', '-'),
-            # type=file_type,
-            size=file_size,
-            dc_creator=dc_creator,
-            dc_title=dc_title,
-            dc_description=dc_description,
-            dc_subject=dc_subject,
-            parent_origin=url,
-            origin=pdf_href,
+            title           =   title[:250]         if title else title,
+            description     =   description[:300]   if description else description,
+            name            =   file_name[:250]     if file_name else file_name,
+            slug            =   title[:250].replace(' ', '-').replace('--', '-') if title else title,
+            size            =   file_size,
+            dc_creator      =   dc_creator[:250]    if dc_creator and type(dc_creator) is str else dc_creator,
+            dc_title        =   dc_title[:250]      if dc_title and type(dc_title) is str else dc_title,
+            dc_description  =   dc_description[:250]if dc_description and type(dc_description) is str else dc_description,
+            dc_subject      =   dc_subject[:250]    if dc_subject and type(dc_subject) is str else dc_subject,
+            parent_origin   =   url,
+            origin          =   pdf_href,
         )
 
         temporarylocation="file.pdf"
@@ -132,14 +131,17 @@ class AbstractScraper(BaseCommand):
         with open(temporarylocation, 'rb') as read:
             pdf_instance.pdf_file.save(title, read)
 
-        # CONVERTING PDF TO HTML FILE
-        html_file_path = convert_pdf_to_html(temporarylocation)
-        if html_file_path:
-            with open(html_file_path, 'rb') as read:
-                pdf_instance.html_file.save(title, read)
+        # This block of code is disabled
+        # you can convert the scraped PDFs using "convertpdfstohtml" command
 
-        os.remove(temporarylocation) # Delete file when done
-        os.remove(html_file_path) # Delete file when done
+        # CONVERTING PDF TO HTML FILE
+        # html_file_path = convert_pdf_to_html(temporarylocation)
+        # if html_file_path:
+        #     with open(html_file_path, 'rb') as read:
+        #         pdf_instance.html_file.save(title, read)
+
+        # os.remove(temporarylocation) # Delete file when done
+        # os.remove(html_file_path) # Delete file when done
         
         subject_name = self.get_subject(url)
         if subject_name:
@@ -165,7 +167,7 @@ class AbstractScraper(BaseCommand):
         pdf_instance.save()
         print()
         print(
-            '     %-10s%-50s%-30s%-15s%-10s%-10s%-10s' % (
+            '     %-10s%-100s%-40s%-15s%-10s%-10s%-10s' % (
                 f"{'-'*3}{self.total}{'-'*3}",
                 title,
                 description,
