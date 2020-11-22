@@ -136,11 +136,11 @@ class PDF(models.Model):
     )
     origin = models.URLField(
         'The origin link that this PDF comes from',
-        max_length=400,
+        max_length=512,
     )
     parent_origin = models.URLField(
         'The link\'s page that contains this PDF link',
-        max_length=400,
+        max_length=256,
     )
     pages = models.IntegerField(
         "Number of Pages in Document",
