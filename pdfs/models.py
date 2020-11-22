@@ -135,10 +135,12 @@ class PDF(models.Model):
         upload_to=html_upload_path,
     )
     origin = models.URLField(
-        'The origin link that this PDF comes from'
+        'The origin link that this PDF comes from',
+        max_length=400,
     )
     parent_origin = models.URLField(
-        'The link\'s page that contains this PDF link'
+        'The link\'s page that contains this PDF link',
+        max_length=400,
     )
     pages = models.IntegerField(
         "Number of Pages in Document",
