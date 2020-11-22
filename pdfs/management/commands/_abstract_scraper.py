@@ -173,7 +173,6 @@ class AbstractScraper(BaseCommand):
         pdf_instance.stage = self.stage
 
         try:
-            raise Exception('')
             pdf_instance.save()
             print()
             print(
