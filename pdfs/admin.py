@@ -38,4 +38,10 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(PDFError)
 class PDFErrorAdmin(admin.ModelAdmin):
-    list_display = ('id',)
+    list_display = ('get_error',)
+
+    def get_error(self, instance, *args, **kwargs):
+        t = instance.traceback
+        return t.strip()[t.strip().rindex('\n'):]
+    
+    get_error.short_description = 'Error'
