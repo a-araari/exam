@@ -45,6 +45,9 @@ class AbstractScraper(BaseCommand):
                 response = requests.get(url)
                 soup = BeautifulSoup(response.content, 'html.parser')
 
+                # if not soup.find_all('a', {"class": self.pdf_download_button_class}, href=True):
+                    # print(url)
+
                 # getting section name
                 section_name = self.get_section_name(soup)
 
@@ -170,7 +173,7 @@ class AbstractScraper(BaseCommand):
             section, created = Section.objects.get_or_create(name=section_name)
             pdf_instance.section = section
 
-        pdf_instance.stage = self.stage
+        pdf_instance.stage = self.get_stage(url)
 
         try:
             pdf_instance.save()
@@ -263,3 +266,11 @@ class AbstractScraper(BaseCommand):
         file_size = file_size_div.contents[0] if file_size_div else None
 
         return title, description, file_name, file_type, file_size
+
+
+    def get_stage(self, url):
+        """
+        Can be overridden
+        will return default stage by default
+        """
+        return self.stage

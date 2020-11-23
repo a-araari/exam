@@ -55,3 +55,9 @@ class Command(AbstractScraper):
         file_size = None
 
         return title, description, file_name, file_type, file_size
+
+    def get_stage(self, url):
+        if 'primaire' in url: return PDF.ELEMENTARY_SCHOOL_STAGE
+        if 'base' in url: return PDF.MIDDLE_SCHOOL_STAGE
+        
+        return PDF.HIGH_SCHOOL_STAGE
