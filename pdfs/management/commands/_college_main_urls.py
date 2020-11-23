@@ -1,3 +1,61 @@
+
+def get_subject(url):
+    try:
+        url = url[len('https://www.tunisiecollege.net/'):]
+        subject = url[:url.index('/')]
+        if subject[-2:] == '-1': subject = subject[:-2]
+
+        return subject
+    except Exception as e:
+        return None
+
+
+def get_category(url):
+    try:
+        categories = [
+            ['devoirs', 'tp', 'فــــروض', 'sujets-bac', 'epreuves-corrigées', 'مواضيع', 'تقييمات', 'travaux-pratiques', 'tps/'],
+            ['cours', 'résumés', 'education', 'دروس', 'وثائق', 'دروس', 'الكتب-المدرسية', 'مطالعة'],
+            ['séries', 'تمارين', 'série', 'series', 'serie', 'ﺗﻤﺎﺭﻳﻦ', 'exercices', 'révision', 'تمارين'],
+        ]
+        url = url[len('https://www.devoir.tn/'):]
+
+        for category in categories:
+            if 1 in [1 if l in url.lower() else 0 for l in category]:
+                return category[0]
+
+        # Search for arabic categories but return the convenient english category
+        for i in range(len(categories_ar)):
+            if categories_ar[i] in url.lower():
+                return categories[i]
+
+    except Exception as e:
+        pass
+
+    return None
+
+
+
+def get_level(url):
+    try:
+        levels = [
+            ['7ème', '7éme', '7-ème', '7eme', 'السابعة-7-أساسي', 'السـابعة-أســاسي'],
+            ['8ème', '8éme', '8-ème', '8eme', 'الثامنة-8-أساسي', 'الثـــامنة-أســاسي'],
+            ['9ème', '9éme', '9-ème', '9eme', 'التاسعة-9-أساسي', 'التـــاسعة-أســاسي'],
+        ]
+        url = url[len('https://www.devoir.tn/'):]
+
+        for level in levels:
+            if 1 in [1 if l in url.lower() else 0 for l in level]:
+                # For bac and 4eme
+                if level[0] == levels[-1][0]: return levels[-2][0]
+                return level[0]
+
+    except Exception as e:
+        pass
+
+    return None
+
+
 URLS = [
     "https://www.tunisiecollege.net/anglais/devoirs-anglais/7-ème/",
     "https://www.tunisiecollege.net/anglais/devoirs-anglais/8-ème/",
@@ -86,54 +144,5 @@ URLS = [
 ]
 
 
-def get_subject(url):
-    try:
-        url = url[len('https://www.tunisiecollege.net/'):]
-        subject = url[:url.index('/')]
-        if subject[-2:] == '-1': subject = subject[:-2]
-
-        return subject
-    except Exception as e:
-        return None
-
-
-def get_category(url):
-    try:
-        categories = ['devoirs', 'cours', 'séries']
-        categories_ar = ['فــــروض', 'دروس', 'تمارين']
-        url = url[len('https://www.tunisiecollege.net/'):]
-
-        for category in categories:
-            if category in url:
-                return category
-
-        # Search for arabic categories but return the convenient english category
-        for i in range(len(categories_ar)):
-            if categories_ar[i] in url:
-                return categories[i]
-
-    except Exception as e:
-        pass
-
-    return None
-
-
-def get_level(url):
-    try:
-        levels = ['7ème', '8ème', '9ème']
-        levels_v2 = ['7-ème', '8-ème', '9-ème']
-        url = url[len('https://www.tunisiecollege.net/'):]
-
-        for level in levels:
-            if level in url:
-                return level
-
-        for i in range(len(levels_v2)):
-            if levels_v2[i] in url:
-                return levels[i]
-
-    except Exception as e:
-        pass
-
-    return None
-
+for url in URLS:
+    if not get_category(url): print(url)
