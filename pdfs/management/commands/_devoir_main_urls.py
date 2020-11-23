@@ -45,7 +45,7 @@ def get_subject(url):
 def get_category(url):
     try:
         categories = [
-            ['devoir', 'ﻓــــﺮﻭﺽ', 'sujets-bac', 'epreuves-corrigées', 'مواضيع', 'تقييمات', 'travaux-pratiques', 'tps/'],
+            ['devoirs', 'ﻓــــﺮﻭﺽ', 'sujets-bac', 'epreuves-corrigées', 'مواضيع', 'تقييمات', 'travaux-pratiques', 'tps/'],
             ['cours', 'résumés', 'ﺩﺭﻭﺱ', 'وثائق', 'دروس', 'الكتب-المدرسية', 'مطالعة'],
             ['séries', 'série', 'series', 'serie', 'ﺗﻤﺎﺭﻳﻦ', 'exercices', 'révision', 'تمارين'],
         ]
