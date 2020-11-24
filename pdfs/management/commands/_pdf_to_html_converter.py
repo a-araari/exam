@@ -39,6 +39,7 @@ if platform == 'win32':
 elif platform in ('linux', 'linux2', 'ubuntu'):
     #['docker', 'run', '-ti', '--rm', '-v', '/home/exercice/test/:/pdf', 'bwits/pdf2htmlex', 'pdf2htmlEX', '--zoom', '1.3', 'a.pdf']
     def convert_pdf_to_html(pdf_location):
+        pdf_location = str(pdf_location).replace(str(settings.BASE_DIR)+'/', '')
         temp_file_name = 'file.html'
         FNULL = open(os.devnull, 'w')
         print('Running:', *['docker', 'run', '-ti', '--rm', '-v', str(settings.BASE_DIR) + ':/pdf', 'bwits/pdf2htmlex', 'pdf2htmlEX', '--zoom', '1.3', pdf_location, temp_file_name])
