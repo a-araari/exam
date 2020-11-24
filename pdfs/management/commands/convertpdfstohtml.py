@@ -16,7 +16,7 @@ class Command(BaseCommand):
             print()
             print(f'Processing PDF with ID={pdf.id}')
             try:
-                html_temp_file_path = convert_pdf_to_html(pdf.pdf_file.file.name)
+                html_temp_file_path = convert_pdf_to_html(pdf.pdf_file.file.name, pdf.id)
                 if html_temp_file_path:
                     with open(html_temp_file_path, 'rb') as file:
                         pdf.html_file.save(pdf.title, file)
