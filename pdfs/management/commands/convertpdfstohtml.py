@@ -24,7 +24,9 @@ class Command(BaseCommand):
 
                     os.remove(html_temp_file_path) # Delete file when done
                 else:
+                    pdf.html_file.name = "None"
                     print(f'pdf2htmlEX failed to convert the file for an unkown reason')
+                pdf.save()
 
             except Exception as e:
                 print(f'Exception raised while converting PDF with ID={pdf.id}:', repr(e))
