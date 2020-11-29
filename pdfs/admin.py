@@ -14,6 +14,7 @@ from pdfs.models import (
 class PDFAdmin(admin.ModelAdmin):
     list_display = ('title', 'description', 'subject', 'section', 'level', 'category')
     list_filter = ('stage', 'category', 'section', 'level', 'subject')
+    search_fields = ('title', )
 
 
 @admin.register(Subject)
