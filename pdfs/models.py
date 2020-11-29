@@ -44,14 +44,14 @@ class Category(models.Model):
 
 def pdf_upload_path(instance, filename):
     try:
-        return 'docs/{}-{}.pdf'.format(filename, instance.date_stored)
+        return 'docs/{}.pdf'.format(instance.id)
     except:
         return 'docs/{}.pdf'.format(filename)
 
 
 def html_upload_path(instance, filename):
     try:
-        return 'docs/{}-{}.html'.format(filename, instance.date_stored)
+        return 'docs/{}.html'.format(instance.id)
     except:
         return 'docs/{}.html'.format(filename)
 
