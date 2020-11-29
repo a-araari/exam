@@ -43,8 +43,7 @@ elif platform in ('linux', 'linux2', 'ubuntu'):
         print()
         print(f'ID={id}')
         pdf_location = str(pdf_location).replace(str(settings.BASE_DIR)+'/', '')
-        pdf_location = f'"{pdf_location}"'
-        temp_file_name = '"file.html"'
+        temp_file_name = 'file.html'
         print('Running:', *['docker', 'run', '-ti', '--rm', '-v', str(settings.BASE_DIR) + ':/pdf', 'bwits/pdf2htmlex', 'pdf2htmlEX', '--zoom', '1.3', '--no-drm', '1', pdf_location, temp_file_name])
         response = str(
             subprocess.run(
