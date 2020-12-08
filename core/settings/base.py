@@ -24,6 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 INSTALLED_APPS = [
     'pdfs.apps.PdfsConfig',
+    'home.apps.HomeConfig',
 
     'django.contrib.admin',
     'django.contrib.auth',
