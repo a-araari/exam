@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+
+{% load i18n %} 
+{% load static %}
+
+<html>
+<head>
+{% block head %}
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        
+    <title>Exercice.net | {% translate title %}</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <!-- Base CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static "css/base.css" %}">
+
+    {% block extra_head %}
+        
+    {% endblock extra_head %}
+
+{% endblock head %}
+</head>
+<body>
+{% block body %}
+    <!-- Navbar -->
+    {% block navbar %}
+        <nav class="navbar navbar-expand-lg navbar-dark bg-black">
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <img src="{% static "images/dark-512px-2.png" %}" width="128px">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse bg-black" id="navbarSupportedContent">
+                    <ul class="navbar-nav d-flex justify-content-center w-100 py-3">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">{% translate 'Home' %}<span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item dropdown">
+                           <a class="nav-link" href="#" data-toggle="dropdown">{% translate 'Primaire' %}</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">{% translate '1ère année' %}</a></li>
+                                <li><a class="dropdown-item" href="#">{% translate '2ème année' %}</a></li>
+                                <li><a class="dropdown-item" href="#">{% translate '3ème année' %}</a></li>
+                                <li><a class="dropdown-item" href="#">{% translate '4ème année' %}</a></li>
+                                <li><a class="dropdown-item" href="#">{% translate '5ème année' %}</a></li>
+                                <li><a class="dropdown-item" href="#">{% translate '6ème année' %}</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                           <a class="nav-link" href="#" data-toggle="dropdown">{% translate 'Collège' %}</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">{% translate '7ème année' %}</a></li>
+                                <li><a class="dropdown-item" href="#">{% translate '8ème année' %}</a></li>
+                                <li><a class="dropdown-item" href="#">{% translate '9ème année' %}</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                           <a class="nav-link" href="#" data-toggle="dropdown">{% translate 'Lyceé' %}</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">{% translate '1ère année' %}</a></li>
+                                <li><a class="dropdown-item" href="#">{% translate '2ème année' %}</a></li>
+                                    <li><a class="dropdown-item pl-5" href="#">{% translate '2ème lettre' %}</a></li>
+                                    <li><a class="dropdown-item pl-5" href="#">{% translate '2ème info' %}</a></li>
+                                    <li><a class="dropdown-item pl-5" href="#">{% translate '2ème sciences' %}</a></li>
+                                    <li><a class="dropdown-item pl-5" href="#">{% translate '2ème économie' %}</a></li>
+                                <li><a class="dropdown-item" href="#">{% translate '3ème année' %}</a></li>
+                                    <li><a class="dropdown-item pl-5" href="#">{% translate '3ème lettre' %}</a></li>
+                                    <li><a class="dropdown-item pl-5" href="#">{% translate '3ème info' %}</a></li>
+                                    <li><a class="dropdown-item pl-5" href="#">{% translate '3ème sciences' %}</a></li>
+                                    <li><a class="dropdown-item pl-5" href="#">{% translate '3ème math' %}</a></li>
+                                    <li><a class="dropdown-item pl-5" href="#">{% translate '3ème économie' %}</a></li>
+                                    <li><a class="dropdown-item pl-5" href="#">{% translate '3ème technique' %}</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                           <a class="nav-link" href="#" data-toggle="dropdown">{% translate 'Bac +' %}</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">{% translate 'Bac lettre' %}</a></li>
+                                <li><a class="dropdown-item" href="#">{% translate 'Bac info' %}</a></li>
+                                <li><a class="dropdown-item" href="#">{% translate 'Bac sciences' %}</a></li>
+                                <li><a class="dropdown-item" href="#">{% translate 'Bac math' %}</a></li>
+                                <li><a class="dropdown-item" href="#">{% translate 'Bac économie' %}</a></li>
+                                <li><a class="dropdown-item" href="#">{% translate 'Bac technique' %}</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    {% endblock navbar %}
+
+    
+    <!-- Messages -->
+    {% block messages %}
+        <div id="messages">
+
+        </div>        
+    {% endblock messages %}
+
+
+    <!-- Main Content -->
+    {% block content %}
+        <div style="height: 1000px">
+            
+        </div>
+    {% endblock content %}
+
+
+    <!-- Footer -->
+    {% block footer %}
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <h6>About</h6>
+                        <p class="text-justify">Exercice.com <i> Lorem ipsum </i> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+                    </div>
+
+                    <div class="col-xs-6 col-md-3">
+                        <h6>Categories</h6>
+                        <ul class="footer-links">
+                            <li><a href="#">Lorem 1</a></li>
+                            <li><a href="#">ipsum 2</a></li>
+                            <li><a href="#">dolor 3</a></li>
+                            <li><a href="#">sit 4</a></li>
+                            <li><a href="#">amet 5</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-xs-6 col-md-3">
+                        <h6>Quick Links</h6>
+                        <ul class="footer-links">
+                            <li><a href="#">consectetur 1</a></li>
+                            <li><a href="#">adipisicing 2</a></li>
+                            <li><a href="#">elit 3</a></li>
+                            <li><a href="#">aliquip 4</a></li>
+                            <li><a href="#">voluptate 5</a></li>
+                        </ul>
+                    </div>
+                </div>
+             
+                <hr>
+             
+                </div>
+                <div class="container">
+                   <div class="row">
+                        <div class="col-md-8 col-sm-6 col-xs-12">
+                            <p class="copyright-text">Copyright &copy; 2020 All Rights Reserved by 
+                                <a href="/">Exercice.net</a>.
+                            </p>
+                        </div>
+
+                        <div class="mt-2 mt-md-0 col-md-4 col-sm-6 col-xs-12">
+                            <ul class="social-icons d-flex justify-content-center">
+                                <li>
+                                    <a class="p-2 pinterest" href="#"><i class="fa fa-lg fa-pinterest"></i></a>
+                                </li>
+                                <li>
+                                    <a class="p-2 twitter" href="#"><i class="fa fa-lg fa-twitter"></i></a>
+                                </li>
+                                <li>
+                                    <a class="p-2 dribbble" href="#"><i class="fa fa-lg fa-dribbble"></i></a>
+                                </li>
+                                <li>
+                                    <a class="p-2 linkedin" href="#"><i class="fa fa-lg fa-linkedin"></i></a>
+                                </li>   
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    {% endblock footer %}
+
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+    <!-- Fontawesome JS -->
+    <script src="https://kit.fontawesome.com/436258daf3.js" crossorigin="anonymous"></script>
+
+    <!-- Base JS -->
+    <script type="text/javascript" src="{% static "js/base.js" %}"></script>
+
+    {% block extra_body %}
+        
+    {% endblock extra_body  %}
+
+{% endblock body %}
+</body>
+</html>
