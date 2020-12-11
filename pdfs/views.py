@@ -76,7 +76,7 @@ def level_detail(request, level_name):
     :param level_name: Level name
     :return: HTML response
     """
-    level = get_object_or_404(Subject, name=level_name)
+    level = get_object_or_404(Level, name=level_name)
     context = {
         'title': level.name,
         'level': level,
@@ -112,7 +112,7 @@ def subject_detail(request, subject_name):
     :param subject_name: Subject name
     :return: HTML response
     """
-    subject = get_object_or_404(Level, name=subject_name)
+    subject = get_object_or_404(Subject, name=subject_name)
     context = {
         'title': subject.name,
         'subject': subject,
