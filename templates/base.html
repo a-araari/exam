@@ -19,6 +19,10 @@
     <!-- Base CSS -->
     <link rel="stylesheet" type="text/css" href="{% static "css/base.css" %}">
 
+    <!-- Rubik Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
     {% block extra_head %}
         
     {% endblock extra_head %}
@@ -29,77 +33,90 @@
 {% block body %}
     <!-- Navbar -->
     {% block navbar %}
-        <nav class="navbar navbar-expand-lg navbar-dark bg-black">
+        <nav class="navbar navbar-expand-lg navbar-light bg-navbar">
             <div class="container">
-                <a class="navbar-brand" href="#">
-                    <img src="{% static "images/dark-512px-2.png" %}" width="128px">
+                <a class="navbar-brand pb-0 pb-md-4" href="#">
+                    <img class="d-block d-md-none" src="{% static "images/dark-512px-2.png" %}" width="128px">
+                    <img class="d-none d-md-block" src="{% static "images/light-512px-2.png" %}" width="128px">
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
+                <button id="down-up-navbar-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <i id="down-up-navbar-icon" class="fa fa-caret-down"></i>
                 </button>
 
-                <div class="collapse navbar-collapse bg-black" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav d-flex justify-content-center w-100 py-3">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">{% translate 'Home' %}<span class="sr-only">(current)</span></a>
+                        <li class="nav-item">
+                            <a id="nav-link-Acceuil" class="nav-link nav-link-active" href="#">{% translate 'Acceuil' %}<span class="sr-only">(current)</span></a>
                         </li>
-                        <li class="nav-item dropdown">
-                           <a class="nav-link" href="#" data-toggle="dropdown">{% translate 'Primaire' %}</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">{% translate '1ère année' %}</a></li>
-                                <li><a class="dropdown-item" href="#">{% translate '2ème année' %}</a></li>
-                                <li><a class="dropdown-item" href="#">{% translate '3ème année' %}</a></li>
-                                <li><a class="dropdown-item" href="#">{% translate '4ème année' %}</a></li>
-                                <li><a class="dropdown-item" href="#">{% translate '5ème année' %}</a></li>
-                                <li><a class="dropdown-item" href="#">{% translate '6ème année' %}</a></li>
-                            </ul>
+                        <li class="nav-item">
+                            <a id="nav-link-propos" class="nav-link" href="#">{% translate 'À propos' %}</a>
                         </li>
-
-                        <li class="nav-item dropdown">
-                           <a class="nav-link" href="#" data-toggle="dropdown">{% translate 'Collège' %}</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">{% translate '7ème année' %}</a></li>
-                                <li><a class="dropdown-item" href="#">{% translate '8ème année' %}</a></li>
-                                <li><a class="dropdown-item" href="#">{% translate '9ème année' %}</a></li>
-                            </ul>
+                        <li class="nav-item">
+                            <a id="nav-link-Contact" class="nav-link" href="#">{% translate 'Contact' %}</a>
                         </li>
-
-                        <li class="nav-item dropdown">
-                           <a class="nav-link" href="#" data-toggle="dropdown">{% translate 'Lyceé' %}</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">{% translate '1ère année' %}</a></li>
-                                <li><a class="dropdown-item" href="#">{% translate '2ème année' %}</a></li>
-                                    <li><a class="dropdown-item pl-5" href="#">{% translate '2ème lettre' %}</a></li>
-                                    <li><a class="dropdown-item pl-5" href="#">{% translate '2ème info' %}</a></li>
-                                    <li><a class="dropdown-item pl-5" href="#">{% translate '2ème sciences' %}</a></li>
-                                    <li><a class="dropdown-item pl-5" href="#">{% translate '2ème économie' %}</a></li>
-                                <li><a class="dropdown-item" href="#">{% translate '3ème année' %}</a></li>
-                                    <li><a class="dropdown-item pl-5" href="#">{% translate '3ème lettre' %}</a></li>
-                                    <li><a class="dropdown-item pl-5" href="#">{% translate '3ème info' %}</a></li>
-                                    <li><a class="dropdown-item pl-5" href="#">{% translate '3ème sciences' %}</a></li>
-                                    <li><a class="dropdown-item pl-5" href="#">{% translate '3ème math' %}</a></li>
-                                    <li><a class="dropdown-item pl-5" href="#">{% translate '3ème économie' %}</a></li>
-                                    <li><a class="dropdown-item pl-5" href="#">{% translate '3ème technique' %}</a></li>
-                            </ul>
+                        <li class="nav-item">
+                            <a id="nav-link-Aide" class="nav-link" href="#">{% translate 'Aide' %}</a>
                         </li>
-
-                        <li class="nav-item dropdown">
-                           <a class="nav-link" href="#" data-toggle="dropdown">{% translate 'Bac +' %}</a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">{% translate 'Bac lettre' %}</a></li>
-                                <li><a class="dropdown-item" href="#">{% translate 'Bac info' %}</a></li>
-                                <li><a class="dropdown-item" href="#">{% translate 'Bac sciences' %}</a></li>
-                                <li><a class="dropdown-item" href="#">{% translate 'Bac math' %}</a></li>
-                                <li><a class="dropdown-item" href="#">{% translate 'Bac économie' %}</a></li>
-                                <li><a class="dropdown-item" href="#">{% translate 'Bac technique' %}</a></li>
-                            </ul>
-                        </li>
+                        
                     </ul>
                 </div>
             </div>
         </nav>
     {% endblock navbar %}
 
+    {% comment %}
+        <li class="nav-item dropdown">
+           <a class="nav-link" href="#" data-toggle="dropdown">{% translate 'Primaire' %}</a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">{% translate '1ère année' %}</a></li>
+                <li><a class="dropdown-item" href="#">{% translate '2ème année' %}</a></li>
+                <li><a class="dropdown-item" href="#">{% translate '3ème année' %}</a></li>
+                <li><a class="dropdown-item" href="#">{% translate '4ème année' %}</a></li>
+                <li><a class="dropdown-item" href="#">{% translate '5ème année' %}</a></li>
+                <li><a class="dropdown-item" href="#">{% translate '6ème année' %}</a></li>
+            </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+           <a class="nav-link" href="#" data-toggle="dropdown">{% translate 'Collège' %}</a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">{% translate '7ème année' %}</a></li>
+                <li><a class="dropdown-item" href="#">{% translate '8ème année' %}</a></li>
+                <li><a class="dropdown-item" href="#">{% translate '9ème année' %}</a></li>
+            </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+           <a class="nav-link" href="#" data-toggle="dropdown">{% translate 'Lyceé' %}</a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">{% translate '1ère année' %}</a></li>
+                <li><a class="dropdown-item" href="#">{% translate '2ème année' %}</a></li>
+                    <li><a class="dropdown-item pl-5" href="#">{% translate '2ème lettre' %}</a></li>
+                    <li><a class="dropdown-item pl-5" href="#">{% translate '2ème info' %}</a></li>
+                    <li><a class="dropdown-item pl-5" href="#">{% translate '2ème sciences' %}</a></li>
+                    <li><a class="dropdown-item pl-5" href="#">{% translate '2ème économie' %}</a></li>
+                <li><a class="dropdown-item" href="#">{% translate '3ème année' %}</a></li>
+                    <li><a class="dropdown-item pl-5" href="#">{% translate '3ème lettre' %}</a></li>
+                    <li><a class="dropdown-item pl-5" href="#">{% translate '3ème info' %}</a></li>
+                    <li><a class="dropdown-item pl-5" href="#">{% translate '3ème sciences' %}</a></li>
+                    <li><a class="dropdown-item pl-5" href="#">{% translate '3ème math' %}</a></li>
+                    <li><a class="dropdown-item pl-5" href="#">{% translate '3ème économie' %}</a></li>
+                    <li><a class="dropdown-item pl-5" href="#">{% translate '3ème technique' %}</a></li>
+            </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+           <a class="nav-link" href="#" data-toggle="dropdown">{% translate 'Bac +' %}</a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">{% translate 'Bac lettre' %}</a></li>
+                <li><a class="dropdown-item" href="#">{% translate 'Bac info' %}</a></li>
+                <li><a class="dropdown-item" href="#">{% translate 'Bac sciences' %}</a></li>
+                <li><a class="dropdown-item" href="#">{% translate 'Bac math' %}</a></li>
+                <li><a class="dropdown-item" href="#">{% translate 'Bac économie' %}</a></li>
+                <li><a class="dropdown-item" href="#">{% translate 'Bac technique' %}</a></li>
+            </ul>
+        </li>
+    {% endcomment %}
     
     <!-- Messages -->
     {% block messages %}
@@ -116,6 +133,10 @@
         </div>
     {% endblock content %}
 
+    {% comment %}
+        
+    {% endcomment %}
+
 
     <!-- Footer -->
     {% block footer %}
@@ -123,61 +144,41 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
-                        <h6>About</h6>
-                        <p class="text-justify">Exercice.com <i> Lorem ipsum </i> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.</p>
+                        <img class="" src="{% static "images/light-512px-2.png" %}" width="128px">
+                        <div class="row">
+                            <div class="col-12 mt-4 pl-4">
+                                <p>ipsum dolor sit amet,ipsum dolor sit amet,ipsum ipsum dolor.</p>
+                            </div>
+
+                            <div class="col-12 pl-4">
+                                <p class="copyright-text">&copy;2020<a href="/">Exercice.net</a>.
+                                </p>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="col-xs-6 col-md-3">
-                        <h6>Categories</h6>
-                        <ul class="footer-links">
-                            <li><a href="#">Lorem 1</a></li>
-                            <li><a href="#">ipsum 2</a></li>
-                            <li><a href="#">dolor 3</a></li>
-                            <li><a href="#">sit 4</a></li>
-                            <li><a href="#">amet 5</a></li>
+                    <div class="col-ms-6 col-md-3 pl-4">
+                        <h6>{% translate "Nous offrons" %}</h6>
+                        <ul class="footer-links pl-3">
+                            <li><a href="#">{% translate "Des Devoirs" %}</a></li>
+                            <li><a href="#">{% translate "Des series" %}</a></li>
+                            <li><a href="#">{% translate "Des cours" %}</a></li>
+                            <li><a href="#">{% translate "Telechargable PDFs" %}</a></li>
+                            <li><a href="#">{% translate "Aide" %}</a></li>
                         </ul>
                     </div>
 
-                    <div class="col-xs-6 col-md-3">
-                        <h6>Quick Links</h6>
-                        <ul class="footer-links">
-                            <li><a href="#">consectetur 1</a></li>
-                            <li><a href="#">adipisicing 2</a></li>
-                            <li><a href="#">elit 3</a></li>
-                            <li><a href="#">aliquip 4</a></li>
-                            <li><a href="#">voluptate 5</a></li>
+                    <div class="col-ms-6 col-md-3 pl-4">
+                        <h6>{% translate "Amet" %}</h6>
+                        <ul class="footer-links pl-3">
+                            <li><a href="#">{% translate "Odum ? " %}</a></li>
+                            <li><a href="#">{% translate "Ipsumipsum" %}</a></li>
+                            <li><a href="#">{% translate "Mipes" %}</a></li>
+                            <li><a href="#">{% translate "Privacy Policy" %}</a></li>
+                            <li><a href="#">{% translate "Terms of Service" %}</a></li>
                         </ul>
                     </div>
                 </div>
-             
-                <hr>
-             
-                </div>
-                <div class="container">
-                   <div class="row">
-                        <div class="col-md-8 col-sm-6 col-xs-12">
-                            <p class="copyright-text">Copyright &copy; 2020 All Rights Reserved by 
-                                <a href="/">Exercice.net</a>.
-                            </p>
-                        </div>
-
-                        <div class="mt-2 mt-md-0 col-md-4 col-sm-6 col-xs-12">
-                            <ul class="social-icons d-flex justify-content-center">
-                                <li>
-                                    <a class="p-2 pinterest" href="#"><i class="fa fa-lg fa-pinterest"></i></a>
-                                </li>
-                                <li>
-                                    <a class="p-2 twitter" href="#"><i class="fa fa-lg fa-twitter"></i></a>
-                                </li>
-                                <li>
-                                    <a class="p-2 dribbble" href="#"><i class="fa fa-lg fa-dribbble"></i></a>
-                                </li>
-                                <li>
-                                    <a class="p-2 linkedin" href="#"><i class="fa fa-lg fa-linkedin"></i></a>
-                                </li>   
-                            </ul>
-                        </div>
-                    </div>
                 </div>
             </div>
         </footer>
