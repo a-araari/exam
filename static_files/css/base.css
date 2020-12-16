@@ -1,7 +1,64 @@
 body {
     font-family: 'Rubik', sans-serif;
-    background: #f4f4f4;
+    background: #fff;
 }
+h1 {
+    font-family: 'Rubik';
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 50px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+p {
+    font-family: Rubik;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 25px;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+
+.searchbar {
+    height: 60px;
+    background-color: white;
+    border-radius: 30px;
+    border: 2px solid #464685;
+    padding: 10px;
+}
+.search_input {
+    color: #464685;
+    border: 0;
+    outline: 0;
+    background: none;
+    caret-color: #464685;
+    line-height: 40px;
+    width: 85%;
+    padding: 0 10px;
+}
+
+.search_icon {
+    background: white;
+    color: #464685;
+    height: 40px;
+    width: 15%;
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    text-decoration:none;
+    border: 0;
+}
+.search_icon:hover {
+    background: white;
+    color: #464685;
+    text-decoration:none;
+}
+
 nav {
     /* Fixing navbar over content */
     margin-bottom: 40px;
@@ -23,6 +80,9 @@ nav {
 .bg-dark-purple {
     background-color: #35354F;
 }
+.bg-dark-purple-2 {
+    background-color: #464685;
+}
 .bg-black {
     background-color: #282b2e!important;
 }
@@ -31,6 +91,7 @@ nav {
 }
 
 /* Footer Styles */
+
 footer {
     margin-top: 100px;
     background-color: #fff;
@@ -88,9 +149,12 @@ footer ul li {
 }
 
 /* buttons */
+/*
 .btn {
     border-radius: 0px;
 }
+*/
+
 .btn-primary {
   color: #ffffff; 
   background-color: #4452FE; 
@@ -187,9 +251,4 @@ fieldset[disabled] .btn-primary.active {
     }
 }
 
-/* ============ desktop view ============ */
-@media all and (min-width: 992px) {
-    .navbar .nav-item .dropdown-menu{ display: none; }
-    .navbar .nav-item:hover .dropdown-menu{ display: block; }
-    .navbar .nav-item .dropdown-menu{ margin-top:0; }
-}
+
