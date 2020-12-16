@@ -1,1 +1,210 @@
 {% extends "base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+
+<div class="container">
+   
+    <!-- Section-1 -->
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <h1 class="text-center text-lg-left">
+                Bienvenue,
+                <br>
+                On a plus que 30k devoirs, cours et series
+            </h1>
+            <p class="d-none d-lg-block">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud consequat.
+            </p>
+            <div class="searchbar mt-4 mt-lg-5">
+                <input class="search_input" type="text" name="" placeholder="{% translate 'Rechercher' %}..">
+                <button class="search_icon"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6 mt-4 mt-lg-0">
+            <img src="{% static "images/Illustration.png" %}" class="w-100">
+        </div>
+    </div>
+
+    <!-- Section-2-Dropdowns -->
+    <div class="row mt-5 pt-1 pt-lg-5 d-flex justify-content-center">
+
+        <div class="col-6 mx-0 mx-md-4 mb-4 mb-md-0 col-md-2 px-0 text-center">
+            <div class="btn-group">
+                <button type="button" class="btn bg-dark-purple-2 text-white" style="width: 100px; height: 45px;">{% translate 'Primaire' %}</button>
+                    <button type="button" style="background-color: #353566;" class="btn text-white px-3 dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">{% translate 'Basculer la liste déroulante' %}</span>
+                </button>
+
+                <div class="dropdown-menu dropdown-menu-right pre-scrollable">
+                    <a class="dropdown-item" href="#">{% translate '1ère année' %}</a>
+                    <a class="dropdown-item" href="#">{% translate '2ème année' %}</a>
+                    <a class="dropdown-item" href="#">{% translate '3ème année' %}</a>
+                    <a class="dropdown-item" href="#">{% translate '4ème année' %}</a>
+                    <a class="dropdown-item" href="#">{% translate '5ème année' %}</a>
+                    <a class="dropdown-item" href="#">{% translate '6ème année' %}</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 mx-0 mx-md-4 mb-4 mb-md-0 col-md-2 px-0 text-center">
+            <div class="btn-group">
+                <button type="button" class="btn bg-dark-purple-2 text-white" style="width: 100px; height: 45px;">{% translate 'Collège' %}</button>
+                    <button type="button" style="background-color: #353566;" class="btn text-white px-3 dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">{% translate 'Basculer la liste déroulante' %}</span>
+                </button>
+
+                <div class="dropdown-menu dropdown-menu-right pre-scrollable">
+                    <a class="dropdown-item" href="#">{% translate '7ème année' %}</a>
+                    <a class="dropdown-item" href="#">{% translate '8ème année' %}</a>
+                    <a class="dropdown-item" href="#">{% translate '9ème année' %}</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 mx-0 mx-md-4 mb-4 mb-md-0 col-md-2 px-0 text-center">
+            <div class="btn-group">
+                <button type="button" class="btn bg-dark-purple-2 text-white" style="width: 100px; height: 45px;">{% translate 'Lyceé' %}</button>
+                    <button type="button" style="background-color: #353566;" class="btn text-white px-3 dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">{% translate 'Basculer la liste déroulante' %}</span>
+                </button>
+
+                <div class="dropdown-menu dropdown-menu-right pre-scrollable">
+                    <a class="dropdown-item" href="#">{% translate '1ère année' %}</a>
+                    <a class="dropdown-item" href="#">{% translate '2ème année' %}</a>
+                    <a class="dropdown-item pl-5" href="#">{% translate '2ème lettre' %}</a>
+                    <a class="dropdown-item pl-5" href="#">{% translate '2ème info' %}</a>
+                    <a class="dropdown-item pl-5" href="#">{% translate '2ème sciences' %}</a>
+                    <a class="dropdown-item pl-5" href="#">{% translate '2ème économie' %}</a>
+                    <a class="dropdown-item" href="#">{% translate '3ème année' %}</a>
+                    <a class="dropdown-item pl-5" href="#">{% translate '3ème lettre' %}</a>
+                    <a class="dropdown-item pl-5" href="#">{% translate '3ème info' %}</a>
+                    <a class="dropdown-item pl-5" href="#">{% translate '3ème sciences' %}</a>
+                    <a class="dropdown-item pl-5" href="#">{% translate '3ème math' %}</a>
+                    <a class="dropdown-item pl-5" href="#">{% translate '3ème économie' %}</a>
+                    <a class="dropdown-item pl-5" href="#">{% translate '3ème technique' %}</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 mx-0 mx-md-4 mb-4 mb-md-0 col-md-2 px-0 text-center">
+            <div class="btn-group">
+                <button type="button" class="btn bg-dark-purple-2 text-white" style="width: 100px; height: 45px;">{% translate 'Bac' %}</button>
+                    <button type="button" style="background-color: #353566;" class="btn text-white px-3 dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">{% translate 'Basculer la liste déroulante' %}</span>
+                </button>
+
+                <div class="dropdown-menu dropdown-menu-right pre-scrollable">
+                    <a class="dropdown-item" href="#">{% translate 'Bac lettre' %}</a>
+                    <a class="dropdown-item" href="#">{% translate 'Bac info' %}</a>
+                    <a class="dropdown-item" href="#">{% translate 'Bac sciences' %}</a>
+                    <a class="dropdown-item" href="#">{% translate 'Bac math' %}</a>
+                    <a class="dropdown-item" href="#">{% translate 'Bac économie' %}</a>
+                    <a class="dropdown-item" href="#">{% translate 'Bac technique' %}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section-2-Statictics -->
+    <div class="row mt-5 pt-0 pt-md-5 d-flex justify-content-center">
+        <div class="col-12 col-lg-3 d-flex justify-content-center">
+            <span class="d-flex justify-content-center align-items-center rounded-circle bg-dark-purple-2 text-white" style="width: 55px;height: 55px;">
+                <i class="fa fa-file" style="font-size: 25px"></i>
+            </span>
+            <div class="row pl-4" style="width: 200px;">
+                <div class="col-12">
+                    <h4 style="font-weight: 700;">36,000+</h4>
+                </div>
+                <div class="col-12">
+                    <p>{% translate "Devoirs" %}</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-1 d-none d-lg-flex justify-content-center">
+            <div style="border-left: 1px solid #CECFD1;" class="h-100"></div>
+        </div>
+        <div class="col-6 col-sm-3 d-flex d-lg-none align-items-center mb-4 mt-2">
+            <div style="border-bottom: 1px solid #CECFD1;" class="w-100"></div>
+        </div>
+
+        <div class="col-12 col-lg-3 d-flex justify-content-center">
+            <span class="d-flex justify-content-center align-items-center rounded-circle bg-dark-purple-2 text-white" style="width: 55px;height: 55px;">
+                <i class="fa fa-book" style="font-size: 25px"></i>
+            </span>
+            <div class="row pl-4" style="width: 200px;">
+                <div class="col-12">
+                    <h4 style="font-weight: 700;">26+</h4>
+                </div>
+                <div class="col-12">
+                    <p>{% translate "Matières" %}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-1 d-none d-lg-flex justify-content-center">
+            <div style="border-left: 1px solid #CECFD1;" class="h-100"></div>
+        </div>
+        <div class="col-6 col-sm-3 d-flex d-lg-none align-items-center mb-4 mt-2">
+            <div style="border-bottom: 1px solid #CECFD1;" class="w-100"></div>
+        </div>
+
+        <div class="col-12 col-lg-3 d-flex justify-content-center">
+            <span class="d-flex justify-content-center align-items-center rounded-circle bg-dark-purple-2 text-white" style="width: 55px;height: 55px;">
+                <i class="fa fa-pencil-ruler" style="font-size: 25px"></i>
+            </span>
+            <div class="row pl-4" style="width: 200px;">
+                <div class="col-12">
+                    <h4 style="font-weight: 700;">10,000+</h4>
+                </div>
+                <div class="col-12">
+                    <p>{% translate "Cours et séries" %}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section-4-Features -->
+    <div class="row mt-5 pt-0 pt-md-5 d-flex justify-content-center">
+        <div class="col-12 col-lg-6 mb-4 mb-lg-0">
+            <img src="{% static "images/Illustration-2.png" %}" class="w-100">
+        </div>
+        
+        <div class="col-12 col-lg-6">
+            <h1 class="text-center text-lg-left">
+                Télécharger et Faire des exercice en ligne
+            </h1>
+            <p class="text-center text-lg-left mb-5">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do.
+            </p>
+            <div class="row">
+                <div class="col-12 pl-4 mb-3">
+                    <i class="fa fa-check mr-3 p-2 pb-1 rounded-circle bg-success text-white" style="font-size: 14px;"></i>
+                    consectetur adipisng apiscing
+                </div>
+                
+                <div class="col-12 pl-4 mb-3">
+                    <i class="fa fa-check mr-3 p-2 pb-1 rounded-circle bg-success text-white" style="font-size: 14px;"></i>
+                    adipiscing elit consectetur
+                </div>
+                
+                <div class="col-12 pl-4 mb-3">
+                    <i class="fa fa-check mr-3 p-2 pb-1 rounded-circle bg-success text-white" style="font-size: 14px;"></i>
+                    consectetur elit adipiscing
+                </div>
+                
+                <div class="col-12 pl-4 mb-3">
+                    <i class="fa fa-check mr-3 p-2 pb-1 rounded-circle bg-success text-white" style="font-size: 14px;"></i>
+                    adipiscing consectetur
+                </div>
+            </di
+            v>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
