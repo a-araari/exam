@@ -1,0 +1,10 @@
+#global-image {
+    height:1300px;
+    background-size: cover;
+    background-position: center;
+}
+
+.dropdown-item:hover {
+    background: #4B4BC2;
+    color: white;
+}

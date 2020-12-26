@@ -33,11 +33,10 @@
 {% block body %}
     <!-- Navbar -->
     {% block navbar %}
-        <nav class="navbar navbar-expand-md navbar-light bg-navbar mb-0 py-3">
-            <div class="container">
-                <a class="navbar-brand pb-0 pb-md-4" href="#">
-                    <img class="d-block d-md-none" src="{% static "images/dark-512px-2.png" %}" width="128px">
-                    <img class="d-none d-md-block" src="{% static "images/light-512px-2.png" %}" width="128px">
+        <nav class="navbar navbar-expand-md fixed-top navbar-light bg-navbar py-0">
+            <div class="container py-2 py-md-0">
+                <a class="navbar-brand" href="/">
+                    <img src="{% static "images/dark-512px-2.png" %}" width="128px">
                 </a>
                 <button id="down-up-navbar-btn" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <i id="down-up-navbar-icon" class="fa fa-caret-down"></i>
@@ -61,34 +60,37 @@
                     </ul>
                     <ul class="navbar-nav ml-auto d-none d-lg-flex">
                         <li class="nav-item">
-                            <a class="nav-link rounded-circle bg-dark-purple-2 text-white d-flex align-items-center justify-content-center" href="#" style="width: 36px;height: 36px;">
-                                <i class="fa fa-facebook"></i>
+                            <a class="nav-link rounded-circle bg-white d-flex align-items-center justify-content-center" href="#" style="width: 36px;height: 36px;">
+                                <i class="text-purple-1 fa-lg fa fa-facebook"></i>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link rounded-circle bg-dark-purple-2 text-white d-flex align-items-center justify-content-center" href="#" style="width: 36px;height: 36px;">
-                                <i class="fa fa-twitter"></i>
+                            <a class="nav-link rounded-circle bg-white d-flex align-items-center justify-content-center" href="#" style="width: 36px;height: 36px;">
+                                <i class="text-purple-1 fa-lg fa fa-twitter"></i>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link rounded-circle bg-dark-purple-2 text-white d-flex align-items-center justify-content-center" href="#" style="width: 36px;height: 36px;">
-                                <i class="fa fa-instagram"></i>
+                            <a class="nav-link rounded-circle bg-white d-flex align-items-center justify-content-center" href="#" style="width: 36px;height: 36px;">
+                                <i class="text-purple-1 fa-lg fa fa-instagram"></i>
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
-        <hr class="bg-gray mt-0 mb-5">
     {% endblock navbar %}
 
 
     <!-- Messages -->
     {% block messages %}
-        <div id="messages">
+        <div id="messages" class="mt-5">
 
-        </div>        
+        </div>
     {% endblock messages %}
+
+
+    <!-- Spacing -->
+    <div style="margin-top: 58px;"></div>
 
 
     <!-- Main Content -->
@@ -99,20 +101,18 @@
 
     <!-- Footer -->
     {% block footer %}
-        <footer>
-            <hr class="bg-gray mt-0 mb-5">
+        <footer class="bg-purple-1">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
-                        <img class="" src="{% static "images/light-512px-2.png" %}" width="128px">
+                        <img class="" src="{% static "images/dark-512px-2.png" %}" width="128px">
                         <div class="row">
                             <div class="col-12 mt-4 pl-4">
-                                <p>ipsum dolor sit amet,ipsum dolor sit amet,ipsum ipsum dolor.</p>
+                                <p class="text-dark-4">ipsum dolor sit amet,ipsum dolor sit amet,ipsum ipsum dolor.</p>
                             </div>
 
                             <div class="col-12 pl-4">
-                                <p class="copyright-text">&copy;2020<a href="/">Exercice.net</a>.
-                                </p>
+                                <p class="copyright-text">&copy;2020 <a href="/">Exercice.net</a>.</p>
                             </div>
                         </div>
                     </div>
@@ -164,3 +164,38 @@
 {% endblock body %}
 </body>
 </html>
+
+{% comment %}
+Buttons:
+
+<div class="container my-5">
+    <button class="mb-4 mx-3 btn btn-purple-1 btn-lg">btn-purple-1</button>
+    <button class="mb-4 mx-3 btn btn-purple-2 btn-lg">btn-purple-2</button>
+    <button class="mb-4 mx-3 btn btn-purple-3 btn-lg">btn-purple-3</button>
+    <button class="mb-4 mx-3 btn btn-purple-4 btn-lg">btn-purple-4</button>
+    <button class="mb-4 mx-3 btn btn-purple-5 btn-lg">btn-purple-5</button>
+    <button class="mb-4 mx-3 btn btn-purple-linear btn-lg">btn-purple-linear</button>
+    <button class="mb-4 mx-3 btn btn-success btn-lg">btn-success</button>
+    <button class="mb-4 mx-3 btn btn-danger btn-lg">btn-danger</button>
+    <button class="mb-4 mx-3 btn btn-warning btn-lg">btn-warning</button>
+    <button class="mb-4 mx-3 btn btn-info btn-lg">btn-info</button>
+    <button class="mb-4 mx-3 btn btn-white btn-lg">btn-white</button>
+    <button class="mb-4 mx-3 btn btn-dark btn-lg">btn-dark</button>
+</div>
+<div class="container my-5 bg-white">
+    <button class="mb-4 mx-3 btn btn-outline-purple-1 btn-lg">btn-outline-purple-1</button>
+    <button class="mb-4 mx-3 btn btn-outline-purple-2 btn-lg">btn-outline-purple-2</button>
+    <button class="mb-4 mx-3 btn btn-outline-purple-3 btn-lg">btn-outline-purple-3</button>
+    <button class="mb-4 mx-3 btn btn-outline-purple-4 btn-lg">btn-outline-purple-4</button>
+    <button class="mb-4 mx-3 btn btn-outline-purple-5 btn-lg">btn-outline-purple-5</button>
+    <button class="mb-4 mx-3 btn btn-outline-purple-linear btn-lg">btn-outline-purple-linear</button>
+</div>
+<div class="container my-5 bg-dark">
+    <button class="mb-4 mx-3 btn btn-outline-success btn-lg">btn-outline-success</button>
+    <button class="mb-4 mx-3 btn btn-outline-danger btn-lg">btn-outline-danger</button>
+    <button class="mb-4 mx-3 btn btn-outline-warning btn-lg">btn-outline-warning</button>
+    <button class="mb-4 mx-3 btn btn-outline-info btn-lg">btn-info</button>
+    <button class="mb-4 mx-3 btn btn-outline-white btn-lg">btn-white</button>
+    <button class="mb-4 mx-3 btn btn-outline-dark btn-lg">btn-dark</button>
+</div>
+{% endcomment %}

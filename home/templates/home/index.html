@@ -1,11 +1,18 @@
 {% extends "base.html" %}
 
+
 {% load static %}
 {% load i18n %}
 
+
+{% block extra_head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'home/css/styles.css' %}">
+{% endblock extra_head %}
+
+
 {% block content %}
 
-<div class="container">
+<div class="container pt-5">
    
     <!-- Section-1 -->
     <div class="row">
@@ -18,14 +25,17 @@
             <p class="d-none d-lg-block">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud consequat.
             </p>
-            <div class="searchbar mt-4 mt-lg-5">
-                <input class="search_input" type="text" name="" placeholder="{% translate 'Rechercher' %}..">
-                <button class="search_icon"><i class="fas fa-search"></i></button>
-            </div>
+            <form action="{% url 'home:search' %}" method="GET">
+                <div class="search-bar mt-4 mt-lg-5">
+                    <input class="search-input" type="text" name="q" placeholder="{% translate 'Rechercher' %}..">
+                    <button type="submit" class="search-icon"><i class="fas fa-search"></i></button>
+                    <hr class="mt-0 bg-white w-90">
+                </div>
+            </form>
         </div>
 
         <div class="col-12 col-lg-6 mt-4 mt-lg-0">
-            <img src="{% static "images/Illustration.png" %}" class="w-100">
+            <img src="{% static "images/Illustration 1.png" %}" class="w-100">
         </div>
     </div>
 
@@ -35,8 +45,8 @@
 
         <div class="col-6 mx-0 mx-md-4 mb-4 mb-md-0 col-md-2 px-0 text-center">
             <div class="btn-group">
-                <button type="button" class="btn bg-dark-purple-2 text-white" style="width: 100px; height: 45px;">{% translate 'Primaire' %}</button>
-                    <button type="button" style="background-color: #353566;" class="btn text-white px-3 dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button type="button" class="btn bg-purple-3 text-white" style="width: 100px; height: 45px;">{% translate 'Primaire' %}</button>
+                    <button type="button" style="background-color: #39399e;" class="btn text-white px-3 dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="sr-only">{% translate 'Basculer la liste déroulante' %}</span>
                 </button>
 
@@ -53,8 +63,8 @@
 
         <div class="col-6 mx-0 mx-md-4 mb-4 mb-md-0 col-md-2 px-0 text-center">
             <div class="btn-group">
-                <button type="button" class="btn bg-dark-purple-2 text-white" style="width: 100px; height: 45px;">{% translate 'Collège' %}</button>
-                    <button type="button" style="background-color: #353566;" class="btn text-white px-3 dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button type="button" class="btn bg-purple-3 text-white" style="width: 100px; height: 45px;">{% translate 'Collège' %}</button>
+                    <button type="button" style="background-color: #39399e;" class="btn text-white px-3 dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="sr-only">{% translate 'Basculer la liste déroulante' %}</span>
                 </button>
 
@@ -68,8 +78,8 @@
 
         <div class="col-6 mx-0 mx-md-4 mb-4 mb-md-0 col-md-2 px-0 text-center">
             <div class="btn-group">
-                <button type="button" class="btn bg-dark-purple-2 text-white" style="width: 100px; height: 45px;">{% translate 'Lyceé' %}</button>
-                    <button type="button" style="background-color: #353566;" class="btn text-white px-3 dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button type="button" class="btn bg-purple-3 text-white" style="width: 100px; height: 45px;">{% translate 'Lyceé' %}</button>
+                    <button type="button" style="background-color: #39399e;" class="btn text-white px-3 dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="sr-only">{% translate 'Basculer la liste déroulante' %}</span>
                 </button>
 
@@ -93,8 +103,8 @@
 
         <div class="col-6 mx-0 mx-md-4 mb-4 mb-md-0 col-md-2 px-0 text-center">
             <div class="btn-group">
-                <button type="button" class="btn bg-dark-purple-2 text-white" style="width: 100px; height: 45px;">{% translate 'Bac' %}</button>
-                    <button type="button" style="background-color: #353566;" class="btn text-white px-3 dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button type="button" class="btn bg-purple-3 text-white" style="width: 100px; height: 45px;">{% translate 'Bac' %}</button>
+                    <button type="button" style="background-color: #39399e;" class="btn text-white px-3 dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="sr-only">{% translate 'Basculer la liste déroulante' %}</span>
                 </button>
 
@@ -114,7 +124,7 @@
     <!-- Section-3-Statictics -->
     <div class="row mt-5 pt-0 pt-md-5 d-flex justify-content-center">
         <div class="col-12 col-lg-3 d-flex justify-content-center">
-            <span class="d-flex justify-content-center align-items-center rounded-circle bg-dark-purple-2 text-white" style="width: 55px;height: 55px;">
+            <span class="d-flex justify-content-center align-items-center rounded-circle bg-purple-3 text-white" style="width: 55px;height: 55px;">
                 <i class="fa fa-file" style="font-size: 25px"></i>
             </span>
             <div class="row pl-4" style="width: 200px;">
@@ -135,7 +145,7 @@
         </div>
 
         <div class="col-12 col-lg-3 d-flex justify-content-center">
-            <span class="d-flex justify-content-center align-items-center rounded-circle bg-dark-purple-2 text-white" style="width: 55px;height: 55px;">
+            <span class="d-flex justify-content-center align-items-center rounded-circle bg-purple-3 text-white" style="width: 55px;height: 55px;">
                 <i class="fa fa-book" style="font-size: 25px"></i>
             </span>
             <div class="row pl-4" style="width: 200px;">
@@ -156,7 +166,7 @@
         </div>
 
         <div class="col-12 col-lg-3 d-flex justify-content-center">
-            <span class="d-flex justify-content-center align-items-center rounded-circle bg-dark-purple-2 text-white" style="width: 55px;height: 55px;">
+            <span class="d-flex justify-content-center align-items-center rounded-circle bg-purple-3 text-white" style="width: 55px;height: 55px;">
                 <i class="fa fa-pencil-ruler" style="font-size: 25px"></i>
             </span>
             <div class="row pl-4" style="width: 200px;">
@@ -174,7 +184,7 @@
     <!-- Section-4-Features -->
     <div class="row mt-5 pt-0 pt-md-5 d-flex justify-content-center">
         <div class="col-12 col-lg-6 mb-4 mb-lg-0">
-            <img src="{% static "images/Illustration-2.png" %}" class="w-100">
+            <img src="{% static "images/Illustration 2.png" %}" class="w-100">
         </div>
         
         <div class="col-12 col-lg-6">
@@ -249,7 +259,31 @@
             </div>
         </div>
     -->
+</div>
 
+<div class="container-fluid bg-purple-1 text-white">
+    <div class="container">
+
+        <!-- Section-9-JoinUs -->
+        <div  class="row mt-5 pt-5 pb-5 d-flex justify-content-center">
+            <div class="col-12 col-lg-9">
+                <h1 class="">
+                    Rejoignez-nous pour
+                    plus de plaisir
+                </h1>
+                <p class="text-light">
+                    sit amet,ipsum dolor sit amet
+                </p>
+            </div>
+            <div class="col-12 col-lg-3 d-flex align-items-center justify-content-center mt-4 mt-lg-0">
+                <!--<button class="btn btn-purple-outline px-5 rounded btn-lg shadow">S'inscrire</button>-->
+                <button class="btn btn-outline-purple-1 btn-outline-purple-1-bg-white btn-lg">S'inscrire</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container pb-5">
 
     <!-- Section-8-Reviews -->
     <div  class="row mt-5 pt-0 pt-md-5 d-flex justify-content-center">
@@ -341,27 +375,6 @@
         </div>
     </div>
 
-</div>
-
-<div class="container-fluid bg-dark-purple text-white">
-    <div class="container">
-
-        <!-- Section-9-JoinUs -->
-        <div  class="row mt-5 pt-5 pb-5 d-flex justify-content-center">
-            <div class="col-12 col-lg-9">
-                <h1 class="">
-                    Rejoignez-nous pour
-                    plus de plaisir
-                </h1>
-                <p class="text-light">
-                    sit amet,ipsum dolor sit amet
-                </p>
-            </div>
-            <div class="col-12 col-lg-3 d-flex align-items-center justify-content-center mt-4 mt-lg-0">
-                <button class="btn btn-purple-outline px-5 rounded btn-lg shadow">S'inscrire</button>
-            </div>
-        </div>
-    </div>
 </div>
 
 {% endblock content %}
