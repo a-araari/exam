@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+
+{% load static %}
+{% load i18n %}
+
+
+{% block content %}
+<div class="container-fluid bg-purple-linear">
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-12 col-lg-5 mt-5 pt-0 pt-lg-5 text-white mb-4 mb-lg-0">
+            <h1>
+                {% trans "Parcourez des milliers de nos examens organisés uniquement pour vous." %}
+            </h1>
+            <p class="text-dark-4">
+                {% trans "Accédez à plus de <b>36 000 examens et exercices</b> en utilisant la barre de recherche ci-dessous." %}
+            </p>
+        </div>
+        <div class="col-2"></div>
+        <div class="d-none col-12 col-lg-4 d-lg-flex justify-content-end">
+            <img class="ml-auto" src="{% static "images/Education-Icons.png" %}">
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <form action="{% url 'home:search' %}" method="GET">
+                <div class="search-bar mt-4 mt-lg-5">
+                    <input class="search-input" type="text" name="q" placeholder="{% translate 'Rechercher' %}..">
+                    <button type="submit" class="search-icon"><i class="fas fa-search"></i></button>
+                    <hr class="mt-0 bg-white w-90">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -8,3 +8,20 @@ def index(request):
     }
 
     return render(request, 'home/index.html', context)
+
+
+def search(request):
+    q = None
+    title = _('Searching for exams, series and courses')
+
+    if request.method == 'GET':
+        q = request.GET.get('q')
+        if q:
+            print(q)
+            title = _('Searching for: ') + q
+
+    context = {
+        'title': title,
+    }
+
+    return render(request, 'home/search.html', context)
