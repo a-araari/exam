@@ -40,9 +40,9 @@ Understand by examples:
 """
 
 urlpatterns = [
-    path('devoir/<str:pdf_slug>/', devoir_detail, 'devoir-detail'),
-    path('devoir/<str:pdf_slug>/pdf/', devoir_pdf_detail, 'devoir-pdf-detail'),
-    path('devoir/<str:pdf_slug>/html/', devoir_html_detail, 'devoir-html-detail'),
+    path('devoir/<str:pdf_slug>/', devoir_detail, name='devoir-detail'),
+    path('devoir/<str:pdf_slug>/pdf/', devoir_pdf_detail, name='devoir-pdf-detail'),
+    path('devoir/<str:pdf_slug>/html/', devoir_html_detail, name='devoir-html-detail'),
 
     # ---------------------------------------------------------------------
 
