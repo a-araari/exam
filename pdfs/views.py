@@ -150,7 +150,7 @@ def level_section_detail(request, level_name, section_name):
     :param: section_name: Section name
     :return: HTML response
     """
-    level = get_object_or_404(Subject, name=level_name)
+    level = get_object_or_404(Level, name=level_name)
     section = get_object_or_404(Section, name=section_name)
 
     context = {
@@ -173,9 +173,9 @@ def level_section_subject_detail(request, level_name, section_name, subject_name
     :param: subject_name: Subject name
     :return: HTML response
     """
-    level = get_object_or_404(Subject, name=level_name)
+    level = get_object_or_404(Level, name=level_name)
     section = get_object_or_404(Section, name=section_name)
-    subject = get_object_or_404(Level, name=subject_name)
+    subject = get_object_or_404(Subject, name=subject_name)
 
     context = {
         'title': f'{level.name}-{section.name}-{subject.name}',
@@ -200,9 +200,9 @@ def level_section_subject_category_detail(request, level_name, section_name, sub
     :param: category_name: Category name
     :return: HTML response
     """
-    level = get_object_or_404(Subject, name=level_name)
+    level = get_object_or_404(Level, name=level_name)
     section = get_object_or_404(Section, name=section_name)
-    subject = get_object_or_404(Level, name=subject_name)
+    subject = get_object_or_404(Subject, name=subject_name)
     category = get_object_or_404(Category, name=category_name)
 
     context = {
