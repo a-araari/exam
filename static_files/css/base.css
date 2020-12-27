@@ -262,7 +262,9 @@ footer ul li {
 }
 
 .text-purple-linear {
-    color: linear-gradient(253.58deg, #A4508B 1.55%, #5F0A87 95.8%);
+    background: linear-gradient(253.58deg, #A4508B 1.55%, #5F0A87 95.8%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 
