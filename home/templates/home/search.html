@@ -122,7 +122,7 @@
                 <div class="filter-items">
                     {% for level in high_school_stage_levels %}
                         <p class="pl-3">
-                            <a href="{% url "pdfs:level-detail" level_name=level.name %}">{% trans level.name %} ({{ level.get_pdfs_count }} {% trans "devoirs" %})</a>
+                            <a href="{% url "pdfs:level-detail" level_slug=level.slug %}">{% trans level.name %} ({{ level.get_pdfs_count }} {% trans "devoirs" %})</a>
                         </p>
                     {% endfor %}
                 </div>
@@ -135,7 +135,7 @@
                 <div class="filter-items">
                     {% for level in middle_school_stage_levels %}
                         <p class="pl-3">
-                            <a href="{% url "pdfs:level-detail" level_name=level.name %}">{% trans level.name %} ({{ level.get_pdfs_count }} {% trans "devoirs" %})</a>
+                            <a href="{% url "pdfs:level-detail" level_slug=level.slug %}">{% trans level.name %} ({{ level.get_pdfs_count }} {% trans "devoirs" %})</a>
                         </p>
                     {% endfor %}
                 </div>
@@ -148,7 +148,7 @@
                 <div class="filter-items">
                     {% for level in elementary_school_stage_levels %}
                         <p class="pl-3">
-                            <a href="{% url "pdfs:level-detail" level_name=level.name %}">{% trans level.name %} ({{ level.get_pdfs_count }} {% trans "devoirs" %})</a>
+                            <a href="{% url "pdfs:level-detail" level_slug=level.slug %}">{% trans level.name %} ({{ level.get_pdfs_count }} {% trans "devoirs" %})</a>
                         </p>
                     {% endfor %}
                 </div>

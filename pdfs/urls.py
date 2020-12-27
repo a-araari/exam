@@ -46,25 +46,25 @@ urlpatterns = [
 
     # ---------------------------------------------------------------------
 
-    path('level/<str:level_name>/', level_detail, name='level-detail'),
-    path('section/<str:section_name>/', section_detail, name='section-detail'),
-    path('subject/<str:subject_name>/', subject_detail, name='subject-detail'),
-    path('category/<str:category_name>/', category_detail, name='category-detail'),
+    path('level/<str:level_slug>/', level_detail, name='level-detail'),
+    path('section/<str:section_slug>/', section_detail, name='section-detail'),
+    path('subject/<str:subject_slug>/', subject_detail, name='subject-detail'),
+    path('category/<str:category_slug>/', category_detail, name='category-detail'),
 
     # ---------------------------------------------------------------------
 
     path(
-        '<str:level_name>/<str:section_name>/',
+        '<str:level_slug>/<str:section_slug>/',
         level_section_detail,
         name='level-section-detail'
     ),
     path(
-        '<str:level_name>/<str:section_name>/<str:subject_name>/',
+        '<str:level_slug>/<str:section_slug>/<str:subject_slug>/',
         level_section_subject_detail,
         name='level-section-subject-detail'
     ),
     path(
-        '<str:level_name>/<str:section_name>/<str:subject_name>/<str:category_name>/',
+        '<str:level_slug>/<str:section_slug>/<str:subject_slug>/<str:category_slug>/',
         level_section_subject_category_detail,
         name='level-section-subject-category-detail'
     ),

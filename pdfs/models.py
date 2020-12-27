@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 from django.utils import timezone as tz
 
 
@@ -15,10 +16,23 @@ class LevelManager(models.Manager):
 
 
 class Subject(models.Model):
+    slug = models.SlugField(
+        unique=True,
+        blank=True,
+        null=True
+    )
     name = models.CharField(
         'Subject name',
         max_length=100
     )
+
+    def save(self, *args, **kwargs):
+        """
+        Save Slug before inserting the row into the DB
+        """
+        if not self.id:
+            self.slug = slugify(self.name)
+        super(Subject, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -28,10 +42,23 @@ class Subject(models.Model):
 
 
 class Section(models.Model):
+    slug = models.SlugField(
+        unique=True,
+        blank=True,
+        null=True
+    )
     name = models.CharField(
         'Section name',
         max_length=100
     )
+
+    def save(self, *args, **kwargs):
+        """
+        Save Slug before inserting the row into the DB
+        """
+        if not self.id:
+            self.slug = slugify(self.name)
+        super(Section, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
@@ -50,6 +77,11 @@ class Level(models.Model):
         (HIGH_SCHOOL_STAGE, 'high'),
     ]
 
+    slug = models.SlugField(
+        unique=True,
+        blank=True,
+        null=True
+    )
     name = models.CharField(
         'Level name',
         max_length=100
@@ -62,6 +94,14 @@ class Level(models.Model):
         default=HIGH_SCHOOL_STAGE,
     )
 
+    def save(self, *args, **kwargs):
+        """
+        Save Slug before inserting the row into the DB
+        """
+        if not self.id:
+            self.slug = slugify(self.name)
+        super(Level, self).save(*args, **kwargs)
+
     objects = LevelManager()
 
     def __str__(self):
@@ -72,10 +112,23 @@ class Level(models.Model):
 
 
 class Category(models.Model):
+    slug = models.SlugField(
+        unique=True,
+        blank=True,
+        null=True
+    )
     name = models.CharField(
         'Category name',
         max_length=100
     )
+
+    def save(self, *args, **kwargs):
+        """
+        Save Slug before inserting the row into the DB
+        """
+        if not self.id:
+            self.slug = slugify(self.name)
+        super(Category, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name

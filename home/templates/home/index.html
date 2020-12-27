@@ -53,7 +53,7 @@
 
                 <div class="dropdown-menu dropdown-menu-right pre-scrollable">
                     {% for level in elementary_school_stage_levels %}
-                        <a class="dropdown-item" href="{% url "pdfs:level-detail" level_name=level.name %}">{% trans level.name %}</a>
+                        <a class="dropdown-item" href="{% url "pdfs:level-detail" level_slug=level.slug %}">{% trans level.slug %}</a>
                     {% endfor %}
                 </div>
             </div>
@@ -70,7 +70,7 @@
 
                 <div class="dropdown-menu dropdown-menu-right pre-scrollable">
                     {% for level in middle_school_stage_levels %}
-                        <a class="dropdown-item" href="{% url "pdfs:level-detail" level_name=level.name %}">{% trans level.name %} {% trans "année" %}</a>
+                        <a class="dropdown-item" href="{% url "pdfs:level-detail" level_slug=level.slug %}">{% trans level.slug %} {% trans "année" %}</a>
                     {% endfor %}
                 </div>
             </div>
@@ -87,48 +87,48 @@
                 </button>
 
                 <div class="dropdown-menu dropdown-menu-right pre-scrollable">
-                    <a class="dropdown-item" href="{% url "pdfs:level-detail" level_name='1ère' %}">{% translate '1ère année' %}</a>
-                    <a class="dropdown-item" href="{% url "pdfs:level-detail" level_name='2ème' %}">{% translate '2ème année' %}</a>
-                    <a class="dropdown-item pl-5" href="{% url "pdfs:level-section-detail" level_name='2ème' section_name='lettre' %}">
+                    <a class="dropdown-item" href="{% url "pdfs:level-detail" level_slug='1ère' %}">{% translate '1ère année' %}</a>
+                    <a class="dropdown-item" href="{% url "pdfs:level-detail" level_slug='2ème' %}">{% translate '2ème année' %}</a>
+                    <a class="dropdown-item pl-5" href="{% url "pdfs:level-section-detail" level_slug='2ème' section_slug='lettre' %}">
                         <i class="fa fa-angle-right pr-2"></i>{% translate '2ème lettre' %}
                     </a>
                     {% with "sciences-de-l'informatique" as info %}
-                    <a class="dropdown-item pl-5" href='{% url "pdfs:level-section-detail" level_name="2ème" section_name=info %}'>
+                    <a class="dropdown-item pl-5" href='{% url "pdfs:level-section-detail" level_slug="2ème" section_slug=info %}'>
                         <i class="fa fa-angle-right pr-2"></i>{% translate '2ème info' %}
                     </a>
                     {% endwith %}
-                    <a class="dropdown-item pl-5" href="{% url "pdfs:level-section-detail" level_name='2ème' section_name='sciences-expérimentales' %}">
+                    <a class="dropdown-item pl-5" href="{% url "pdfs:level-section-detail" level_slug='2ème' section_slug='sciences-expérimentales' %}">
                         <i class="fa fa-angle-right pr-2"></i>{% translate '2ème sciences' %}
                     </a>
-                    <a class="dropdown-item pl-5" href="{% url "pdfs:level-section-detail" level_name='2ème' section_name='economie-et-gestion' %}">
+                    <a class="dropdown-item pl-5" href="{% url "pdfs:level-section-detail" level_slug='2ème' section_slug='economie-et-gestion' %}">
                         <i class="fa fa-angle-right pr-2"></i>{% translate '2ème économie' %}
                     </a>
-                    <a class="dropdown-item pl-5" href="{% url "pdfs:level-section-detail" level_name='2ème' section_name='sport' %}">
+                    <a class="dropdown-item pl-5" href="{% url "pdfs:level-section-detail" level_slug='2ème' section_slug='sport' %}">
                         <i class="fa fa-angle-right pr-2"></i>{% translate '2ème sport' %}
                     </a>
 
-                    <a class="dropdown-item" href="{% url "pdfs:level-detail" level_name='3ème' %}">{% translate '3ème année' %}</a>
-                    <a class="dropdown-item pl-5" href="{% url "pdfs:level-section-detail" level_name='3ème' section_name='lettres' %}">
+                    <a class="dropdown-item" href="{% url "pdfs:level-detail" level_slug='3ème' %}">{% translate '3ème année' %}</a>
+                    <a class="dropdown-item pl-5" href="{% url "pdfs:level-section-detail" level_slug='3ème' section_slug='lettres' %}">
                         <i class="fa fa-angle-right pr-2"></i>{% translate '3ème lettre' %}
                     </a>
                     {% with "sciences-de-l'informatique" as info %}
-                    <a class="dropdown-item pl-5" href='{% url "pdfs:level-section-detail" level_name="3ème" section_name=info %}'>
+                    <a class="dropdown-item pl-5" href='{% url "pdfs:level-section-detail" level_slug="3ème" section_slug=info %}'>
                         <i class="fa fa-angle-right pr-2"></i>{% translate '3ème info' %}
                     </a>
                     {% endwith %}
-                    <a class="dropdown-item pl-5" href="{% url "pdfs:level-section-detail" level_name='3ème' section_name='sciences-expérimentales' %}">
+                    <a class="dropdown-item pl-5" href="{% url "pdfs:level-section-detail" level_slug='3ème' section_slug='sciences-expérimentales' %}">
                         <i class="fa fa-angle-right pr-2"></i>{% translate '3ème sciences' %}
                     </a>
-                    <a class="dropdown-item pl-5" href="{% url "pdfs:level-section-detail" level_name='3ème' section_name='mathématiques' %}">
+                    <a class="dropdown-item pl-5" href="{% url "pdfs:level-section-detail" level_slug='3ème' section_slug='mathématiques' %}">
                         <i class="fa fa-angle-right pr-2"></i>{% translate '3ème math' %}
                     </a>
-                    <a class="dropdown-item pl-5" href="{% url "pdfs:level-section-detail" level_name='3ème' section_name='economie-et-gestion' %}">
+                    <a class="dropdown-item pl-5" href="{% url "pdfs:level-section-detail" level_slug='3ème' section_slug='economie-et-gestion' %}">
                         <i class="fa fa-angle-right pr-2"></i>{% translate '3ème économie' %}
                     </a>
-                    <a class="dropdown-item pl-5" href="{% url "pdfs:level-section-detail" level_name='3ème' section_name='sciences-techniques' %}">
+                    <a class="dropdown-item pl-5" href="{% url "pdfs:level-section-detail" level_slug='3ème' section_slug='sciences-techniques' %}">
                         <i class="fa fa-angle-right pr-2"></i>{% translate '3ème technique' %}
                     </a>
-                    <a class="dropdown-item pl-5" href="{% url "pdfs:level-section-detail" level_name='3ème' section_name='sport' %}">
+                    <a class="dropdown-item pl-5" href="{% url "pdfs:level-section-detail" level_slug='3ème' section_slug='sport' %}">
                         <i class="fa fa-angle-right pr-2"></i>{% translate '3ème sport' %}
                     </a>
                 </div>
@@ -144,27 +144,27 @@
                 </button>
 
                 <div class="dropdown-menu dropdown-menu-right pre-scrollable">
-                    <a class="dropdown-item" href="{% url "pdfs:level-section-detail" level_name='4ème' section_name='lettres' %}">
+                    <a class="dropdown-item" href="{% url "pdfs:level-section-detail" level_slug='4ème' section_slug='lettres' %}">
                         {% translate 'Bac lettre' %}
                     </a>
                     {% with "sciences-de-l'informatique" as info %}
-                    <a class="dropdown-item" href='{% url "pdfs:level-section-detail" level_name="4ème" section_name=info %}'>
+                    <a class="dropdown-item" href='{% url "pdfs:level-section-detail" level_slug="4ème" section_slug=info %}'>
                         {% translate 'Bac info' %}
                     </a>
                     {% endwith %}
-                    <a class="dropdown-item" href="{% url "pdfs:level-section-detail" level_name='4ème' section_name='sciences-expérimentales' %}">
+                    <a class="dropdown-item" href="{% url "pdfs:level-section-detail" level_slug='4ème' section_slug='sciences-expérimentales' %}">
                         {% translate 'Bac sciences' %}
                     </a>
-                    <a class="dropdown-item" href="{% url "pdfs:level-section-detail" level_name='4ème' section_name='mathématiques' %}">
+                    <a class="dropdown-item" href="{% url "pdfs:level-section-detail" level_slug='4ème' section_slug='mathématiques' %}">
                         {% translate 'Bac math' %}
                     </a>
-                    <a class="dropdown-item" href="{% url "pdfs:level-section-detail" level_name='4ème' section_name='economie-et-gestion' %}">
+                    <a class="dropdown-item" href="{% url "pdfs:level-section-detail" level_slug='4ème' section_slug='economie-et-gestion' %}">
                         {% translate 'Bac économie' %}
                     </a>
-                    <a class="dropdown-item" href="{% url "pdfs:level-section-detail" level_name='4ème' section_name='sciences-techniques' %}">
+                    <a class="dropdown-item" href="{% url "pdfs:level-section-detail" level_slug='4ème' section_slug='sciences-techniques' %}">
                         {% translate 'Bac technique' %}
                     </a>
-                    <a class="dropdown-item" href="{% url "pdfs:level-section-detail" level_name='4ème' section_name='sport' %}">
+                    <a class="dropdown-item" href="{% url "pdfs:level-section-detail" level_slug='4ème' section_slug='sport' %}">
                         {% translate 'Bac sport' %}
                     </a>
                 </div>

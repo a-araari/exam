@@ -1,5 +1,4 @@
 from django.shortcuts import render, get_object_or_404
-
 from pdfs.models import (
     Subject,
     Section,
@@ -66,92 +65,90 @@ def devoir_html_detail(request, pdf_slug):
     return render(request, 'pdfs/devoir-html-detail.html', context)
 
 
-
-def level_detail(request, level_name):
+def level_detail(request, level_slug):
     """
     Display level detail
     This function will raise Http404 if no level found
-    within the given level_name value
+    within the given level_slug value
 
-    :param level_name: Level name
+    :param level_slug: Level slug
     :return: HTML response
     """
-    level = get_object_or_404(Level, name=level_name)
+    level = get_object_or_404(Level, slug=level_slug)
     context = {
-        'title': level.name,
+        'title': level.slug,
         'level': level,
     }
 
     return render(request, 'pdfs/level-detail.html', context)
 
 
-def section_detail(request, section_name):
+def section_detail(request, section_slug):
     """
     Display section detail
     This function will raise Http404 if no section found
-    within the given section_name value
+    within the given section_slug value
 
-    :param section_name: Section name
+    :param section_slug: Section slug
     :return: HTML response
     """
-    section = get_object_or_404(Section, name=section_name)
+    section = get_object_or_404(Section, slug=section_slug)
     context = {
-        'title': section.name,
+        'title': section.slug,
         'section': section,
     }
 
     return render(request, 'pdfs/section-detail.html', context)
 
 
-def subject_detail(request, subject_name):
+def subject_detail(request, subject_slug):
     """
     Display subject detail
     This function will raise Http404 if no subject found
-    within the given subject_name value
+    within the given subject_slug value
 
-    :param subject_name: Subject name
+    :param subject_slug: Subject slug
     :return: HTML response
     """
-    subject = get_object_or_404(Subject, name=subject_name)
+    subject = get_object_or_404(Subject, slug=subject_slug)
     context = {
-        'title': subject.name,
+        'title': subject.slug,
         'subject': subject,
     }
 
     return render(request, 'pdfs/subject-detail.html', context)
 
 
-def category_detail(request, category_name):
+def category_detail(request, category_slug):
     """
     Display category detail
     This function will raise Http404 if no category found
-    within the given category_name value
+    within the given category_slug value
 
-    :param category_name: Category name
+    :param category_slug: Category slug
     :return: HTML response
     """
-    category = get_object_or_404(Category, name=category_name)
+    category = get_object_or_404(Category, slug=category_slug)
     context = {
-        'title': category.name,
+        'title': category.slug,
         'category': category,
     }
 
     return render(request, 'pdfs/category-detail.html', context)
 
 
-
-def level_section_detail(request, level_name, section_name):
+def level_section_detail(request, level_slug, section_slug):
     """
     Display level_section detail
     This function will raise Http404 if no level, section found
-    within the given level_name, section_name values
+    within the given level_slug, section_slug values
 
-    :param level_name: Level name
-    :param: section_name: Section name
+    :param level_slug: Level slug
+    :param: section_slug: Section slug
     :return: HTML response
     """
-    level = get_object_or_404(Level, name=level_name)
-    section = get_object_or_404(Section, name=section_name)
+    level = get_object_or_404(Level, slug=level_slug)
+    section = get_object_or_404(Section, slug=section_slug)
 
     context = {
         'title': f'{level.name}-{section.name}',
@@ -162,20 +159,20 @@ def level_section_detail(request, level_name, section_name):
     return render(request, 'pdfs/level-section-detail.html', context)
 
 
-def level_section_subject_detail(request, level_name, section_name, subject_name):
+def level_section_subject_detail(request, level_slug, section_slug, subject_slug):
     """
     Display level_section_subject detail
     This function will raise Http404 if no level, section, subject found
-    within the given level_name, section_name, subject_name values
+    within the given level_slug, section_slug, subject_slug values
 
-    :param level_name: Level name
-    :param: section_name: Section name
-    :param: subject_name: Subject name
+    :param level_slug: Level slug
+    :param: section_slug: Section slug
+    :param: subject_slug: Subject slug
     :return: HTML response
     """
-    level = get_object_or_404(Level, name=level_name)
-    section = get_object_or_404(Section, name=section_name)
-    subject = get_object_or_404(Subject, name=subject_name)
+    level = get_object_or_404(Level, slug=level_slug)
+    section = get_object_or_404(Section, slug=section_slug)
+    subject = get_object_or_404(Subject, slug=subject_slug)
 
     context = {
         'title': f'{level.name}-{section.name}-{subject.name}',
@@ -187,23 +184,22 @@ def level_section_subject_detail(request, level_name, section_name, subject_name
     return render(request, 'pdfs/level-section-subject-detail.html', context)
 
 
-
-def level_section_subject_category_detail(request, level_name, section_name, subject_name, category_name):
+def level_section_subject_category_detail(request, level_slug, section_slug, subject_slug, category_slug):
     """
     Display level_section_subject_category detail
     This function will raise Http404 if no level, section, subject, category found
-    within the given level_name, section_name, subject_name, category_name values
+    within the given level_slug, section_slug, subject_slug, category_slug values
 
-    :param level_name: Level name
-    :param: section_name: Section name
-    :param: subject_name: Subject name
-    :param: category_name: Category name
+    :param level_slug: Level slug
+    :param: section_slug: Section slug
+    :param: subject_slug: Subject slug
+    :param: category_slug: Category slug
     :return: HTML response
     """
-    level = get_object_or_404(Level, name=level_name)
-    section = get_object_or_404(Section, name=section_name)
-    subject = get_object_or_404(Subject, name=subject_name)
-    category = get_object_or_404(Category, name=category_name)
+    level = get_object_or_404(Level, slug=level_slug)
+    section = get_object_or_404(Section, slug=section_slug)
+    subject = get_object_or_404(Subject, slug=subject_slug)
+    category = get_object_or_404(Category, slug=category_slug)
 
     context = {
         'title': f'{level.name}-{section.name}-{subject.name}-{category.name}',
@@ -214,5 +210,4 @@ def level_section_subject_category_detail(request, level_name, section_name, sub
     }
 
     return render(request, 'pdfs/level-section-subject-category-detail.html', context)
-
 
