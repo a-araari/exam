@@ -8,8 +8,15 @@ from pdfs.models import (
 
 
 def index(request):
+    high_school_stage_levels = Level.objects.get_high_school_stage_levels()
+    middle_school_stage_levels = Level.objects.get_middle_school_stage_levels()
+    elementary_school_stage_levels = Level.objects.get_elementary_school_stage_levels()
+    
     context = {
         'title': _('Home'),
+        'high_school_stage_levels': high_school_stage_levels,
+        'middle_school_stage_levels': middle_school_stage_levels,
+        'elementary_school_stage_levels': elementary_school_stage_levels,
     }
 
     return render(request, 'home/index.html', context)
