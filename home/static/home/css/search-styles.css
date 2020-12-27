@@ -1,0 +1,40 @@
+#side-filter {
+
+}
+
+#side-filter .filter-title {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 100%;
+}
+
+#side-filter .filter-subtitle {
+    font-size: 16px;
+    line-height: 100%;
+}
+
+#side-filter .filter-items p {
+    font-size: 14px;
+    line-height: 100%;
+}
+
+#side-filter .filter-items p a {
+    color: #5C5C5C;
+}
+
+.search-item {
+    border-radius: 15px;
+}
+.search-item img {
+    border-radius: 15px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.search-item .badge {
+    right: 0;
+    border-bottom-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+.search-item a {
+    color: var(--white);
+}

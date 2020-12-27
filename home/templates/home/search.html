@@ -5,6 +5,11 @@
 {% load i18n %}
 
 
+{% block extra_head %}
+    <link rel="stylesheet" type="text/css" href="{% static "home/css/search-styles.css" %}">    
+{% endblock extra_head %}
+
+
 {% block content %}
 <div class="container-fluid bg-purple-linear">
     <div class="row">
@@ -25,16 +30,132 @@
 </div>
 
 <div class="container">
-    <div class="row">
-        <div class="col-12">
-            <form action="{% url 'home:search' %}" method="GET">
+    <form action="{% url 'home:search' %}" method="GET">
+        <div class="row">
+            <!-- Search bar -->
+            <div class="col-12 mb-5">
                 <div class="search-bar mt-4 mt-lg-5">
-                    <input class="search-input" type="text" name="q" placeholder="{% translate 'Rechercher' %}..">
+                    <input class="search-input" type="text" name="q" value="{{ query|default:'' }}" placeholder="{% translate 'Rechercher des examens, par exemple devoirs math' %}..">
                     <button type="submit" class="search-icon"><i class="fas fa-search"></i></button>
                     <hr class="mt-0 bg-white w-90">
                 </div>
-            </form>
+            </div>
+            
+            <!-- Result stats -->
+            <div class="col-6">
+                {% trans "Affichage des résultats 1 à 8 sur 30" %}
+            </div>
+            
+            <!-- list or grid -->
+            <div class="col-2 d-flex justify-content-center align-items-center">
+                <img class="mr-3" src="{% static "images/icons/grid-interface.png" %}" width="23px" height="23px">
+                <img class="disabled" src="{% static "images/icons/bullet-list.png" %}" width="23px" height="23px">
+            </div>
+
+            <!-- Filter -->
+            <div class="col-2 d-flex justify-content-center">
+                <div class="dropdown">
+                    <button class="btn bg-white border-1 border-dark dropdown-toggle px-4 py-2" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {% trans "Filter" %}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <button class="dropdown-item" type="button">----------</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sort by -->
+            <div class="col-2 d-flex justify-content-center">
+                <div class="dropdown">
+                    <button class="btn bg-white border-1 border-dark dropdown-toggle px-4 py-2" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {% trans "Trier par" %}
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        <button class="dropdown-item" type="button">----------</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Results -->
+<div class="container mt-5">
+    <div class="row">
+        <!-- Search result -->
+        <div class="col-10 d-flex justify-content-left">
+            <div class="row">
+                {% if pdfs %}
+                    {% for pdf in pdfs %}
+                        <div class="col-4 mb-3">
+                            <div class="card mx-3 search-item" style="width: 18rem;">
+                                <a href="{% url 'pdfs:devoir-detail' pdf_slug=pdf.slug %}">
+                                    <img src="https://static.bhphoto.com/images/images500x500/1441903824_45483.jpg" class="card-img-top" alt="{{ pdf.title }}">
+                                </a>
+                                <span class="badge bg-purple-5-linear text-white px-4 py-2 position-absolute">PDF</span>
+                                <div class="card-body bg-purple-5-linear text-white ">
+                                    <p class="card-text">
+                                        <a href="{% url 'pdfs:devoir-detail' pdf_slug=pdf.slug %}">
+                                            {{ pdf.title }}
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <h1>No pdfs</h1>
+                {% endif %}
+            </div>
+        </div>
+        
+        <!-- Side filter -->
+        <div class="col-2" id="side-filter">
+            <p class="filter-title">{% trans "Tous les niveaux" %}</p>
+
+            {% if high_school_stage_levels %}
+                
+                <p class="filter-subtitle">{% trans "Secondaire" %}</p>
+                <div class="filter-items">
+                    {% for level in high_school_stage_levels %}
+                        <p class="pl-3">
+                            <a href="{% url "pdfs:level-detail" level_name=level.name %}">{% trans level.name %} ({{ level.get_pdfs_count }} {% trans "devoirs" %})</a>
+                        </p>
+                    {% endfor %}
+                </div>
+
+            {% endif %}
+
+            {% if middle_school_stage_levels %}
+                
+                <p class="filter-subtitle">{% trans "Collège" %}</p>
+                <div class="filter-items">
+                    {% for level in middle_school_stage_levels %}
+                        <p class="pl-3">
+                            <a href="{% url "pdfs:level-detail" level_name=level.name %}">{% trans level.name %} ({{ level.get_pdfs_count }} {% trans "devoirs" %})</a>
+                        </p>
+                    {% endfor %}
+                </div>
+
+            {% endif %}
+
+            {% if elementary_school_stage_levels %}
+                
+                <p class="filter-subtitle">{% trans "École" %}</p>
+                <div class="filter-items">
+                    {% for level in elementary_school_stage_levels %}
+                        <p class="pl-3">
+                            <a href="{% url "pdfs:level-detail" level_name=level.name %}">{% trans level.name %} ({{ level.get_pdfs_count }} {% trans "devoirs" %})</a>
+                        </p>
+                    {% endfor %}
+                </div>
+
+            {% endif %}
         </div>
     </div>
 </div>
+
 {% endblock content %}
