@@ -32,6 +32,8 @@ def get_level(url):
 
         for level in levels:
             if level in url:
+                if level == 'bac':
+                    return '4ème'
                 return level
 
     except Exception as e:

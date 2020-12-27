@@ -81,7 +81,7 @@ def get_level(url):
             ['1ère', '1-ère'],
             ['2ème', '2-ème'],
             ['3ème', '3-ème'],
-            ['bac', '4ème', '4-ème']
+            ['4ème', 'bac', '4-ème']
         ]
         url = url[len('https://www.devoir.tn/'):]
 
