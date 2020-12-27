@@ -5,13 +5,13 @@ from django.utils import timezone as tz
 class LevelManager(models.Manager):
 
     def get_high_school_stage_levels(self):
-        return self.filter(stage=Level.HIGH_SCHOOL_STAGE).order_by('-name')
+        return self.filter(stage=Level.HIGH_SCHOOL_STAGE).order_by('name')
 
     def get_middle_school_stage_levels(self):
-        return self.filter(stage=Level.MIDDLE_SCHOOL_STAGE).order_by('-name')
+        return self.filter(stage=Level.MIDDLE_SCHOOL_STAGE).order_by('name')
 
     def get_elementary_school_stage_levels(self):
-        return self.filter(stage=Level.ELEMENTARY_SCHOOL_STAGE).order_by('-name')
+        return self.filter(stage=Level.ELEMENTARY_SCHOOL_STAGE).order_by('name')
 
 
 class Subject(models.Model):
