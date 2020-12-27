@@ -53,7 +53,7 @@
 
                 <div class="dropdown-menu dropdown-menu-right pre-scrollable">
                     {% for level in elementary_school_stage_levels %}
-                        <a class="dropdown-item" href="{% url "pdfs:level-detail" level_slug=level.slug %}">{% trans level.slug %}</a>
+                        <a class="dropdown-item" href="{% url "pdfs:level-detail" level_slug=level.slug %}">{% trans level.name %}</a>
                     {% endfor %}
                 </div>
             </div>
@@ -70,7 +70,7 @@
 
                 <div class="dropdown-menu dropdown-menu-right pre-scrollable">
                     {% for level in middle_school_stage_levels %}
-                        <a class="dropdown-item" href="{% url "pdfs:level-detail" level_slug=level.slug %}">{% trans level.slug %} {% trans "année" %}</a>
+                        <a class="dropdown-item" href="{% url "pdfs:level-detail" level_slug=level.slug %}">{% trans level.name %} {% trans "année" %}</a>
                     {% endfor %}
                 </div>
             </div>
