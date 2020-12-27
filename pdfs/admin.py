@@ -22,7 +22,7 @@ class SubjectAdmin(admin.ModelAdmin):
     list_display = ('name', 'get_pdfs_count')
 
     def get_pdfs_count(self, instance, *args, **kwargs):
-        return PDF.objects.filter(subject=instance).count()
+        return instance.get_pdfs_count()
 
     get_pdfs_count.short_description = 'related pdfs count'
 
@@ -32,7 +32,7 @@ class SectionAdmin(admin.ModelAdmin):
     list_display = ('name', 'get_pdfs_count')
 
     def get_pdfs_count(self, instance, *args, **kwargs):
-        return PDF.objects.filter(section=instance).count()
+        return instance.get_pdfs_count()
 
     get_pdfs_count.short_description = 'related pdfs count'
 
@@ -42,7 +42,7 @@ class LevelAdmin(admin.ModelAdmin):
     list_display = ('name', 'get_pdfs_count')
 
     def get_pdfs_count(self, instance, *args, **kwargs):
-        return PDF.objects.filter(level=instance).count()
+        return instance.get_pdfs_count()
 
     get_pdfs_count.short_description = 'related pdfs count'
 
@@ -52,7 +52,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'get_pdfs_count')
 
     def get_pdfs_count(self, instance, *args, **kwargs):
-        return PDF.objects.filter(category=instance).count()
+        return instance.get_pdfs_count()
         
     get_pdfs_count.short_description = 'related pdfs count'
 

@@ -2,6 +2,18 @@ from django.db import models
 from django.utils import timezone as tz
 
 
+class LevelManager(models.Manager):
+
+    def get_high_school_stage_levels(self):
+        return self.filter(stage=Level.HIGH_SCHOOL_STAGE).order_by('-name')
+
+    def get_middle_school_stage_levels(self):
+        return self.filter(stage=Level.MIDDLE_SCHOOL_STAGE).order_by('-name')
+
+    def get_elementary_school_stage_levels(self):
+        return self.filter(stage=Level.ELEMENTARY_SCHOOL_STAGE).order_by('-name')
+
+
 class Subject(models.Model):
     name = models.CharField(
         'Subject name',
@@ -10,6 +22,9 @@ class Subject(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_pdfs_count(self):
+        return PDF.objects.filter(subject=self).count()
 
 
 class Section(models.Model):
@@ -21,15 +36,39 @@ class Section(models.Model):
     def __str__(self):
         return self.name
 
+    def get_pdfs_count(self):
+        return PDF.objects.filter(section=self).count()
+
 
 class Level(models.Model):
+    ELEMENTARY_SCHOOL_STAGE = 'elementary'
+    MIDDLE_SCHOOL_STAGE = 'middle'
+    HIGH_SCHOOL_STAGE = 'high'
+    PDF_SCHOOL_STAGES = [
+        (ELEMENTARY_SCHOOL_STAGE, 'elementary'),
+        (MIDDLE_SCHOOL_STAGE, 'middle'),
+        (HIGH_SCHOOL_STAGE, 'high'),
+    ]
+
     name = models.CharField(
         'Level name',
         max_length=100
     )
 
+    stage = models.CharField(
+        'Schooling stage',
+        max_length=20,
+        choices=PDF_SCHOOL_STAGES,
+        default=HIGH_SCHOOL_STAGE,
+    )
+
+    objects = LevelManager()
+
     def __str__(self):
         return self.name
+
+    def get_pdfs_count(self):
+        return PDF.objects.filter(level=self).count()
 
 
 class Category(models.Model):
@@ -40,6 +79,9 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_pdfs_count(self):
+        return PDF.objects.filter(category=self).count()
 
 
 def pdf_upload_path(instance, filename):
