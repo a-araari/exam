@@ -111,7 +111,7 @@
                     <a class="dropdown-item pl-5" href="{% url "pdfs:level-section-detail" level_slug='3eme' section_slug='lettres' %}">
                         <i class="fa fa-angle-right pr-2"></i>{% translate '3ème lettre' %}
                     </a>
-                    {% with "sciences-de-l'informatique" as info %}
+                    {% with "sciences-de-linformatique" as info %}
                     <a class="dropdown-item pl-5" href='{% url "pdfs:level-section-detail" level_slug="3eme" section_slug=info %}'>
                         <i class="fa fa-angle-right pr-2"></i>{% translate '3ème info' %}
                     </a>
@@ -147,7 +147,7 @@
                     <a class="dropdown-item" href="{% url "pdfs:level-section-detail" level_slug='4eme' section_slug='lettres' %}">
                         {% translate 'Bac lettre' %}
                     </a>
-                    {% with "sciences-de-l'informatique" as info %}
+                    {% with "sciences-de-linformatique" as info %}
                     <a class="dropdown-item" href='{% url "pdfs:level-section-detail" level_slug="4eme" section_slug=info %}'>
                         {% translate 'Bac info' %}
                     </a>
