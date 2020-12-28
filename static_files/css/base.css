@@ -95,7 +95,7 @@ text-align: left;
 /* ###################### START SEARCH-BAR ###################### */
 .search-bar {
     height: 70px;
-    background: linear-gradient(90deg, #5227CC 0%, #7249E3 100%);
+    background: linear-gradient(22deg, #5227CC 0%, #17a2b8 100%);
     border-radius: 10px;
     border: 0;
     padding: 10px;
@@ -238,6 +238,10 @@ footer ul li {
 
 .bg-purple-linear {
     background: linear-gradient(253.58deg, #A4508B 1.55%, #5F0A87 95.8%);
+}
+
+.bg-purple-info-linear {
+    background: linear-gradient(253.58deg, #17a2b8 1.55%, #5F0A87 95.8%);
 }
 
 
