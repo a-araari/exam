@@ -33,7 +33,7 @@
 {% block body %}
     <!-- Navbar -->
     {% block navbar %}
-        <nav class="navbar navbar-expand-md fixed-top navbar-light bg-navbar shadow py-0">
+        <nav class="navbar navbar-expand-md {% block navbar-fixed %}fixed-top shadow{% endblock navbar-fixed %} navbar-light bg-navbar py-0">
             <div class="container py-2 py-md-0">
                 <a class="navbar-brand" href="/">
                     <img src="{% static "images/dark-512px-2.png" %}" width="128px">
@@ -83,14 +83,16 @@
 
     <!-- Messages -->
     {% block messages %}
-        <div id="messages" class="mt-5">
+        <div id="messages">
 
         </div>
     {% endblock messages %}
 
 
     <!-- Spacing -->
-    <div style="margin-top: 58px;"></div>
+    {% block spacing %}
+        <div style="margin-top: 58px;"></div>
+    {% endblock spacing %}
 
 
     <!-- Main Content -->
