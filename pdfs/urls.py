@@ -5,6 +5,8 @@ from pdfs.views import (
     devoir_pdf_detail,
     devoir_html_detail,
 
+    devoir_download,
+
     level_detail,
     section_detail,
     subject_detail,
@@ -46,6 +48,10 @@ urlpatterns = [
 
     # ---------------------------------------------------------------------
 
+    path('download/<str:pdf_slug>/', devoir_download, name='devoir-download'),
+
+    # ---------------------------------------------------------------------
+
     path('level/<str:level_slug>/', level_detail, name='level-detail'),
     path('section/<str:section_slug>/', section_detail, name='section-detail'),
     path('subject/<str:subject_slug>/', subject_detail, name='subject-detail'),
@@ -68,4 +74,5 @@ urlpatterns = [
         level_section_subject_category_detail,
         name='level-section-subject-category-detail'
     ),
+ 
 ]

@@ -2,6 +2,7 @@ from django.shortcuts import (
     render,
     get_object_or_404
 )
+from django.http import Http404, HttpResponse
 from pdfs.models import (
     Subject,
     Section,
@@ -66,6 +67,17 @@ def devoir_html_detail(request, pdf_slug):
     }
 
     return render(request, 'pdfs/devoir-html-detail.html', context)
+
+
+def devoir_download(request, pdf_slug):
+    devoir = get_object_or_404(PDF, slug=pdf_slug)
+
+    if devoir.pdf_file:
+        response = HttpResponse(devoir.pdf_file.open('rb').read(), content_type="application/pdf")
+        response['Content-Disposition'] = 'inline; filename=' + f'{devoir.title}.pdf'
+        return response
+    else:
+        raise Http404()
 
 
 def level_detail(request, level_slug):
@@ -213,4 +225,3 @@ def level_section_subject_category_detail(request, level_slug, section_slug, sub
     }
 
     return render(request, 'pdfs/level-section-subject-category-detail.html', context)
-

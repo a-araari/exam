@@ -63,12 +63,12 @@
                 <h4 class="text-white" style="font-weight: 500">{{ devoir.title }}</h4>
             </div>
             <div class="col-3 d-flex justify-content-center align-items-center">
-                <button class="btn bg-white py-2 px-4" style="border-radius: 100px;">
+                <button class="btn bg-white py-2 px-4" style="border-radius: 100px;" onclick="location.href='{% url 'pdfs:devoir-download' pdf_slug=devoir.slug %}'">
                     <i class="fa fa-file-download pr-2" style="color: #17a2b8;"></i>
                     {% trans "Télécharger" %}
                 </button>
                 <small class="px-2 text-dark-4">{% trans "ou" %}</small>
-                <a href="#">Imprimer</a>
+                <a href="#" onclick="printJS({printable: '{% url 'pdfs:devoir-download' pdf_slug=devoir.slug %}', type: 'pdf'})">Imprimer</a>
             </div>
         </div>
     </div>
@@ -111,5 +111,5 @@
 
 <!-- Extra body tag -->
 {% block extra_body %}
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/print-js/1.5.0/print.js" integrity="sha512-j4gEMMRxGKV6WrHIPj0NmIVBRS0UTYU8tiV/q5X1Hd5iFngs1grFuu15np/tFP70tynShfcBoPHb0wR8Ag8S1Q==" crossorigin="anonymous"></script>
 {% endblock extra_body %}
