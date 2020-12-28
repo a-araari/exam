@@ -179,12 +179,10 @@ class PDFManager(models.Manager):
         search_vector = SearchVector('title')
         search_query = SearchQuery(query)
         pdfs = PDF.objects.annotate(
-            search=search_vector,
             similarity=TrigramSimilarity('title', query),
             rank=SearchRank(search_vector, search_query)
         ).filter(
             similarity__gt=0.1,
-            search=search_query,
         ).order_by('-rank')
 
         return pdfs
