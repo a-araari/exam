@@ -1,3 +1,4 @@
+import urllib
 from django.shortcuts import render
 from django.utils.translation import gettext as _
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -25,8 +26,9 @@ def index(request):
 def search(request):
     pdfs = None
     q = request.GET.get('q')
+    encoded_query = urllib.parse.urlencode({'q': q})
     page = request.GET.get('page', 1)
-    max_pdfs_per_page = request.GET.get('docs_per_page', 8)
+    max_pdfs_per_page = request.GET.get('docs_per_page', 9)
 
     title = _('Searching for exams, series and courses')
     high_school_stage_levels = Level.objects.get_high_school_stage_levels()
@@ -52,6 +54,7 @@ def search(request):
         'title': title,
         'pdfs': pdfs,
         'query': q,
+        'encoded_query': encoded_query,
     }
 
     return render(request, 'home/search.html', context)
