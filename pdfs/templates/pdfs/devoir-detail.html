@@ -68,7 +68,20 @@
                     {% trans "Télécharger" %}
                 </button>
                 <small class="px-2 text-dark-4">{% trans "ou" %}</small>
-                <a href="#" onclick="printJS({printable: '{% url 'pdfs:devoir-download' pdf_slug=devoir.slug %}', type: 'pdf'})">Imprimer</a>
+                <a href="#" onclick="printExam(this, '{% url "pdfs:devoir-download" pdf_slug=devoir.slug %}')">
+                    <span id="print-text">Imprimer</span>
+                    <span id="print-spinners" style="display: none;">
+                        <div class="spinner-grow spinner-grow-sm pl-2" role="status" >
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow spinner-grow-sm pl-2" role="status" >
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow spinner-grow-sm pl-2" role="status" >
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </span>
+                </a>
             </div>
         </div>
     </div>
@@ -112,4 +125,5 @@
 <!-- Extra body tag -->
 {% block extra_body %}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/print-js/1.5.0/print.js" integrity="sha512-j4gEMMRxGKV6WrHIPj0NmIVBRS0UTYU8tiV/q5X1Hd5iFngs1grFuu15np/tFP70tynShfcBoPHb0wR8Ag8S1Q==" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{% static "pdfs/js/script.js" %}"></script>
 {% endblock extra_body %}

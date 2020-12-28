@@ -1,8 +1,14 @@
+import base64
+
 from django.shortcuts import (
     render,
     get_object_or_404
 )
-from django.http import Http404, HttpResponse
+from django.http import (
+    Http404,
+    HttpResponse,
+    JsonResponse
+)
 from pdfs.models import (
     Subject,
     Section,
@@ -73,9 +79,22 @@ def devoir_download(request, pdf_slug):
     devoir = get_object_or_404(PDF, slug=pdf_slug)
 
     if devoir.pdf_file:
-        response = HttpResponse(devoir.pdf_file.open('rb').read(), content_type="application/pdf")
-        response['Content-Disposition'] = 'inline; filename=' + f'{devoir.title}.pdf'
-        return response
+        as_base64 = request.GET.get('as_base64', False)
+
+        if as_base64:
+            data = devoir.pdf_file.read()
+            base64_data = base64.b64encode(data).decode("utf-8")
+            
+            data = {
+                'base64_data': base64_data
+            }
+            return JsonResponse(data)
+            
+        else:
+            response = HttpResponse(devoir.pdf_file.open('rb').read(), content_type="application/pdf")
+            response['Content-Disposition'] = 'inline; filename=' + f'{devoir.title}.pdf'
+            return response
+
     else:
         raise Http404()
 
