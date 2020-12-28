@@ -6,3 +6,28 @@
     text-decoration: none;
     border-bottom: 1px solid white;
 }
+.selected-category {
+    width: 20px;
+    height: 2px;
+    border-bottom: 3px solid #A4508B;
+}
+.category-tab-link {
+    text-decoration: none;
+}
+.category-tab-link:hover {
+    text-decoration: none;
+    border-bottom: 1px solid;
+    color: #196dc1;
+    font-weight: 600;
+}
+.table-head{
+    border-radius: 10px;
+    box-shadow: 0 0 30px  -20px;
+}
+.table-head div p {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 25px;
+    letter-spacing: 0em;
+}

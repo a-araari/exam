@@ -45,18 +45,24 @@
             <div class="col-3 d-flex justify-content-center align-items-center">
                 <i class="fa fa-long-arrow-left text-white pr-3" onclick="location.href='{{ request.META.HTTP_REFERER }}'" style="cursor: pointer;"></i>
                 <span class="text-white">
-                    {% if devoir.level %}
-                        <a href="{% url 'pdfs:level-detail' level_slug=devoir.level.slug %}">{{ devoir.level }}</a><span class="text-warning"> /</span>
-                    {% endif %}
-                    {% if devoir.section %}
-                        <a href="{% url 'pdfs:section-detail' section_slug=devoir.section.slug %}">{{ devoir.section }}</a><span class="text-warning"> /</span>
-                    {% endif %}
-                    {% if devoir.subject %}
-                        <a href="{% url 'pdfs:subject-detail' subject_slug=devoir.subject.slug %}">{{ devoir.subject }}</a><span class="text-warning"> /</span>
-                    {% endif %}
-                    {% if devoir.category %}
-                        <a href="{% url 'pdfs:category-detail' category_slug=devoir.category.slug %}">{{ devoir.category }}</a><span class="text-warning"> /</span>
-                    {% endif %}
+                    {% with level=devoir.get_level section=devoir.get_section subject=devoir.get_subject category=devoir.get_category %}
+                        
+                        {% if level %}
+                            <a href="{% url 'pdfs:level-detail' level_slug=level.slug %}">{{ level }}</a><span class="text-warning"> /</span>
+                            {% if section %}
+                                {% if section.name != 'tout' %}
+                                    <a href="{% url 'pdfs:level-section-detail' level_slug=level.slug section_slug=section.slug %}">{{ section.name }}</a><span class="text-warning"> /</span>
+                                {% endif %}
+                                {% if subject %}
+                                    <a href="{% url 'pdfs:level-section-subject-detail' level_slug=level.slug section_slug=section.slug subject_slug=subject.slug %}">{{ subject }}</a><span class="text-warning"> /</span>
+                                    {% if category %}
+                                        <a href="{% url 'pdfs:level-section-subject-category-detail' level_slug=level.slug section_slug=section.slug subject_slug=subject.slug category_slug=category.slug %}">{{ category }}</a><span class="text-warning"> /</span>
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+
+                    {% endwith %}
                 </span>
             </div>
             <div class="col-6 d-flex justify-content-center align-items-center">

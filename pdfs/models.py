@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 from django.utils import timezone as tz
 from bs4 import BeautifulSoup
@@ -43,6 +44,11 @@ class Subject(models.Model):
 
 
 class Section(models.Model):
+    """
+    Section must have an instance with 'tout' as name and slug so that urlpatterns
+    works as expected
+    It will be created automatically when calling PDF.get_section()
+    """
     slug = models.SlugField(
         unique=True,
         blank=True,
@@ -66,6 +72,9 @@ class Section(models.Model):
 
     def get_pdfs_count(self):
         return PDF.objects.filter(section=self).count()
+
+    def is_default(self):
+        return self.name == 'tout'
 
 
 class Level(models.Model):
@@ -136,6 +145,9 @@ class Category(models.Model):
 
     def get_pdfs_count(self):
         return PDF.objects.filter(category=self).count()
+
+    def get_all_exluding_self(self):
+        return Category.objects.exclude(name=self.name)
 
 
 def pdf_upload_path(instance, filename):
@@ -278,6 +290,24 @@ class PDF(models.Model):
     
     def __str__(self):
         return f'{self.name}: By {self.description}'
+
+    def get_absolute_url(self):
+        return reverse('pdfs:devoir-detail', kwargs={'pdf_slug': self.slug})
+
+    def get_level(self):
+        return self.level
+
+    def get_section(self):
+        if self.section:
+            return self.section
+        else:
+            return Section.objects.get_or_create(name='tout')[0]
+
+    def get_subject(self):
+        return self.subject
+
+    def get_category(self):
+        return self.category
 
     def get_html_content_body(self):
         if self.html_file:

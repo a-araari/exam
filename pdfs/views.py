@@ -1,5 +1,10 @@
 import base64
 
+from django.core.paginator import (
+    PageNotAnInteger,
+    Paginator,
+    EmptyPage,
+)
 from django.shortcuts import (
     render,
     get_object_or_404
@@ -235,12 +240,35 @@ def level_section_subject_category_detail(request, level_slug, section_slug, sub
     subject = get_object_or_404(Subject, slug=subject_slug)
     category = get_object_or_404(Category, slug=category_slug)
 
+    page = request.GET.get('page', 1)
+    max_pdfs_per_page = request.GET.get('max_pdfs_per_page', 9)
+
+    pdfs = PDF.objects.filter(
+        level=level,
+        subject=subject,
+        category=category
+    )
+    if not section.is_default():
+        pdfs.filter(section=section)
+
+    pdfs_count = pdfs.count()
+
+    paginator = Paginator(pdfs, max_pdfs_per_page)
+    try:
+        pdfs = paginator.page(page)
+    except PageNotAnInteger:
+        pdfs = paginator.page(1)
+    except EmptyPage:
+        pdfs = paginator.page(paginator.num_pages)
+
     context = {
         'title': f'{level.name}-{section.name}-{subject.name}-{category.name}',
+        'pdfs': pdfs,
         'level': level,
         'section': section,
         'subject': subject,
         'category': category,
+        'pdfs_count': pdfs_count,
     }
 
     return render(request, 'pdfs/level-section-subject-category-detail.html', context)
