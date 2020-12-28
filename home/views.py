@@ -35,7 +35,7 @@ def search(request):
 
     if q:
         title = _('Searching for: ') + q
-        pdfs = PDF.objects.filter(name__contains=q)
+        pdfs = PDF.objects.filter(title__contains=q)
     
         paginator = Paginator(pdfs, max_pdfs_per_page)
         try:
