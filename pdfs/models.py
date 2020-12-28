@@ -1,3 +1,9 @@
+from django.contrib.postgres.search import (
+    TrigramSimilarity,
+    SearchVector,
+    SearchQuery,
+    SearchRank,
+)
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
@@ -164,6 +170,26 @@ def html_upload_path(instance, filename):
         return 'docs/{}.html'.format(filename)
 
 
+class PDFManager(models.Manager):
+    """Manager for PDF Model"""
+    def search(self, query):
+        """
+        Search for PDFs with ranking and Trigram similarity
+        """
+        search_vector = SearchVector('title')
+        search_query = SearchQuery(query)
+        pdfs = PDF.objects.annotate(
+            search=search_vector,
+            similarity=TrigramSimilarity('title', query),
+            rank=SearchRank(search_vector, search_query)
+        ).filter(
+            similarity__gt=0.1,
+            search=search_query,
+        ).order_by('-rank')
+
+        return pdfs
+
+
 class PDF(models.Model):
     """
     A model which stores data about a PDF.
@@ -286,10 +312,11 @@ class PDF(models.Model):
         blank=True
     )
 
+    objects = PDFManager()
     _cached_soup = None
     
     def __str__(self):
-        return f'{self.name}: By {self.description}'
+        return f'{self.title}'
 
     def get_absolute_url(self):
         return reverse('pdfs:devoir-detail', kwargs={'pdf_slug': self.slug})
@@ -323,7 +350,6 @@ class PDF(models.Model):
 
             return devoir_content
         return None
-
 
     def get_html_content_head(self):
         if self.html_file:
