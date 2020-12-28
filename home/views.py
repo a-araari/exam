@@ -1,4 +1,5 @@
 import urllib
+from django.db.models import Q
 from django.shortcuts import render
 from django.utils.translation import gettext as _
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -9,15 +10,11 @@ from pdfs.models import (
 
 
 def index(request):
-    high_school_stage_levels = Level.objects.get_high_school_stage_levels()
-    middle_school_stage_levels = Level.objects.get_middle_school_stage_levels()
-    elementary_school_stage_levels = Level.objects.get_elementary_school_stage_levels()
+    level_manager = Level.objects
     
     context = {
         'title': _('Home'),
-        'high_school_stage_levels': high_school_stage_levels,
-        'middle_school_stage_levels': middle_school_stage_levels,
-        'elementary_school_stage_levels': elementary_school_stage_levels,
+        'level_manager': level_manager,
     }
 
     return render(request, 'home/index.html', context)
@@ -31,13 +28,15 @@ def search(request):
     max_pdfs_per_page = request.GET.get('docs_per_page', 9)
 
     title = _('Searching for exams, series and courses')
-    high_school_stage_levels = Level.objects.get_high_school_stage_levels()
-    middle_school_stage_levels = Level.objects.get_middle_school_stage_levels()
-    elementary_school_stage_levels = Level.objects.get_elementary_school_stage_levels()
+    level_manager = Level.objects
 
     if q:
         title = _('Searching for: ') + q
-        pdfs = PDF.objects.filter(title__contains=q)
+
+        pdfs = PDF.objects.search(query=q)
+
+        for pdf in pdfs:
+            print(pdf.title)
     
         paginator = Paginator(pdfs, max_pdfs_per_page)
         try:
@@ -48,9 +47,7 @@ def search(request):
             pdfs = paginator.page(paginator.num_pages)
 
     context = {
-        'high_school_stage_levels': high_school_stage_levels,
-        'middle_school_stage_levels': middle_school_stage_levels,
-        'elementary_school_stage_levels': elementary_school_stage_levels,
+        'level_manager': level_manager,
         'title': title,
         'pdfs': pdfs,
         'query': q,

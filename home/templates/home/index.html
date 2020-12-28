@@ -43,7 +43,7 @@
     <!-- Section-2-Dropdowns -->
     <div class="row mt-5 pt-1 pt-lg-5 d-flex justify-content-center">
 
-        {% if elementary_school_stage_levels %}
+        {% if level_manager.get_elementary_school_stage_levels %}
         <div class="col-6 mx-0 mx-md-4 mb-4 mb-md-0 col-md-2 px-0 text-center">
             <div class="btn-group">
                 <button type="button" class="btn bg-purple-3 text-white" style="width: 100px; height: 45px;">{% translate 'Primaire' %}</button>
@@ -52,7 +52,7 @@
                 </button>
 
                 <div class="dropdown-menu dropdown-menu-right pre-scrollable">
-                    {% for level in elementary_school_stage_levels %}
+                    {% for level in level_manager.get_elementary_school_stage_levels %}
                         <a class="dropdown-item" href="{% url "pdfs:level-detail" level_slug=level.slug %}">{% trans level.name %}</a>
                     {% endfor %}
                 </div>
@@ -60,7 +60,7 @@
         </div>
         {% endif %}
 
-        {% if middle_school_stage_levels %}
+        {% if level_manager.get_middle_school_stage_levels %}
         <div class="col-6 mx-0 mx-md-4 mb-4 mb-md-0 col-md-2 px-0 text-center">
             <div class="btn-group">
                 <button type="button" class="btn bg-purple-3 text-white" style="width: 100px; height: 45px;">{% translate 'Collège' %}</button>
@@ -69,7 +69,7 @@
                 </button>
 
                 <div class="dropdown-menu dropdown-menu-right pre-scrollable">
-                    {% for level in middle_school_stage_levels %}
+                    {% for level in level_manager.get_middle_school_stage_levels %}
                         <a class="dropdown-item" href="{% url "pdfs:level-detail" level_slug=level.slug %}">{% trans level.name %} {% trans "année" %}</a>
                     {% endfor %}
                 </div>
@@ -78,7 +78,7 @@
         {% endif %}
 
         <!-- This code is very hard-coded. Should be fixed very soon -->
-        {% if high_school_stage_levels %}
+        {% if level_manager.get_high_school_stage_levels %}
         <div class="col-6 mx-0 mx-md-4 mb-4 mb-md-0 col-md-2 px-0 text-center">
             <div class="btn-group">
                 <button type="button" class="btn bg-purple-3 text-white" style="width: 100px; height: 45px;">{% translate 'Lyceé' %}</button>

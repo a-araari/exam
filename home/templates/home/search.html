@@ -160,11 +160,11 @@
         <div class="col-2" id="side-filter">
             <p class="filter-title">{% trans "Tous les niveaux" %}</p>
 
-            {% if high_school_stage_levels %}
+            {% if level_manager.get_high_school_stage_levels %}
                 
                 <p class="filter-subtitle">{% trans "Secondaire" %}</p>
                 <div class="filter-items">
-                    {% for level in high_school_stage_levels %}
+                    {% for level in level_manager.get_high_school_stage_levels %}
                         <p class="pl-3">
                             <a href="{% url "pdfs:level-detail" level_slug=level.slug %}">{% trans level.name %} ({{ level.get_pdfs_count }} {% trans "devoirs" %})</a>
                         </p>
@@ -173,11 +173,11 @@
 
             {% endif %}
 
-            {% if middle_school_stage_levels %}
+            {% if level_manager.get_middle_school_stage_levels %}
                 
                 <p class="filter-subtitle">{% trans "Collège" %}</p>
                 <div class="filter-items">
-                    {% for level in middle_school_stage_levels %}
+                    {% for level in level_manager.get_middle_school_stage_levels %}
                         <p class="pl-3">
                             <a href="{% url "pdfs:level-detail" level_slug=level.slug %}">{% trans level.name %} ({{ level.get_pdfs_count }} {% trans "devoirs" %})</a>
                         </p>
@@ -186,11 +186,11 @@
 
             {% endif %}
 
-            {% if elementary_school_stage_levels %}
+            {% if level_manager.get_elementary_school_stage_levels %}
                 
                 <p class="filter-subtitle">{% trans "École" %}</p>
                 <div class="filter-items">
-                    {% for level in elementary_school_stage_levels %}
+                    {% for level in level_manager.get_elementary_school_stage_levels %}
                         <p class="pl-3">
                             <a href="{% url "pdfs:level-detail" level_slug=level.slug %}">{% trans level.name %} ({{ level.get_pdfs_count }} {% trans "devoirs" %})</a>
                         </p>
