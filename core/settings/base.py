@@ -26,6 +26,8 @@ INSTALLED_APPS = [
     'pdfs.apps.PdfsConfig',
     'home.apps.HomeConfig',
 
+    # 'django.contrib.postgres',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
