@@ -127,12 +127,12 @@
                                         </li>
                                     {% endif %}
                                     <li class="page-item"><a class="page-link bg-info text-white disabled">{{ pdfs.number }}</a></li>
-                                    {% if pdfs.number == 1 %}
-                                        <li class="page-item"><a class="page-link text-info" href="{{ request.path }}?{% if request.GET.q %}{{ encoded_query }}&{% endif %}page=3">3</a></li>
-                                    {% endif %}
                                     <!-- Suivant -->
                                     {% if pdfs.has_next %}
                                         <li class="page-item"><a class="page-link text-info" href="{{ request.path }}?{% if request.GET.q %}{{ encoded_query }}&{% endif %}page={{ pdfs.next_page_number }}">{{ pdfs.next_page_number }}</a></li>
+                                        {% if pdfs.number == 1 %}
+                                            <li class="page-item"><a class="page-link text-info" href="{{ request.path }}?{% if request.GET.q %}{{ encoded_query }}&{% endif %}page=3">3</a></li>
+                                        {% endif %}
                                         <li class="page-item">
                                             <a class="page-link text-center text-info" style="width: 100px" href="{{ request.path }}?{% if request.GET.q %}{{ encoded_query }}&{% endif %}page={{ pdfs.next_page_number }}">
                                                 {% trans 'Suivant' %}
