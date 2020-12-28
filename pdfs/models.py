@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from django.utils import timezone as tz
+from bs4 import BeautifulSoup
 
 
 class LevelManager(models.Manager):
@@ -272,9 +273,42 @@ class PDF(models.Model):
         null=True,
         blank=True
     )
+
+    _cached_soup = None
     
     def __str__(self):
         return f'{self.name}: By {self.description}'
+
+    def get_html_content_body(self):
+        if self.html_file:
+            soup = None
+            if self._cached_soup:
+                soup = self._cached_soup
+            else:
+                html_file = self.html_file.open('r')
+                soup = BeautifulSoup(html_file, 'lxml')
+                self._cached_soup = soup
+
+            devoir_content = soup.find("div", {"id":"page-container"})
+
+            return devoir_content
+        return None
+
+
+    def get_html_content_head(self):
+        if self.html_file:
+            soup = None
+            if self._cached_soup:
+                soup = self._cached_soup
+            else:
+                html_file = self.html_file.open('r')
+                soup = BeautifulSoup(html_file, 'lxml')
+                self._cached_soup = soup
+                
+            devoir_content = str(soup.head).replace('<head>', '').replace('</head>', '')
+
+            return devoir_content
+        return None
 
 
 class PDFError(models.Model):
