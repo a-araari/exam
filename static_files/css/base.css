@@ -75,7 +75,13 @@ text-align: left;
         display: block;
     }
 }
-
+/* Change the white to any color ;) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px #34e6d657 inset !important;
+}
 @media (min-width: 767.98px) {
     
     /* display 3 */
@@ -101,6 +107,8 @@ text-align: left;
     padding: 10px;
 }
 .search-input {
+    border-radius: 10px;
+    width: calc(100% - 50px);
     color: #FFF;
     border: 0;
     outline: 0;
@@ -113,8 +121,10 @@ text-align: left;
 .search-icon {
     background: #00000000;
     color: #FFFFFF;
+    width: 20px;
     height: 40px;
-    margin-left: 1.5rem;
+    margin-left: 1.0rem;
+    margin-right: 0.5rem;
     float: left;
     display: flex;
     justify-content: center;
