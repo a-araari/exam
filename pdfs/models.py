@@ -48,6 +48,9 @@ class Subject(models.Model):
     def get_pdfs_count(self):
         return PDF.objects.filter(subject=self).count()
 
+    def get_all_exluding_self(self):
+        return Subject.objects.exclude(name=self.name)
+
 
 class Section(models.Model):
     """
@@ -81,6 +84,9 @@ class Section(models.Model):
 
     def is_default(self):
         return self.name == 'tout'
+
+    def get_all_exluding_self(self):
+        return Section.objects.exclude(name=self.name)
 
 
 class Level(models.Model):
@@ -125,6 +131,9 @@ class Level(models.Model):
 
     def get_pdfs_count(self):
         return PDF.objects.filter(level=self).count()
+
+    def get_all_exluding_self(self):
+        return Level.objects.exclude(name=self.name)
 
 
 class Category(models.Model):

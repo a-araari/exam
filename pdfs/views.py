@@ -114,7 +114,10 @@ def level_detail(request, level_slug):
     :return: HTML response
     """
     level = get_object_or_404(Level, slug=level_slug)
+    subjects = Subject.objects.all()
+
     context = {
+        'subjects': subjects,
         'title': level.slug,
         'level': level,
     }
@@ -212,12 +215,36 @@ def level_section_subject_detail(request, level_slug, section_slug, subject_slug
     level = get_object_or_404(Level, slug=level_slug)
     section = get_object_or_404(Section, slug=section_slug)
     subject = get_object_or_404(Subject, slug=subject_slug)
+    categories = Category.objects.all()
+
+    page = request.GET.get('page', 1)
+    max_pdfs_per_page = request.GET.get('max_pdfs_per_page', 9)
+
+    pdfs = PDF.objects.filter(
+        level=level,
+        subject=subject,
+    )
+    if not section.is_default():
+        pdfs.filter(section=section)
+
+    pdfs_count = pdfs.count()
+
+    paginator = Paginator(pdfs, max_pdfs_per_page)
+    try:
+        pdfs = paginator.page(page)
+    except PageNotAnInteger:
+        pdfs = paginator.page(1)
+    except EmptyPage:
+        pdfs = paginator.page(paginator.num_pages)
 
     context = {
         'title': f'{level.name}-{section.name}-{subject.name}',
+        'pdfs': pdfs,
         'level': level,
         'section': section,
         'subject': subject,
+        'pdfs_count': pdfs_count,
+        'categories': categories,
     }
 
     return render(request, 'pdfs/level-section-subject-detail.html', context)
