@@ -151,12 +151,15 @@
                         </div>
                     {% endif %}
                 {% else %}
-                    {% if q %}
-                        <h1 class="text-dark-1">{% trans "Désolé, nous n'avons trouvé aucun fichier correspondant à votre recherche." %}</h1>
-                        <h2 class="text-dark-2">{% trans "Vous pouvez utiliser les listes déroulantes ci-dessus pour accéder facilement à votre examen" %}</h2>
-                    {% else %}
-                        <h1>{% trans "trouver des examens, des exercices et des cours de tous niveaux en utilisant la barre de recherche ci-dessus" %}</h1>
-                    {% endif %}
+                    <div class="col-12 text-center">
+                        {% if query %}
+                            <i class="fa fa-exclamation text-info mb-4" style="font-size: 128px"></i>
+                            <h3 class="text-dark-1 text-center">{% trans "Désolé, nous n'avons trouvé aucun fichier correspondant à votre recherche." %}</h3>
+                            <p class="text-dark-2 text-center">{% trans "Vous pouvez utiliser les listes déroulantes ci-dessus pour accéder facilement à votre examen" %}</p>
+                        {% else %}
+                            <h3 class="text-dark-1 text-center">{% trans "Trouver des examens, des exercices et des cours de tous niveaux en utilisant la barre de recherche ci-dessus" %}</h3>
+                        {% endif %}
+                    </div>
                 {% endif %}
             </div>
         </div>
