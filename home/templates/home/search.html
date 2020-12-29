@@ -151,7 +151,12 @@
                         </div>
                     {% endif %}
                 {% else %}
-                    <h1>No pdfs</h1>
+                    {% if q %}
+                        <h1 class="text-dark-1">{% trans "Désolé, nous n'avons trouvé aucun fichier correspondant à votre recherche." %}</h1>
+                        <h2 class="text-dark-2">{% trans "Vous pouvez utiliser les listes déroulantes ci-dessus pour accéder facilement à votre examen" %}</h2>
+                    {% else %}
+                        <h1>{% trans "trouver des examens, des exercices et des cours de tous niveaux en utilisant la barre de recherche ci-dessus" %}</h1>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>
