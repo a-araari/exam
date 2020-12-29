@@ -91,10 +91,10 @@
                             <i class="text-purple-1 fa fa-file-alt" style="font-size: 32px"></i>
                         </div>
                         <div class="col-5">
-                            <a class="text-info" href="{{ pdf.get_absolute_url }}">{{ pdf.title }}</a>
+                            <a class="text-info" href="{{ pdf.get_absolute_url }}">{{ pdf.title|default:'-' }}</a>
                         </div>
                         <div class="col-4">
-                            {{ pdf.description }}
+                            {{ pdf.description|default:'-' }}
                         </div>
                         <div class="col-2 d-flex">
                             <a href="{% url 'pdfs:devoir-download' pdf_slug=pdf.slug %}" class="text-info">
@@ -130,6 +130,9 @@
                             <!-- Suivant -->
                             {% if pdfs.has_next %}
                                 <li class="page-item"><a class="page-link text-info" href="?page={{ pdfs.next_page_number }}">{{ pdfs.next_page_number }}</a></li>
+                                {% if pdfs.number == 1 %}
+                                    <li class="page-item"><a class="page-link text-info" href="{{ request.path }}?{% if request.GET.q %}{{ encoded_query }}&{% endif %}page=3">3</a></li>
+                                {% endif %}
                                 <li class="page-item">
                                     <a class="page-link text-center text-info" style="width: 100px" href="?page={{ pdfs.next_page_number }}">
                                         {% trans 'Suivant' %}
