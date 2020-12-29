@@ -45,6 +45,9 @@ class Subject(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('pdfs:subject-detail', kwargs={'subject_slug': self.slug})
+
     def get_pdfs_count(self):
         return PDF.objects.filter(subject=self).count()
 
@@ -78,6 +81,9 @@ class Section(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('pdfs:section-detail', kwargs={'section_slug': self.slug})
 
     def get_pdfs_count(self):
         return PDF.objects.filter(section=self).count()
@@ -129,6 +135,9 @@ class Level(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('pdfs:level-detail', kwargs={'level_slug': self.slug})
+
     def get_pdfs_count(self):
         return PDF.objects.filter(level=self).count()
 
@@ -154,6 +163,9 @@ class Category(models.Model):
         if not self.id:
             self.slug = slugify(self.name)
         super(Category, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('pdfs:category-detail', kwargs={'category_slug': self.slug})
 
     def __str__(self):
         return self.name
