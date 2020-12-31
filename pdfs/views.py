@@ -116,7 +116,7 @@ def level_detail(request, level_slug):
     level = get_object_or_404(Level, slug=level_slug)
 
     context = {
-        'title': level.slug,
+        'title': level.name,
         'level': level,
     }
 
@@ -134,7 +134,7 @@ def section_detail(request, section_slug):
     """
     section = get_object_or_404(Section, slug=section_slug)
     context = {
-        'title': section.slug,
+        'title': section.name,
         'section': section,
     }
 
@@ -152,7 +152,7 @@ def subject_detail(request, subject_slug):
     """
     subject = get_object_or_404(Subject, slug=subject_slug)
     context = {
-        'title': subject.slug,
+        'title': subject.name,
         'subject': subject,
     }
 
@@ -170,7 +170,7 @@ def category_detail(request, category_slug):
     """
     category = get_object_or_404(Category, slug=category_slug)
     context = {
-        'title': category.slug,
+        'title': category.name,
         'category': category,
     }
 
