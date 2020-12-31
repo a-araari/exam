@@ -265,13 +265,10 @@ class PDF(models.Model):
         default=HIGH_SCHOOL_STAGE,
     )
 
-    name = models.CharField(
-        "File name",
-        max_length=250
-    )
     slug = models.SlugField(
         'SlugField',
-        max_length=250
+        unique=True,
+        max_length=250,
     )
     title = models.CharField(
         "Title",
