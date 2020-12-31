@@ -51,7 +51,7 @@
                     <div class="col-6 d-flex align-items-center"><p class="mb-0">{% trans "Catégories" %}</p></div>
                 </div>
                 <!-- List Content -->
-                {% if not subjects %}
+                {% if not level.subjects %}
                     <div class="row mx-5 py-4 table-row">
                         <div class="col-12 text-center">
                             <i class="fa fa-exclamation text-info mb-4" style="font-size: 128px"></i>
@@ -59,7 +59,7 @@
                         </div>
                     </div>
                 {% endif %}
-                {% for sbj in subjects %}
+                {% for sbj in level.subjects.all %}
                     
                     <div class="row mx-5 py-4 table-row">
                         <div class="col-2">

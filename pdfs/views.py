@@ -114,10 +114,8 @@ def level_detail(request, level_slug):
     :return: HTML response
     """
     level = get_object_or_404(Level, slug=level_slug)
-    subjects = Subject.objects.all()
 
     context = {
-        'subjects': subjects,
         'title': level.slug,
         'level': level,
     }
