@@ -58,27 +58,17 @@
                     <span style="font-size: 18px">{{ subject.name }}</span>
                     <small class="text-secondary">({{ pdfs_count }})</small>
                 </div>
-
-                <div class="selected-category mx-auto mt-1 mb-3"></div>
-
-                {% for ctg in categories %}
-                    <span class="mx-4">
-                        <a class="text-info category-tab-link" href="{% url 'pdfs:level-section-subject-category-detail' level_slug=level.slug section_slug=section.slug subject_slug=subject.slug category_slug=ctg.slug %}">
-                            {{ ctg.name }}
-                        </a>
-                    </span>
-                {% endfor %}
-
             </div>
+
             <div class="col-12 text-left mt-3 px-5">
                 <!-- List Header -->
                 <div class="row bg-white mx-5 py-4 table-head">
-                    <div class="col-6 d-flex align-items-center"><p class="mb-0">{% trans "Devoir détails" %}</p></div>
-                    <div class="col-4 d-flex align-items-center"><p class="mb-0">{% trans "Description" %}</p></div>
-                    <div class="col-2 d-flex align-items-center"><p class="mb-0">{% trans "Télécharger" %}</p></div>
+                    <div class="col-3 d-flex align-items-center"><p class="mb-0">{% trans "Section" %}</p></div>
+                    <div class="col-3 d-flex align-items-center"><p class="mb-0">{% trans "Matière" %}</p></div>
+                    <div class="col-6 d-flex align-items-center"><p class="mb-0">{% trans "Catégories" %}</p></div>
                 </div>
                 <!-- List Content -->
-                {% if not pdfs %}
+                {% if not subjects %}
                     <div class="row mx-5 py-4 table-row">
                         <div class="col-12 text-center">
                             <i class="fa fa-exclamation text-info mb-4" style="font-size: 128px"></i>
@@ -86,22 +76,34 @@
                         </div>
                     </div>
                 {% endif %}
-                {% for pdf in pdfs %}
+                {% for sbj in subjects %}
                     
                     <div class="row mx-5 py-4 table-row">
-                        <div class="col-1 d-flex align-items-center justify-content-center">
-                            <i class="text-purple-1 fa fa-file-alt" style="font-size: 32px"></i>
+                        <div class="col-3 text-secondary">
+                            {{ section.name|default:'-' }}
                         </div>
-                        <div class="col-5">
-                            <a class="text-info" href="{{ pdf.get_absolute_url }}">{{ pdf.title|default:'-' }}</a>
+                        <div class="col-3">
+                            {{ sbj.name|default:'-' }}
                         </div>
-                        <div class="col-4">
-                            {{ pdf.description|default:'-' }}
+                        <div class="col-1">
+                            <a class="text-info category-tab-link" href="{% url 'pdfs:level-section-subject-category-detail' level_slug=level.slug section_slug=section.slug subject_slug=sbj.slug category_slug='devoirs' %}">
+                                {% trans "Devoirs" %}
+                            </a>
                         </div>
-                        <div class="col-2 d-flex">
-                            <a href="{% url 'pdfs:devoir-download' pdf_slug=pdf.slug %}" class="text-info">
-                                <i class="fa fa-file-download pr-1"></i>
-                                {% trans "Télécharger" %}
+                        <div class="col-1">
+                            <span><i class="fa fa-circle fa-xs text-dark-3 mx-4"></i></span>
+                        </div>
+                        <div class="col-1">
+                            <a class="text-info category-tab-link" href="{% url 'pdfs:level-section-subject-category-detail' level_slug=level.slug section_slug=section.slug subject_slug=sbj.slug category_slug='series' %}">
+                                {% trans "Séries" %}
+                            </a>
+                        </div>
+                        <div class="col-1">
+                            <span><i class="fa fa-circle fa-xs text-dark-3 mx-4"></i></span>
+                        </div>
+                        <div class="col-1">
+                            <a class="text-info category-tab-link" href="{% url 'pdfs:level-section-subject-category-detail' level_slug=level.slug section_slug=section.slug subject_slug=sbj.slug category_slug='cours' %}">
+                                {% trans "Cours" %}
                             </a>
                         </div>
                     </div>
@@ -109,18 +111,18 @@
                 {% endfor %}
             </div>
             <!-- Pagination(24 per page): Prev / Next-->
-            {% if pdfs.has_other_pages %}
+            {% if subjects.has_other_pages %}
                 <div class="col-12">
                     <nav aria-label="PDFs Page navigation">
                         <ul class="pagination justify-content-center">
                             <!-- Précédent -->
-                            {% if pdfs.has_previous %}
+                            {% if subjects.has_previous %}
                                 <li class="page-item">
-                                    <a class="page-link text-center text-info" style="width: 100px" href="?page={{ pdfs.previous_page_number }}" tabindex="-1">
+                                    <a class="page-link text-center text-info" style="width: 100px" href="?page={{ subjects.previous_page_number }}" tabindex="-1">
                                         {% trans 'Précédent' %}
                                     </a>
                                 </li>
-                                <li class="page-item"><a class="page-link text-info" href="?page={{ pdfs.previous_page_number }}">{{ pdfs.previous_page_number }}</a></li>
+                                <li class="page-item"><a class="page-link text-info" href="?page={{ subjects.previous_page_number }}">{{ subjects.previous_page_number }}</a></li>
                             {% else %}
                                 <li class="page-item disabled">
                                     <a class="page-link text-center" style="width: 100px" href="#">
@@ -128,15 +130,15 @@
                                     </a>
                                 </li>
                             {% endif %}
-                            <li class="page-item"><a class="page-link bg-info text-white disabled">{{ pdfs.number }}</a></li>
+                            <li class="page-item"><a class="page-link bg-info text-white disabled">{{ subjects.number }}</a></li>
                             <!-- Suivant -->
-                            {% if pdfs.has_next %}
-                                <li class="page-item"><a class="page-link text-info" href="?page={{ pdfs.next_page_number }}">{{ pdfs.next_page_number }}</a></li>
-                                {% if pdfs.number == 1 %}
+                            {% if subjects.has_next %}
+                                <li class="page-item"><a class="page-link text-info" href="?page={{ subjects.next_page_number }}">{{ subjects.next_page_number }}</a></li>
+                                {% if subjects.number == 1 %}
                                     <li class="page-item"><a class="page-link text-info" href="{{ request.path }}?{% if request.GET.q %}{{ encoded_query }}&{% endif %}page=3">3</a></li>
                                 {% endif %}
                                 <li class="page-item">
-                                    <a class="page-link text-center text-info" style="width: 100px" href="?page={{ pdfs.next_page_number }}">
+                                    <a class="page-link text-center text-info" style="width: 100px" href="?page={{ subjects.next_page_number }}">
                                         {% trans 'Suivant' %}
                                     </a>
                                 </li>
