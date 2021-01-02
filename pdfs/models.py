@@ -101,6 +101,7 @@ class Section(models.Model):
 
 
 class Level(models.Model):
+    """ Should change section to ManyToMany Field as well and change the dropdowns in Index template """
     ELEMENTARY_SCHOOL_STAGE = 'elementary'
     MIDDLE_SCHOOL_STAGE = 'middle'
     HIGH_SCHOOL_STAGE = 'high'
@@ -207,6 +208,13 @@ def html_upload_path(instance, filename):
         return 'docs/{}.html'.format(filename)
 
 
+def thumbnail_upload_path(instance, filename):
+    try:
+        return 'docs/{}.jpeg'.format(instance.id)
+    except:
+        return 'docs/{}.jpeg'.format(filename)
+
+
 class PDFManager(models.Manager):
     """Manager for PDF Model"""
     def search(self, query):
@@ -299,6 +307,12 @@ class PDF(models.Model):
         null=True,
         blank=True,
         upload_to=html_upload_path,
+    )
+    thumbnail = models.ImageField(
+        "PDF thumbnail",
+        null=True,
+        blank=True,
+        upload_to=thumbnail_upload_path,
     )
     origin = models.URLField(
         'The origin link that this PDF comes from',
