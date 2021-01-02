@@ -89,11 +89,17 @@
         <div class="col-10 d-flex justify-content-left">
             <div class="row">
                 {% if pdfs %}
+
+                    <!-- PDF cards -->
                     {% for pdf in pdfs %}
                         <div class="col-4 mb-3">
                             <div class="card mx-3 search-item" style="width: 18rem;">
                                 <a href="{% url 'pdfs:devoir-detail' pdf_slug=pdf.slug %}">
-                                    <img src="https://static.bhphoto.com/images/images500x500/1441903824_45483.jpg" class="card-img-top" alt="{{ pdf.title }}">
+                                    {% if pdf.thumbnail %}
+                                        <img src="{{ pdf.thumbnail.url }}" class="card-img-top" alt="{{ pdf.title }}">
+                                    {% else %}
+                                        <img src="https://static.bhphoto.com/images/images500x500/1441903824_45483.jpg" class="card-img-top" alt="{{ pdf.title }}">
+                                    {% endif %}
                                 </a>
                                 <span class="badge bg-purple-5-linear text-white px-4 py-2 position-absolute">PDF</span>
                                 <div class="card-body bg-purple-5-linear text-white ">
@@ -106,6 +112,7 @@
                             </div>
                         </div>
                     {% endfor %}
+
                     <!-- Pagination(24 per page): Prev / Next-->
                     {% if pdfs.has_other_pages %}
                         <div class="col-12">
