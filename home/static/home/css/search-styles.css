@@ -21,20 +21,3 @@
 #side-filter .filter-items p a {
     color: #5C5C5C;
 }
-
-.search-item {
-    border-radius: 15px;
-}
-.search-item img {
-    border-radius: 15px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-}
-.search-item .badge {
-    right: 0;
-    border-bottom-left-radius: 15px;
-    border-top-right-radius: 15px;
-}
-.search-item a {
-    color: var(--white);
-}
