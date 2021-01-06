@@ -61,7 +61,11 @@
             {% endif %}
             {% for category in categories %}
                 <div class="col-12 col-md-6 col-lg-4 mb-4 d-flex justify-content-center align-items-center">
-                    <a class="no-text-decoration-a" href="{% url 'pdfs:level-section-subject-category-detail' level_slug=level.slug section_slug='tout' subject_slug=subject.slug category_slug=category.slug %}">
+                    {% if section %}
+                        <a class="no-text-decoration-a" href="{% url 'pdfs:level-section-subject-category-detail' level_slug=level.slug section_slug=section.slug subject_slug=subject.slug category_slug=category.slug %}">
+                    {% else %}
+                        <a class="no-text-decoration-a" href="{% url 'pdfs:level-section-subject-category-detail' level_slug=level.slug section_slug='tout' subject_slug=subject.slug category_slug=category.slug %}">
+                    {% endif %}
                         <div class="card rounded-0 subject-card" style="width: 18rem;">
                             <img src="{{ category.get_preview_image }}" class="card-img-top rounded-0" alt="{{ category.name }}">
                             <div class="card-body text-dark">
