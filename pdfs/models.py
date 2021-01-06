@@ -197,6 +197,9 @@ class Category(models.Model):
         max_length=100
     )
 
+    class Meta:
+        ordering = ('id', )
+
     def save(self, *args, **kwargs):
         """
         Save Slug before inserting the row into the DB
