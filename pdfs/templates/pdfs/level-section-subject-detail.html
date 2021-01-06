@@ -20,12 +20,12 @@
 
 <!-- Inside body tag -->
 {% block content %}
-    <!-- Exam sub-navbar -->
-    <div id="exam-sub-navbar" class="container-fluid sticky-top bg-purple-info-linear py-3 shadow">
+    <!-- sub-navbar -->
+    <div class="container-fluid sticky-top custom-sub-navbar bg-purple-info-linear py-3 shadow">
         <div class="row">
-            <div class="col-3 d-flex justify-content-center align-items-center">
+            <div class="col-10 col-md-7 col-lg-4 d-flex align-items-center">
                 <i class="fa fa-long-arrow-left text-white pr-3" onclick="location.href='{{ request.META.HTTP_REFERER }}'" style="cursor: pointer;"></i>
-                <span class="text-white">
+                <span class="text-white text-nowrap overflow-auto">
                     {% if level %}
                         <a class="text-white" href="{% url 'pdfs:level-detail' level_slug=level.slug %}">{{ level }}</a><span class="text-warning"> /</span>
                         {% if section %}
@@ -36,18 +36,20 @@
                     {% endif %}
                 </span>
             </div>
-            <div class="col-6 d-flex justify-content-center align-items-center">
+            
+            <div class="col-6 col-lg-4 d-none d-lg-flex justify-content-center align-items-center">
                 <h4 class="text-white" style="font-weight: 500">{{ subject.name|capfirst }}</h4>
             </div>
-            <div class="col-3 d-flex justify-content-center align-items-center">
-                <button class="btn bg-white py-2 px-4" style="border-radius: 100px;" onclick="location.href='{% url 'home:search' %}'">
-                    <i class="fa fa-search pr-2" style="color: #17a2b8;"></i>
-                    {% trans "Rechercher" %}
+
+            <div class="col-2 col-md-5 col-lg-4 d-flex justify-content-end align-items-center">
+                <button class="btn bg-white py-1 py-md-2 px-2 px-md-4 mr-0 mr-md-4" style="border-radius: 100px;" onclick="location.href='{% url 'home:search' %}'">
+                    <i class="fa fa-search pr-0 pr-md-2" style="color: #17a2b8;"></i>
+                    <span class="d-none d-md-inline">{% trans "Rechercher" %}</span>
                 </button>
             </div>
         </div>
     </div>
-
+    
     <div class="container mt-5 pt-5">
         <div class="row">
             <!-- List Content -->
