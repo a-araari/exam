@@ -120,6 +120,9 @@ class Section(models.Model):
     def get_all_exluding_self(self):
         return Section.objects.exclude(name=self.name)
 
+    def get_name(self):
+        return f"{_('Section')} {self.name}"
+
 
 class Level(models.Model):
     """ Should change section to ManyToMany Field as well and change the dropdowns in Index template """
