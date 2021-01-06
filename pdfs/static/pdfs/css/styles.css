@@ -31,3 +31,16 @@
     line-height: 25px;
     letter-spacing: 0em;
 }
+.no-text-decoration-a {
+    text-decoration: none;
+}
+.no-text-decoration-a:hover {
+    text-decoration: none;
+}
+.subject-card {
+
+}
+.subject-card:hover {
+    box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.25);
+    transition: all ease 150ms;
+}

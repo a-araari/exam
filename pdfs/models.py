@@ -1,3 +1,5 @@
+from django.utils.translation import ugettext_lazy as _
+from django.templatetags.static import static
 from django.contrib.postgres.search import (
     TrigramSimilarity,
     SearchVector,
@@ -34,6 +36,9 @@ class Subject(models.Model):
         max_length=100
     )
 
+    class Meta:
+        ordering = ('name', )
+
     def save(self, *args, **kwargs):
         """
         Save Slug before inserting the row into the DB
@@ -53,6 +58,22 @@ class Subject(models.Model):
 
     def get_all_exluding_self(self):
         return Subject.objects.exclude(name=self.name)
+
+    def get_preview_image(self):
+        if self.name in ('Sciences EX', 'economie', 'géstion', 'math', 'physique',
+                            'sciences SVT', 'technologie', 'économie gestion', 'الإيـقاظ-العلـمـي'):
+            return static('images/subjects/science-subjects-preview.jpg')
+
+        if self.name in ('allemand', 'anglais', 'arabe', 'dictée', 'espagnol',
+                            'français', 'italien', 'langue', 'lecture', 'lettre',
+                            'production-écrite', 'الإنـتاج-الكتابـي', 'الـقـراءة', 'قـواعـد-الـلـغـة'):
+            return static('images/subjects/language-subjects-preview.jpg')
+
+        if self.name in ('algorithme et programmation', 'informatique', 'tic'):
+            return static('images/subjects/programmation-subjects-preview.jpg')
+
+        # Default preview for the rest of subjects
+        return static('images/subjects/human-subjects-preview.jpg')
 
 
 class Section(models.Model):
@@ -161,6 +182,9 @@ class Level(models.Model):
     def get_all_exluding_self(self):
         return Level.objects.exclude(name=self.name)
 
+    def get_name(self):
+        return f"{self.name} {_('année')}"
+
 
 class Category(models.Model):
     slug = models.SlugField(
@@ -192,6 +216,9 @@ class Category(models.Model):
 
     def get_all_exluding_self(self):
         return Category.objects.exclude(name=self.name)
+
+    def get_preview_image(self):
+        return static(f'images/categories/{self.slug}-preview.jpg')
 
 
 def pdf_upload_path(instance, filename):
