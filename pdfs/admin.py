@@ -46,7 +46,7 @@ class LevelAdmin(admin.ModelAdmin):
         return instance.get_pdfs_count()
 
     get_pdfs_count.short_description = 'related pdfs count'
-    filter_horizontal = ('subjects', )
+    filter_horizontal = ('subjects', 'sections')
 
 
 @admin.register(Category)
