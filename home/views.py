@@ -31,6 +31,10 @@ def search(request):
 
     pdfs = None
     q = request.GET.get('q')
+    level_slug = request.GET.get('level', 'all')
+    section_slug = request.GET.get('section', 'all')
+    subject_slug = request.GET.get('subject', 'all')
+    category_slug = request.GET.get('category', 'all')
     encoded_query = urllib.parse.urlencode({'q': q})
     page = request.GET.get('page', 1)
     max_pdfs_per_page = request.GET.get('docs_per_page', 9)
@@ -40,8 +44,21 @@ def search(request):
 
     if q:
         title = _('Searching for: ') + q
+        queryset = PDF.objects
 
-        pdfs = PDF.objects.filter(title__icontains=q) # search(query=q)
+        if level_slug != 'all':
+            queryset = queryset.filter(level__slug=level_slug)
+
+        if section_slug != 'all':
+            queryset = queryset.filter(section__slug=section_slug)
+
+        if subject_slug != 'all':
+            queryset = queryset.filter(subject__slug=subject_slug)
+
+        if category_slug != 'all':
+            queryset = queryset.filter(category__slug=category_slug)
+
+        pdfs = queryset.search(query=q)
 
         paginator = Paginator(pdfs, max_pdfs_per_page)
         try:
@@ -61,6 +78,10 @@ def search(request):
         'pdfs': pdfs,
         'query': q,
         'encoded_query': encoded_query,
+        'default_category': category_slug,
+        'default_section': section_slug,
+        'default_subject': subject_slug,
+        'default_level': level_slug,
     }
 
     return render(request, 'home/search.html', context)

@@ -255,16 +255,14 @@ def thumbnail_upload_path(instance, filename):
     except:
         return 'docs/{}.jpeg'.format(filename)
 
-
-class PDFManager(models.Manager):
-    """Manager for PDF Model"""
+class PDFQuerySet(models.QuerySet):
     def search(self, query):
         """
         Search for PDFs with ranking and Trigram similarity
         """
         search_vector = SearchVector('title')
         search_query = SearchQuery(query)
-        pdfs = PDF.objects.annotate(
+        pdfs = self.annotate(
             similarity=TrigramSimilarity('title', query),
             rank=SearchRank(search_vector, search_query)
         ).filter(
@@ -272,6 +270,12 @@ class PDFManager(models.Manager):
         ).order_by('-rank')
 
         return pdfs
+
+
+class PDFManager(models.Manager):
+    """Manager for PDF Model"""
+    def get_queryset(self):
+        return PDFQuerySet(self.model, using=self._db)
 
 
 class PDF(models.Model):
