@@ -1,0 +1,95 @@
+{# Must load home/static/css/search-input.css #}
+{# Must load home/static/js/search-input.js #}
+
+{# Required Variables: levels, sections, subjects and categories #}
+
+{% load i18n %}
+
+
+<div class="search-container justify-content-center">
+    <div class="row mt-5 mb-0">
+        <div class="col-10 col-md-11 pl-1 pl-md-0 pr-0" style="margin-right: 1px;">
+            <input type="text" name="q" class="form-control rounded-0 pr-4" style="padding: 30px 10px;" aria-label="Text input with dropdown button">
+        </div>
+
+        <div class="col-2 col-md-1 w-100 pr-1 pr-md-0 pl-0 input-group-append">
+            <button class="btn w-100 px-0 btn-outline-purple-1 rounded-0 border-left-0 px-4 w-100 text-center" id="basic-addon2"><i class="fa fa-search"></i></button>
+        </div>
+    </div>
+
+    <div class="row mb-5 mt-0 px-1 px-md-0">
+
+
+        <div id="level-dropdown-container" class="col-12 col-md-4 col-lg-2 px-0 mx-0 w-100 input-group-prepend">
+            <input id="level-hidden-input" type="hidden" name="level" value="all">
+
+            <button class="border-top-0 w-100 shadow-none btn btn-outline-purple-1 dropdown-toggle" style="padding: 10px 10px;" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span>{% trans "Level: " %} {% trans "All" %}</span>
+                <i class="fa fa-angle-right ml-3"></i>
+            </button>
+
+            <ul class="dropdown-menu pre-scrollable w-100 ">
+                <li id="level-default-dropdown-item" class="dropdown-item" data-slug="all" onclick="levelSelect(this)">{% trans "Level: " %} {% trans "All" %}</li>
+                <div role="separator" class="dropdown-divider"></div>
+                {% for level in levels %}
+                    <li class="dropdown-item" onclick="levelSelect(this)" data-slug="{{ level.slug }}">{{ level.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+
+        <div id="section-dropdown-container" class="col-12 col-md-8 col-lg-4 px-0 m-0 w-100 input-group-prepend">
+            <input id="section-hidden-input" type="hidden" name="section" value="all">
+
+            <button class="border-top-0 w-100 shadow-none btn btn-outline-purple-1 dropdown-toggle" style="padding: 10px 10px;" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span>{% trans "Section: " %} {% trans "All" %}</span>
+                <i class="fa fa-angle-right ml-3"></i>
+            </button>
+
+            <ul class="dropdown-menu pre-scrollable w-100 ">
+                <li id="section-default-dropdown-item" class="dropdown-item" data-slug="all" onclick="sectionSelect(this)">{% trans "Section: " %} {% trans "All" %}</li>
+                <div role="separator" class="dropdown-divider"></div>
+                {% for section in sections %}
+                    <li class="dropdown-item" onclick="sectionSelect(this)" data-slug="{{ section.slug }}">{{ section.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+
+        <div id="subject-dropdown-container" class="col-12 col-md-8 col-lg-4 px-0 mx-0 w-100 input-group-prepend">
+            <input id="subject-hidden-input" type="hidden" name="subject" value="all">
+
+            <button class="border-top-0 w-100 shadow-none btn btn-outline-purple-1 dropdown-toggle" style="padding: 10px 10px;" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span>{% trans "Subject: " %} {% trans "All" %}</span>
+                <i class="fa fa-angle-right ml-3"></i>
+            </button>
+
+            <ul class="dropdown-menu pre-scrollable w-100 ">
+                <li id="subject-default-dropdown-item" class="dropdown-item" data-slug="all" onclick="subjectSelect(this)">{% trans "Subject: " %} {% trans "All" %}</li>
+                <div role="separator" class="dropdown-divider"></div>
+                {% for subject in subjects %}
+                    <li class="dropdown-item" onclick="subjectSelect(this)" data-slug="{{ subject.slug }}">{{ subject.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+
+        <div id="category-dropdown-container" class="col-12 col-md-4 col-lg-2 px-0 mx-0 w-100 input-group-prepend">
+            <input id="category-hidden-input" type="hidden" name="category" value="all">
+
+            <button class="border-top-0 w-100 shadow-lg-none btn btn-outline-purple-1 dropdown-toggle" style="padding: 10px 10px;" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span>{% trans "Category: " %} {% trans "All" %}</span>
+                <i class="fa fa-angle-right ml-3"></i>
+            </button>
+
+            <ul class="dropdown-menu pre-scrollable w-100 ">
+                <li id="category-default-dropdown-item" class="dropdown-item" data-slug="all" onclick="categorySelect(this)">{% trans "Category: " %} {% trans "All" %}</li>
+                <div role="separator" class="dropdown-divider"></div>
+                {% for category in categories %}
+                    <li class="dropdown-item" onclick="categorySelect(this)" data-slug="{{ category.slug }}">{{ category.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </div>
+</div>

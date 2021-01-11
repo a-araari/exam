@@ -123,6 +123,9 @@ class Section(models.Model):
     def get_name(self):
         return f"{_('Section')} {self.name}"
 
+    def get_subjects(self):
+        return self.subjects
+
 
 class Level(models.Model):
     """ Should change section to ManyToMany Field as well and change the dropdowns in Index template """

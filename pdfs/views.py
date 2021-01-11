@@ -1,5 +1,6 @@
 import base64
 
+from django.views.decorators.http import require_GET
 from django.core.paginator import (
     PageNotAnInteger,
     Paginator,
@@ -295,3 +296,64 @@ def level_section_subject_category_detail(request, level_slug, section_slug, sub
     }
 
     return render(request, 'pdfs/level-section-subject-category-detail.html', context)
+
+
+
+@require_GET
+def get_level_subjects(request):
+    level_slug = request.GET.get('level')
+    subjects = None
+    data = {}
+
+    if level_slug == 'all':
+        subjects = Subject.objects.all().values('slug', 'name')
+
+    elif level_slug:
+        level = get_object_or_404(Level, slug=level_slug)
+        subjects = level.get_subjects().values('slug', 'name')
+
+    if subjects:
+        for i in range(subjects.count()):
+            data[i] = subjects[i]
+
+    return JsonResponse(data)
+
+
+@require_GET
+def get_level_sections(request):
+    level_slug = request.GET.get('level')
+    sections = None
+    data = {}
+
+    if level_slug == 'all':
+        sections = Section.objects.all().values('slug', 'name')
+
+    elif level_slug:
+        level = get_object_or_404(Level, slug=level_slug)
+        sections = level.get_sections().values('slug', 'name')
+
+    if sections:
+        for i in range(sections.count()):
+            data[i] = sections[i]
+
+    return JsonResponse(data)
+
+
+@require_GET
+def get_section_subjects(request):
+    section_slug = request.GET.get('section')
+    subjects = None
+    data = {}
+
+    if section_slug == 'all':
+        subjects = Subject.objects.all().values('slug', 'name')
+
+    elif section_slug:
+        section = get_object_or_404(Section, slug=section_slug)
+        subjects = section.get_subjects().values('slug', 'name')
+
+    if subjects:
+        for i in range(subjects.count()):
+            data[i] = subjects[i]
+
+    return JsonResponse(data)

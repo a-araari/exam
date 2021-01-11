@@ -4,8 +4,11 @@ from django.shortcuts import render
 from django.utils.translation import gettext as _
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from pdfs.models import (
-    Level,
     PDF,
+    Level,
+    Section,
+    Subject,
+    Category,
 )
 
 
@@ -21,6 +24,11 @@ def index(request):
 
 
 def search(request):
+    levels = Level.objects.all()
+    sections = Section.objects.exclude(slug='tout')
+    subjects = Subject.objects.all()
+    categories = Category.objects.all()
+
     pdfs = None
     q = request.GET.get('q')
     encoded_query = urllib.parse.urlencode({'q': q})
@@ -33,11 +41,8 @@ def search(request):
     if q:
         title = _('Searching for: ') + q
 
-        pdfs = PDF.objects.search(query=q)
+        pdfs = PDF.objects.filter(title__icontains=q) # search(query=q)
 
-        for pdf in pdfs:
-            print(pdf.title)
-    
         paginator = Paginator(pdfs, max_pdfs_per_page)
         try:
             pdfs = paginator.page(page)
@@ -48,6 +53,10 @@ def search(request):
 
     context = {
         'level_manager': level_manager,
+        'categories': categories,
+        'sections': sections,
+        'subjects': subjects,
+        'levels': levels,
         'title': title,
         'pdfs': pdfs,
         'query': q,

@@ -6,7 +6,8 @@
 
 
 {% block extra_head %}
-    <link rel="stylesheet" type="text/css" href="{% static "home/css/search-styles.css" %}">    
+    <link rel="stylesheet" type="text/css" href="{% static "home/css/search-styles.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "home/css/search-input.css" %}">
 {% endblock extra_head %}
 
 
@@ -29,56 +30,30 @@
     </div>
 </div>
 
-<div class="container">
-    <form action="{% url 'home:search' %}" method="GET">
+<form action="{% url 'home:search' %}" method="GET">
+    <div class="container">
         <div class="row">
             <!-- Search bar -->
             <div class="col-12 mb-2">
-                <div class="search-bar mt-4 mt-lg-5">
-                    <input class="search-input" type="text" name="q" value="{{ query|default:'' }}" placeholder="{% translate 'Rechercher des examens, par exemple devoirs math' %}..">
-                    <button type="submit" class="search-icon"><i class="fas fa-search"></i></button>
-                    <hr class="mt-0 bg-white w-90">
-                </div>
-            </div>
-
-            <!-- Filter dropdowns -->
-            <div class="col-12 d-flex mb-5">
-                <!-- Filter -->
-                <div class="dropdown mr-3">
-                    <button class="btn bg-white border-1 border-dark dropdown-toggle px-4 py-2" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {% trans "Filter" %}
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                        <button class="dropdown-item" type="button">----------</button>
-                    </div>
-                </div>
-    
-                <!-- Sort by -->
-                <div class="dropdown">
-                    <button class="btn bg-white border-1 border-dark dropdown-toggle px-4 py-2" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {% trans "Trier par" %}
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                        <button class="dropdown-item" type="button">----------</button>
-                    </div>
-                </div>
-
+                {% include "./search-input.html" %}
             </div>
             
             <!-- Result stats -->
-            <div class="col-12 col-md-8">
-                {% trans "Affichage des résultats 1 à 8 sur 30" %}
-            </div>
-            
-            <!-- list or grid -->
-            <div class="col-4 col-md-4 ml-auto mt-2 d-flex justify-content-center align-items-center">
-                <img class="mr-3" src="{% static "images/icons/grid-interface.png" %}" width="23px" height="23px">
-                <img class="disabled" src="{% static "images/icons/bullet-list.png" %}" width="23px" height="23px">
-            </div>
+            {% if pdfs %}
+                <div class="col-12 col-md-8">
+                    {% trans "Affichage des résultats 1 à 8 sur 30" %}
+                </div>
+
+                <!-- list or grid -->
+                <div class="col-4 col-md-4 ml-auto mt-2 d-flex justify-content-center align-items-center">
+                    <img class="mr-3" src="{% static "images/icons/grid-interface.png" %}" width="23px" height="23px">
+                    <img class="disabled" src="{% static "images/icons/bullet-list.png" %}" width="23px" height="23px">
+                </div>
+            {% endif %}
 
         </div>
-    </form>
-</div>
+    </div>
+</form>
 
 <!-- Results -->
 <div class="container mt-5">
@@ -202,3 +177,14 @@
 </div>
 
 {% endblock content %}
+
+
+{% block extra_body %}
+    <script type="text/javascript">
+        ajaxLevelSubjectsURL = "{% url 'pdfs:ajax-level-subjects' %}";
+        ajaxLevelSectionsURL = "{% url 'pdfs:ajax-level-sections' %}";
+        ajaxSectionSubjectsURL = "{% url 'pdfs:ajax-section-subjects' %}";
+    </script>
+
+    <script type="text/javascript" src="{% static "home/js/search-input.js" %}"></script>
+{% endblock extra_body %}
