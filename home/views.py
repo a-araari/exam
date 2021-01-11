@@ -58,7 +58,7 @@ def search(request):
         if category_slug != 'all':
             queryset = queryset.filter(category__slug=category_slug)
 
-        pdfs = queryset.search(query=q)
+        pdfs = queryset.search(query=q) if queryset != PDF.objects else queryset.get_queryset().search(query=q)
 
         paginator = Paginator(pdfs, max_pdfs_per_page)
         try:
