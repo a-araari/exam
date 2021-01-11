@@ -32,3 +32,6 @@
     background-color: #35354F;
     color: var(--white);
 }
+.tt-suggestion {
+    padding: 10px 5px;
+}
