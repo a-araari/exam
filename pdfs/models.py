@@ -156,11 +156,10 @@ class Level(models.Model):
         blank=True,
         related_name='subjects'
     )
-    section = models.ForeignKey(
+    sections = models.ManyToManyField(
         Section,
-        null=True,
         blank=True,
-        on_delete=models.SET_NULL,
+        related_name='sections'
     )
 
     def save(self, *args, **kwargs):
@@ -187,6 +186,12 @@ class Level(models.Model):
 
     def get_name(self):
         return f"{self.name} {_('année')}"
+
+    def get_subjects(self):
+        return self.subjects
+
+    def get_sections(self):
+        return self.sections
 
 
 class Category(models.Model):
