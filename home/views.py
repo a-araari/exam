@@ -58,7 +58,22 @@ def search(request):
         if category_slug != 'all':
             queryset = queryset.filter(category__slug=category_slug)
 
-        pdfs = queryset.search(query=q) if queryset != PDF.objects else queryset.get_queryset().search(query=q)
+        # This is complex variable.
+        do_search = ' '.join(
+            q.replace(
+                Level.objects.get(slug=level_slug).name if level_slug and level_slug != 'all' else '', ''
+            ).replace(
+                Section.objects.get(slug=section_slug).name if section_slug and section_slug != 'all' else '', '')
+            .replace(
+                Subject.objects.get(slug=subject_slug).name if subject_slug and subject_slug != 'all' else '', '')
+            .replace(
+                Category.objects.get(slug=category_slug).name if category_slug and category_slug != 'all' else '', '')
+            .split()) != ''
+        print(do_search)
+        if do_search:
+            pdfs = queryset.search(query=q) if queryset != PDF.objects else queryset.get_queryset().search(query=q)
+        else:
+            pdfs = queryset
 
         paginator = Paginator(pdfs, max_pdfs_per_page)
         try:

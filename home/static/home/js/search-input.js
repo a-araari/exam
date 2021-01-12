@@ -1,30 +1,30 @@
 /* Required variables: ajaxLevelSubjectsURL, ajaxLevelSectionsURL, ajaxSectionSubjectsURL */
-level = 'level'
-section = 'section'
-subject = 'subject'
-category = 'category'
+levelDropName = 'level'
+sectionDropName = 'section'
+subjectDropName = 'subject'
+categoryDropName = 'category'
 
 
 function levelSelect(item) {
-    level_slug = selectOption(item, level)
+    level_slug = selectOption(item, levelDropName)
     updateSections(level_slug)
     updateSubjectsByLevel(level_slug)
-    setDefaultOption(section)
-    setDefaultOption(subject)
+    setDefaultOption(sectionDropName)
+    setDefaultOption(subjectDropName)
 }
 
 function sectionSelect(item) {
-    section_slug = selectOption(item, section)
+    section_slug = selectOption(item, sectionDropName)
     updateSubjectsBySection(section_slug)
-    setDefaultOption(subject)
+    setDefaultOption(subjectDropName)
 }
 
 function subjectSelect(item) {
-    selectOption(item, subject)
+    selectOption(item, subjectDropName)
 }
 
 function categorySelect(item) {
-    selectOption(item, category)
+    selectOption(item, categoryDropName)
 }
 
 function selectOption(item, dropName) {
@@ -54,7 +54,7 @@ function updateSections(level_slug) {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function(data) {
-            updateDropdownContent(section, data)
+            updateDropContent(sectionDropName, data)
         },
         error: function(ts) { 
             $('#next-btn').attr('disabled', 'false')
@@ -73,7 +73,7 @@ function updateSubjectsByLevel(level_slug) {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function(data) {
-            updateDropdownContent(subject, data)
+            updateDropContent(subjectDropName, data)
         },
         error: function(ts) { 
             $('#next-btn').attr('disabled', 'false')
@@ -92,7 +92,7 @@ function updateSubjectsBySection(section_slug) {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function(data) {
-            updateDropdownContent(subject, data)
+            updateDropContent(subjectDropName, data)
         },
         error: function(ts) { 
             $('#next-btn').attr('disabled', 'false')
@@ -105,12 +105,18 @@ function setDefaultOption(dropName){
     selectOption($('#' + dropName + '-default-dropdown-item')[0], dropName)
 }
 
-function updateDropdownContent(dropName, data) {
+function getDropOptions(dropName) {
+    options = $('#' + dropName + '-dropdown-container' + ' .dropdown-menu' + ' li:not("#' + dropName + '-default-dropdown-item")')
+
+    return options
+}
+
+function updateDropContent(dropName, data) {
     dropMenuString = '#' + dropName + '-dropdown-container' + ' .dropdown-menu'
     dropMenu = $(dropMenuString)
 
     if (dropMenu != null) {
-        options = $(dropMenuString + ' li:not("#' + dropName + '-default-dropdown-item")')
+        options = getDropOptions(dropName)
         options.remove()
             console.log(data.length)
 
@@ -122,7 +128,6 @@ function updateDropdownContent(dropName, data) {
         }
     }
 }
-
 
 var substringMatcher = function(strs) {
     return function findMatches(q, cb) {
@@ -171,3 +176,69 @@ $('#search-input-container .typeahead').typeahead(
         source: substringMatcher(search_queries)
     }
 );
+
+$('#search-query-input').on('input', function(event) {
+    input = $(event.currentTarget)
+    q = input.val()
+
+    // Execute this function only of a full new word typed
+    if (q.endsWith(' ')) {
+        updateDropSelectedValues(q)
+    }
+});
+$('#search-query-input').keydown(function(event) {
+    input = $(event.currentTarget)
+    q = input.val()
+
+    // Execute this function if any arrow key pressed
+    if (event.which == 13 || event.which >= 37 && event.which <= 40) {
+        updateDropSelectedValues(q)
+    }
+});
+
+function updateDropSelectedValues(q) {
+    levels = getDropOptions(levelDropName)
+    sections = getDropOptions(sectionDropName)
+    subjects = getDropOptions(subjectDropName)
+    categories = getDropOptions(categoryDropName)
+
+    levels.each(function(index) {
+        level = $(this)
+        if (q.includes(level.text())) {
+            selectOption(level, levelDropName)
+            return false
+        } else {
+            setDefaultOption(levelDropName)
+        }
+    });
+
+    sections.each(function(index) {
+        section = $(this)
+        if (q.includes(section.text())) {
+            selectOption(section, sectionDropName)
+            return false
+        } else {
+            setDefaultOption(sectionDropName)
+        }
+    });
+
+    subjects.each(function(index) {
+        subject = $(this)
+        if (q.includes(subject.text())) {
+            selectOption(subject, subjectDropName)
+            return false
+        } else {
+            setDefaultOption(subjectDropName)
+        }
+    });
+
+    categories.each(function(index) {
+        category = $(this)
+        if (q.includes(category.text())) {
+            selectOption(category, categoryDropName)
+            return false
+        } else {
+            setDefaultOption(categoryDropName)
+        }
+    });
+}

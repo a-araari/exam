@@ -43,3 +43,6 @@
 .tt-highlight {
     color: #e02f2f;
 }
+.tt-cursor {
+    background-color: #000;
+}

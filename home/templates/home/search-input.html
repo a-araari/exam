@@ -9,7 +9,7 @@
 <div class="search-container justify-content-center">
     <div class="row mt-5 mb-0">
         <div id="search-input-container" class="col-10 col-md-11 pl-1 pl-md-0 pr-0" style="margin-right: 1px;">
-            <input type="text"  name="q" value="{{ query|default:'' }}" class="form-control typeahead rounded-0 pr-4" style="padding: 30px 10px;" placeholder="{% translate 'Rechercher des examens, par exemple devoirs math' %}.." required>
+            <input id="search-query-input" type="text"  name="q" value="{{ query|default:'' }}" class="form-control typeahead rounded-0 pr-4" style="padding: 30px 10px;" placeholder="{% translate 'Rechercher des examens, par exemple devoirs math' %}.." autofocus="true" required>
         </div>
 
         <div class="col-2 col-md-1 w-100 pr-1 pr-md-0 pl-0 input-group-append" style="max-height: 62px;">
