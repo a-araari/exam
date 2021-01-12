@@ -35,7 +35,7 @@ function selectOption(item, dropName) {
     container = $(dropdownContainerString)
 
     if (container != null) {
-        buttonText = $(dropdownContainerString + ' button span')
+        buttonText = $(dropdownContainerString + ' button span .to-change')
         buttonText.text(item.text())
         hiddenInput = $('#' + dropName + '-hidden-input')
         hiddenInput.val(item.data('slug'))

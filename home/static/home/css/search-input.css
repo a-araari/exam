@@ -1,19 +1,38 @@
 .search-container {
 
 }
+.search-container #search-query-input {
+    background-color: #00000000;
+    color: white;
+}
+.search-container #search-row-container {
+    background-color: var(--info);
+    border-radius: 30px;
+    border: 1px solid gray;
+}
+.search-container #search-row-container:focus-within {
+    border-radius: 10px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
 .search-container .dropdown-toggle::after {
     display: none !important;
 }
 .search-container input:focus,
 .search-container .form-control:focus{
     box-shadow: none;
-    border-color: #35354F;
+    border-color: var(--info);
+}
+.search-container .btn-outline-info {
+    box-shadow: none!important;
+    padding-right: 0!important;
+    padding-left: 0!important;
 }
 .search-container .btn-outline-purple-1 {
     background-color: #FFFFFF00;
     color: #35354F;
     border-color: #ddd;
-    border-radius: 0!important;
+    border-radius: 40px!important;
     box-shadow: none!important;
     padding-right: 0!important;
     padding-left: 0!important;
@@ -29,20 +48,38 @@
     cursor: pointer;
 }
 .search-container .dropdown-item:hover {
-    background-color: #35354F;
-    color: var(--white);
+    background-color: #FFF;
+    color: #000;
 }
 .tt-suggestion {
     padding: 10px 5px;
-    color: #FFFFFF;
+    color: #eee;
 }
 /* In-input autocomplete */
 .tt-hint {
-    color: gray;
+    color: #ddd;
 }
 .tt-highlight {
-    color: #e02f2f;
+    color: #FFF;
 }
 .tt-cursor {
-    background-color: #000;
+    background-color: #262635;
+}
+
+.search-container #search-query-input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #eee;
+    opacity: 1; /* Firefox */
+}
+.search-container #search-query-input:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #eee;
+}
+.search-container #search-query-input::-ms-input-placeholder { /* Microsoft Edge */
+    color: #eee;
+}
+
+.search-container .dropdown-button .span1 {
+    font-weight: 600;
+}
+.search-container .dropdown-button .to-change {
+    font-weight: 400;
 }

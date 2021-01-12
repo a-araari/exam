@@ -1142,7 +1142,7 @@
                     zIndex: "100",
                     display: "none",
                     color: "white",
-                    backgroundColor: "#35354F",
+                    backgroundColor: "#00000000",
                 },
                 ltr: {
                     left: "0",
