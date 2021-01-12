@@ -204,7 +204,8 @@ function updateDropSelectedValues(q) {
 
     levels.each(function(index) {
         level = $(this)
-        if (q.includes(level.text())) {
+        // only for level, e.g 3eme vs 3ème
+        if (q.includes(level.text()) || q.includes(level.data('slug'))) {
             selectOption(level, levelDropName)
             return false
         } else {

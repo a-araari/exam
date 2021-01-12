@@ -185,6 +185,7 @@
         ajaxLevelSectionsURL = "{% url 'pdfs:ajax-level-sections' %}";
         ajaxSectionSubjectsURL = "{% url 'pdfs:ajax-section-subjects' %}";
 
+        // only for level, e.g 3eme vs 3ème
         search_queries = [
             {% for category in categories %}
                 {% for level in levels %}
@@ -195,6 +196,7 @@
                             {% for section in sections %}
                                 {% for subject in section.get_subjects.all %}
                                     "{{ category.name|safe }} {{ subject.name|safe }} {{ level.name|safe }} {{ section.name|safe }}",
+                                    "{{ category.name|safe }} {{ subject.name|safe }} {{ level.slug|safe }} {{ section.name|safe }}",
                                 {% endfor %}
                             {% endfor %}
 
@@ -202,6 +204,7 @@
 
                             {% for subject in level.get_subjects.all %}
                                 "{{ category.name|safe }} {{ subject.name|safe }} {{ level.name|safe }} {{ section.name|safe }}",
+                                "{{ category.name|safe }} {{ subject.name|safe }} {{ level.slug|safe }} {{ section.name|safe }}",
                             {% endfor %}
 
                         {% endif %}

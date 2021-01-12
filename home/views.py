@@ -58,10 +58,15 @@ def search(request):
         if category_slug != 'all':
             queryset = queryset.filter(category__slug=category_slug)
 
+        levelInstance = Level.objects.get(slug=level_slug)
         # This is complex variable.
         do_search = ' '.join(
             q.replace(
-                Level.objects.get(slug=level_slug).name if level_slug and level_slug != 'all' else '', ''
+                # only for level, e.g 3eme vs 3ème
+                levelInstance.name if level_slug and level_slug != 'all' else '', ''
+            ).replace(
+                # only for level, e.g 3eme vs 3ème
+                levelInstance.slug if level_slug and level_slug != 'all' else '', ''
             ).replace(
                 Section.objects.get(slug=section_slug).name if section_slug and section_slug != 'all' else '', '')
             .replace(
