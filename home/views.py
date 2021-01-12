@@ -58,7 +58,7 @@ def search(request):
         if category_slug != 'all':
             queryset = queryset.filter(category__slug=category_slug)
 
-        levelInstance = Level.objects.get(slug=level_slug)
+        levelInstance = Level.objects.get(slug=level_slug) if level_slug and level_slug != 'all' else ''
         # This is complex variable.
         do_search = ' '.join(
             q.replace(
