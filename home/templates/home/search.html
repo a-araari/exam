@@ -30,30 +30,28 @@
     </div>
 </div>
 
-<form action="{% url 'home:search' %}" method="GET">
-    <div class="container">
-        <div class="row">
-            <!-- Search bar -->
-            <div class="col-12 mb-2">
-                {% include "./search-input.html" %}
-            </div>
-            
-            <!-- Result stats -->
-            {% if pdfs %}
-                <div class="col-12 col-md-8">
-                    {% trans "Affichage des résultats 1 à 8 sur 30" %}
-                </div>
-
-                <!-- list or grid -->
-                <div class="col-4 col-md-4 ml-auto mt-2 d-flex justify-content-center align-items-center">
-                    <img class="mr-3" src="{% static "images/icons/grid-interface.png" %}" width="23px" height="23px">
-                    <img class="disabled" src="{% static "images/icons/bullet-list.png" %}" width="23px" height="23px">
-                </div>
-            {% endif %}
-
+<div class="container">
+    <div class="row">
+        <!-- Search bar -->
+        <div class="col-12 mb-2">
+            {% include "./search-input.html" with hide_filters=False %}
         </div>
+        
+        <!-- Result stats -->
+        {% if pdfs %}
+            <div class="col-12 col-md-8">
+                {% trans "Affichage des résultats 1 à 8 sur 30" %}
+            </div>
+
+            <!-- list or grid -->
+            <div class="col-4 col-md-4 ml-auto mt-2 d-flex justify-content-center align-items-center">
+                <img class="mr-3" src="{% static "images/icons/grid-interface.png" %}" width="23px" height="23px">
+                <img class="disabled" src="{% static "images/icons/bullet-list.png" %}" width="23px" height="23px">
+            </div>
+        {% endif %}
+
     </div>
-</form>
+</div>
 
 <!-- Results -->
 <div class="container mt-5">

@@ -13,11 +13,20 @@ from pdfs.models import (
 
 
 def index(request):
+    levels = Level.objects.all()
+    sections = Section.objects.exclude(slug='tout')
+    subjects = Subject.objects.all()
+    categories = Category.objects.all()
     level_manager = Level.objects
     
     context = {
-        'title': _('Home'),
         'level_manager': level_manager,
+        'categories': categories,
+        'sections': sections,
+        'subjects': subjects,
+        'levels': levels,
+
+        'title': _('Home'),
     }
 
     return render(request, 'home/index.html', context)
@@ -94,10 +103,14 @@ def search(request):
         'sections': sections,
         'subjects': subjects,
         'levels': levels,
+
         'title': title,
+        
         'pdfs': pdfs,
+
         'query': q,
         'encoded_query': encoded_query,
+
         'default_category': category_slug,
         'default_section': section_slug,
         'default_subject': subject_slug,
