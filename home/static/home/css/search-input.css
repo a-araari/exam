@@ -34,4 +34,12 @@
 }
 .tt-suggestion {
     padding: 10px 5px;
+    color: #FFFFFF;
+}
+/* In-input autocomplete */
+.tt-hint {
+    color: gray;
+}
+.tt-highlight {
+    color: #e02f2f;
 }
