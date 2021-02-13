@@ -1,0 +1,108 @@
+{# Must load home/static/css/search-input.css #}
+{# Must load home/static/js/typeahead.bundle.js #}
+{# Must load home/static/js/similarity-algo.js #}
+{# Must load home/static/js/search-input.js #}
+
+{# Required django template Variables: levels, sections, subjects and categories #}
+{# Required Javascript Variables: ajaxLevelSubjectsURL, ajaxLevelSectionsURL, ajaxSectionSubjectsURL and search_queries #}
+
+{% load i18n %}
+
+<form action="{% url 'home:search' %}" method="GET">
+
+    <div class="search-container justify-content-center">
+        <div id="search-row-container" class="row mt-5 mb-0">
+            <div class="col-2 {% if big_search_icon %}col-md-2{% else %}col-md-1{% endif %} w-100 pr-1 pr-md-0 pl-0 input-group-append" style="max-height: 62px;">
+                <button class="btn w-100 px-0 border-0 border-right-0 px-4 w-100 text-center text-white" id="basic-addon2"><i class="fa fa-search"></i></button>
+            </div>
+
+            <div id="search-input-container" class="col-10 {% if big_search_icon %}col-md-10{% else %}col-md-11{% endif %} pl-1 pl-md-0 pr-0" style="margin-right: 1px;">
+                <input id="search-query-input" type="text"  name="q" value="{{ query|default:'' }}" class="form-control rounded-pill typeahead border-left-0 border-0 pr-4" style="padding: 30px 10px;" placeholder="{% translate 'Rechercher des examens, par exemple devoirs math' %}.." autofocus="true" required>
+            </div>
+        </div>
+
+        <div class="row mb-5 mt-3 px-1 px-md-0 {% if hide_filters %}d-none{% endif %}">
+
+            <div class="col d-flex justify-content-center px-1 mb-2">
+                
+                <div id="level-dropdown-container" class="px-0 mx-0">
+                    <input id="level-hidden-input" type="hidden" name="level" value="{{ default_level }}">
+
+                    <button class="dropdown-button shadow-none btn btn-outline-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="span1 pl-3">{% trans "Level: " %}<span class="to-change">{{ default_level }}</span></span>
+                        <i class="fa fa-angle-right pr-3 ml-3"></i>
+                    </button>
+
+                    <ul class="dropdown-menu pre-scrollable">
+                        <li id="level-default-dropdown-item" class="dropdown-item" data-slug="all" onclick="levelSelect(this)">{% trans "All" %}</li>
+                        <div role="separator" class="dropdown-divider"></div>
+                        {% for level in levels %}
+                            <li class="dropdown-item" onclick="levelSelect(this)" data-slug="{{ level.slug }}">{{ level.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col d-flex justify-content-center px-1 mb-2">
+                
+                <div id="section-dropdown-container" class="px-0 m-0">
+                    <input id="section-hidden-input" type="hidden" name="section" value="{{ default_section }}">
+
+                    <button class="dropdown-button shadow-none btn btn-outline-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="span1 pl-3">{% trans "Section: " %}<span class="to-change">{{ default_section }}</span></span>
+                        <i class="fa fa-angle-right pr-3 ml-3"></i>
+                    </button>
+
+                    <ul class="dropdown-menu pre-scrollable">
+                        <li id="section-default-dropdown-item" class="dropdown-item" data-slug="all" onclick="sectionSelect(this)">{% trans "All" %}</li>
+                        <div role="separator" class="dropdown-divider"></div>
+                        {% for section in sections %}
+                            <li class="dropdown-item" onclick="sectionSelect(this)" data-slug="{{ section.slug }}">{{ section.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col d-flex justify-content-center px-1 mb-2">
+                
+                <div id="subject-dropdown-container" class="px-0 mx-0">
+                    <input id="subject-hidden-input" type="hidden" name="subject" value="{{ default_subject }}">
+
+                    <button class="dropdown-button shadow-none btn btn-outline-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="span1 pl-3">{% trans "Subject: " %}<span class="to-change">{{ default_subject }}</span></span>
+                        <i class="fa fa-angle-right pr-3 ml-3"></i>
+                    </button>
+
+                    <ul class="dropdown-menu pre-scrollable">
+                        <li id="subject-default-dropdown-item" class="dropdown-item" data-slug="all" onclick="subjectSelect(this)">{% trans "All" %}</li>
+                        <div role="separator" class="dropdown-divider"></div>
+                        {% for subject in subjects %}
+                            <li class="dropdown-item" onclick="subjectSelect(this)" data-slug="{{ subject.slug }}">{{ subject.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col d-flex justify-content-center px-1 mb-2">
+                
+                <div id="category-dropdown-container" class="px-0 mx-0">
+                    <input id="category-hidden-input" type="hidden" name="category" value="{{ default_category }}">
+
+                    <button class="dropdown-button shadow-none btn btn-outline-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="span1 pl-3">{% trans "Category: " %}<span class="to-change">{{ default_category }}</span></span>
+                        <i class="fa fa-angle-right pr-3 ml-3"></i>
+                    </button>
+
+                    <ul class="dropdown-menu pre-scrollable">
+                        <li id="category-default-dropdown-item" class="dropdown-item" data-slug="all" onclick="categorySelect(this)">{% trans "All" %}</li>
+                        <div role="separator" class="dropdown-divider"></div>
+                        {% for category in categories %}
+                            <li class="dropdown-item" onclick="categorySelect(this)" data-slug="{{ category.slug }}">{{ category.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>

@@ -1,5 +1,6 @@
 import base64
 
+from django.views.decorators.http import require_GET
 from django.core.paginator import (
     PageNotAnInteger,
     Paginator,
@@ -114,11 +115,9 @@ def level_detail(request, level_slug):
     :return: HTML response
     """
     level = get_object_or_404(Level, slug=level_slug)
-    subjects = Subject.objects.all()
 
     context = {
-        'subjects': subjects,
-        'title': level.slug,
+        'title': level.name,
         'level': level,
     }
 
@@ -136,7 +135,7 @@ def section_detail(request, section_slug):
     """
     section = get_object_or_404(Section, slug=section_slug)
     context = {
-        'title': section.slug,
+        'title': section.name,
         'section': section,
     }
 
@@ -154,7 +153,7 @@ def subject_detail(request, subject_slug):
     """
     subject = get_object_or_404(Subject, slug=subject_slug)
     context = {
-        'title': subject.slug,
+        'title': subject.name,
         'subject': subject,
     }
 
@@ -172,7 +171,7 @@ def category_detail(request, category_slug):
     """
     category = get_object_or_404(Category, slug=category_slug)
     context = {
-        'title': category.slug,
+        'title': category.name,
         'category': category,
     }
 
@@ -218,33 +217,31 @@ def level_section_subject_detail(request, level_slug, section_slug, subject_slug
     categories = Category.objects.all()
 
     page = request.GET.get('page', 1)
-    max_pdfs_per_page = request.GET.get('max_pdfs_per_page', 9)
+    max_subjects_per_page = request.GET.get('max_subjects_per_page', 9)
 
-    pdfs = PDF.objects.filter(
-        level=level,
-        subject=subject,
-    )
     if not section.is_default():
-        pdfs.filter(section=section)
+        subjects = section.subjects.all()
+    else:
+        subjects = level.subjects.all()
 
-    pdfs_count = pdfs.count()
+    subjects_count = subjects.count()
 
-    paginator = Paginator(pdfs, max_pdfs_per_page)
+    paginator = Paginator(subjects, max_subjects_per_page)
     try:
-        pdfs = paginator.page(page)
+        subjects = paginator.page(page)
     except PageNotAnInteger:
-        pdfs = paginator.page(1)
+        subjects = paginator.page(1)
     except EmptyPage:
-        pdfs = paginator.page(paginator.num_pages)
+        subjects = paginator.page(paginator.num_pages)
 
     context = {
         'title': f'{level.name}-{section.name}-{subject.name}',
-        'pdfs': pdfs,
         'level': level,
         'section': section,
         'subject': subject,
-        'pdfs_count': pdfs_count,
+        'subjects': subjects,
         'categories': categories,
+        'subjects_count': subjects_count,
     }
 
     return render(request, 'pdfs/level-section-subject-detail.html', context)
@@ -299,3 +296,64 @@ def level_section_subject_category_detail(request, level_slug, section_slug, sub
     }
 
     return render(request, 'pdfs/level-section-subject-category-detail.html', context)
+
+
+
+@require_GET
+def get_level_subjects(request):
+    level_slug = request.GET.get('level')
+    subjects = None
+    data = {}
+
+    if level_slug == 'all':
+        subjects = Subject.objects.all().values('slug', 'name')
+
+    elif level_slug:
+        level = get_object_or_404(Level, slug=level_slug)
+        subjects = level.get_subjects().values('slug', 'name')
+
+    if subjects:
+        for i in range(subjects.count()):
+            data[i] = subjects[i]
+
+    return JsonResponse(data)
+
+
+@require_GET
+def get_level_sections(request):
+    level_slug = request.GET.get('level')
+    sections = None
+    data = {}
+
+    if level_slug == 'all':
+        sections = Section.objects.all().values('slug', 'name')
+
+    elif level_slug:
+        level = get_object_or_404(Level, slug=level_slug)
+        sections = level.get_sections().values('slug', 'name')
+
+    if sections:
+        for i in range(sections.count()):
+            data[i] = sections[i]
+
+    return JsonResponse(data)
+
+
+@require_GET
+def get_section_subjects(request):
+    section_slug = request.GET.get('section')
+    subjects = None
+    data = {}
+
+    if section_slug == 'all':
+        subjects = Subject.objects.all().values('slug', 'name')
+
+    elif section_slug:
+        section = get_object_or_404(Section, slug=section_slug)
+        subjects = section.get_subjects().values('slug', 'name')
+
+    if subjects:
+        for i in range(subjects.count()):
+            data[i] = subjects[i]
+
+    return JsonResponse(data)

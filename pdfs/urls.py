@@ -1,6 +1,10 @@
 from django.urls import path
 
 from pdfs.views import (
+    get_section_subjects,
+    get_level_subjects,
+    get_level_sections,
+    
     devoir_detail,
     devoir_pdf_detail,
     devoir_html_detail,
@@ -42,6 +46,10 @@ Understand by examples:
 """
 
 urlpatterns = [
+    path('ajax/level/subjects/', get_level_subjects, name='ajax-level-subjects'),
+    path('ajax/level/sections/', get_level_sections, name='ajax-level-sections'),
+    path('ajax/section/subjects/', get_section_subjects, name='ajax-section-subjects'),
+
     path('devoir/<str:pdf_slug>/', devoir_detail, name='devoir-detail'),
     path('devoir/<str:pdf_slug>/pdf/', devoir_pdf_detail, name='devoir-pdf-detail'),
     path('devoir/<str:pdf_slug>/html/', devoir_html_detail, name='devoir-html-detail'),

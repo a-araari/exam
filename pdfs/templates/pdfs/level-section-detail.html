@@ -1,17 +1,81 @@
 {% extends "base.html" %}
 
 {% load i18n %} 
+{% load static %}
 
 
 <!-- Extra head tag -->
 {% block extra_head %}
-    
+    <link rel="stylesheet" type="text/css" href="{% static "pdfs/css/styles.css" %}">
 {% endblock extra_head %}
+
+
+{% block navbar-fixed %}
+    {# This block will remove the 'fixed-top' class from the navbar in templates/base.html #}
+{% endblock navbar-fixed %}
+{% block spacing %}
+    {# This block will remove the 'spacing' div after the navbar in templates/base.html #}
+{% endblock spacing %}
 
 
 <!-- Inside body tag -->
 {% block content %}
-    
+    <!-- sub-navbar -->
+    <div class="container-fluid sticky-top custom-sub-navbar bg-purple-info-linear py-3 shadow">
+        <div class="row">
+            <div class="col-10 col-md-7 col-lg-4 d-flex align-items-center">
+                <i class="fa fa-long-arrow-left text-white pr-3" onclick="location.href='{{ request.META.HTTP_REFERER }}'" style="cursor: pointer;"></i>
+                <span class="text-white text-nowrap overflow-auto">
+                    {% if level %}
+                        <a class="text-white" href="{% url 'pdfs:level-detail' level_slug=level.slug %}">{{ level }}</a><span class="text-warning"> /</span>
+                    {% endif %}
+                </span>
+            </div>
+            
+            <div class="col-6 col-lg-4 d-none d-lg-flex justify-content-center align-items-center">
+                <h4 class="text-white" style="font-weight: 500">{{ section.name|capfirst }}</h4>
+            </div>
+
+            <div class="col-2 col-md-5 col-lg-4 d-flex justify-content-end align-items-center">
+                <button class="btn bg-white py-1 py-md-2 px-2 px-md-4 mr-0 mr-md-4" style="border-radius: 100px;" onclick="location.href='{% url 'home:search' %}'">
+                    <i class="fa fa-search pr-0 pr-md-2" style="color: #17a2b8;"></i>
+                    <span class="d-none d-md-inline">{% trans "Rechercher" %}</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid mt-0 py-5 d-flex justify-content-center align-items-center" style="background-color: #FDCE86;margin-top: 72px;">
+        <h1>{{ section.get_name|capfirst }}</h1>
+    </div>
+
+    <div class="container mt-5 pt-5">
+        <div class="row">
+            {% with subjects=section.subjects.all %}
+                <!-- List Content -->
+                {% if not subjects %}
+                    <div class="row mx-0 mx-md-5 py-4 table-row">
+                        <div class="col-12 text-center">
+                            <i class="fa fa-exclamation text-info mb-4" style="font-size: 128px"></i>
+                            <h3 class="text-dark-2 text-center">{% trans "Désolé, nous n'avons trouvé aucun fichier correspondant à votre recherche." %}</h3>
+                        </div>
+                    </div>
+                {% endif %}
+                {% for sbj in subjects %}
+                    <div class="col-12 col-md-6 col-lg-4 mb-4 d-flex justify-content-center align-items-center">
+                        <a class="no-text-decoration-a" href="{% url 'pdfs:level-section-subject-detail' level_slug=level.slug section_slug=section.slug subject_slug=sbj.slug %}">
+                            <div class="card rounded-0 subject-card" style="width: 18rem;">
+                                <img src="{{ sbj.get_preview_image }}" class="card-img-top rounded-0" alt="{{ sbj.name }}">
+                                <div class="card-body text-dark">
+                                    <p class="card-text text-center">{{ sbj.name|capfirst|default:'-' }}</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            {% endwith %}
+        </div>
+    </div>
 {% endblock content %}
 
 

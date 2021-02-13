@@ -40,11 +40,11 @@
 <!-- Inside body tag -->
 {% block content %}
     <!-- Exam sub-navbar -->
-    <div id="exam-sub-navbar" class="container-fluid sticky-top bg-purple-info-linear py-3 shadow">
+    <div class="container-fluid sticky-top custom-sub-navbar bg-purple-info-linear py-3 shadow">
         <div class="row">
-            <div class="col-3 d-flex justify-content-center align-items-center">
+            <div class="col-12 col-md-7 col-lg-4 d-flex align-items-center">
                 <i class="fa fa-long-arrow-left text-white pr-3" onclick="location.href='{{ request.META.HTTP_REFERER }}'" style="cursor: pointer;"></i>
-                <span class="text-white">
+                <span class="text-white text-nowrap overflow-auto">
                     {% with level=devoir.get_level section=devoir.get_section subject=devoir.get_subject category=devoir.get_category %}
                         
                         {% if level %}
@@ -65,12 +65,40 @@
                     {% endwith %}
                 </span>
             </div>
-            <div class="col-6 d-flex justify-content-center align-items-center">
+            
+            <div class="col-6 col-lg-5 d-none d-lg-flex align-items-center">
                 <h4 class="text-white" style="font-weight: 500">{{ devoir.title }}</h4>
             </div>
-            <div class="col-3 d-flex justify-content-center align-items-center">
+
+            <div class="col-12 col-md-5 col-lg-3 d-none d-md-flex justify-content-center align-items-center">
                 <button class="btn bg-white py-2 px-4" style="border-radius: 100px;" onclick="location.href='{% url 'pdfs:devoir-download' pdf_slug=devoir.slug %}'">
                     <i class="fa fa-file-download pr-2" style="color: #17a2b8;"></i>
+                    {% trans "Télécharger" %}
+                </button>
+                <small class="px-2 text-dark-4">{% trans "ou" %}</small>
+                <a href="#" onclick="printExam(this, '{% url "pdfs:devoir-download" pdf_slug=devoir.slug %}')">
+                    <span id="print-text">Imprimer</span>
+                    <span id="print-spinners" style="display: none;">
+                        <div class="spinner-grow spinner-grow-sm pl-2" role="status" >
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow spinner-grow-sm pl-2" role="status" >
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="spinner-grow spinner-grow-sm pl-2" role="status" >
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div  class="container-fluid d-block custom-sub-navbar d-md-none bg-dark py-3 shadow">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center align-items-center">
+                <button class="btn bg-white py-2 px-4" style="border-radius: 100px;" onclick="location.href='{% url 'pdfs:devoir-download' pdf_slug=devoir.slug %}'">
+                    <i class="fa fa-file-download pr-2 text-dark"-2></i>
                     {% trans "Télécharger" %}
                 </button>
                 <small class="px-2 text-dark-4">{% trans "ou" %}</small>
@@ -99,8 +127,15 @@
             <div id="outline">
             </div>
         </div>
-
-        {{ devoir.get_html_content_body|safe }}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12" style="width: 512px;
+        overflow-x: auto;
+        overflow-y: hidden;">
+                    {{ devoir.get_html_content_body|safe }}
+                </div>
+            </div>
+        </div>
      
         <div class="loading-indicator">
         </div>

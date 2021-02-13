@@ -6,7 +6,8 @@
 
 
 {% block extra_head %}
-    <link rel="stylesheet" type="text/css" href="{% static "home/css/search-styles.css" %}">    
+    <link rel="stylesheet" type="text/css" href="{% static "home/css/search-styles.css" %}">
+    <link rel="stylesheet" type="text/css" href="{% static "home/css/search-input.css" %}">
 {% endblock extra_head %}
 
 
@@ -30,82 +31,41 @@
 </div>
 
 <div class="container">
-    <form action="{% url 'home:search' %}" method="GET">
-        <div class="row">
-            <!-- Search bar -->
-            <div class="col-12 mb-5">
-                <div class="search-bar mt-4 mt-lg-5">
-                    <input class="search-input" type="text" name="q" value="{{ query|default:'' }}" placeholder="{% translate 'Rechercher des examens, par exemple devoirs math' %}..">
-                    <button type="submit" class="search-icon"><i class="fas fa-search"></i></button>
-                    <hr class="mt-0 bg-white w-90">
-                </div>
-            </div>
-            
-            <!-- Result stats -->
-            <div class="col-6">
+    <div class="row">
+        <!-- Search bar -->
+        <div class="col-12 mb-2">
+            {% include "./search-input.html" with hide_filters=False %}
+        </div>
+        
+        <!-- Result stats -->
+        {% if pdfs %}
+            <div class="col-12 col-md-8">
                 {% trans "Affichage des résultats 1 à 8 sur 30" %}
             </div>
-            
+
             <!-- list or grid -->
-            <div class="col-2 d-flex justify-content-center align-items-center">
+            <div class="col-4 col-md-4 ml-auto mt-2 d-flex justify-content-center align-items-center">
                 <img class="mr-3" src="{% static "images/icons/grid-interface.png" %}" width="23px" height="23px">
                 <img class="disabled" src="{% static "images/icons/bullet-list.png" %}" width="23px" height="23px">
             </div>
+        {% endif %}
 
-            <!-- Filter -->
-            <div class="col-2 d-flex justify-content-center">
-                <div class="dropdown">
-                    <button class="btn bg-white border-1 border-dark dropdown-toggle px-4 py-2" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {% trans "Filter" %}
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                        <button class="dropdown-item" type="button">----------</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sort by -->
-            <div class="col-2 d-flex justify-content-center">
-                <div class="dropdown">
-                    <button class="btn bg-white border-1 border-dark dropdown-toggle px-4 py-2" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {% trans "Trier par" %}
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                        <button class="dropdown-item" type="button">----------</button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-2">
-
-            </div>
-        </div>
-    </form>
+    </div>
 </div>
 
 <!-- Results -->
 <div class="container mt-5">
     <div class="row">
         <!-- Search result -->
-        <div class="col-10 d-flex justify-content-left">
-            <div class="row">
+        <div class="col-12 col-xl-10">
+            <div class="row d-flex justify-content-center">
                 {% if pdfs %}
+
+                    <!-- PDF cards -->
                     {% for pdf in pdfs %}
-                        <div class="col-4 mb-3">
-                            <div class="card mx-3 search-item" style="width: 18rem;">
-                                <a href="{% url 'pdfs:devoir-detail' pdf_slug=pdf.slug %}">
-                                    <img src="https://static.bhphoto.com/images/images500x500/1441903824_45483.jpg" class="card-img-top" alt="{{ pdf.title }}">
-                                </a>
-                                <span class="badge bg-purple-5-linear text-white px-4 py-2 position-absolute">PDF</span>
-                                <div class="card-body bg-purple-5-linear text-white ">
-                                    <p class="card-text">
-                                        <a href="{% url 'pdfs:devoir-detail' pdf_slug=pdf.slug %}">
-                                            {{ pdf.title }}
-                                        </a>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                        {% include "pdfs/pdf-card.html" with pdf=pdf %}
                     {% endfor %}
+
                     <!-- Pagination(24 per page): Prev / Next-->
                     {% if pdfs.has_other_pages %}
                         <div class="col-12">
@@ -114,15 +74,17 @@
                                     <!-- Précédent -->
                                     {% if pdfs.has_previous %}
                                         <li class="page-item">
-                                            <a class="page-link text-center text-info" style="width: 100px" href="{{ request.path }}?{% if request.GET.q %}{{ encoded_query }}&{% endif %}page={{ pdfs.previous_page_number }}" tabindex="-1">
-                                                {% trans 'Précédent' %}
+                                            <a class="page-link text-center text-info" href="{{ request.path }}?{% if request.GET.q %}{{ encoded_query }}&{% endif %}page={{ pdfs.previous_page_number }}" tabindex="-1">
+                                                <span class="d-none d-md-block">{% trans 'Précédent' %}</span>
+                                                <span class="d-block d-md-none"><i class="fa fa-angle-double-left"></i></span>
                                             </a>
                                         </li>
                                         <li class="page-item"><a class="page-link text-info" href="{{ request.path }}?{% if request.GET.q %}{{ encoded_query }}&{% endif %}page={{ pdfs.previous_page_number }}">{{ pdfs.previous_page_number }}</a></li>
                                     {% else %}
                                         <li class="page-item disabled">
-                                            <a class="page-link text-center" style="width: 100px" href="#">
-                                                {% trans 'Précédent' %}
+                                            <a class="page-link text-center" href="#">
+                                                <span class="d-none d-md-block">{% trans 'Précédent' %}</span>
+                                                <span class="d-block d-md-none"><i class="fa fa-angle-double-left"></i></span>
                                             </a>
                                         </li>
                                     {% endif %}
@@ -134,14 +96,16 @@
                                             <li class="page-item"><a class="page-link text-info" href="{{ request.path }}?{% if request.GET.q %}{{ encoded_query }}&{% endif %}page=3">3</a></li>
                                         {% endif %}
                                         <li class="page-item">
-                                            <a class="page-link text-center text-info" style="width: 100px" href="{{ request.path }}?{% if request.GET.q %}{{ encoded_query }}&{% endif %}page={{ pdfs.next_page_number }}">
-                                                {% trans 'Suivant' %}
+                                            <a class="page-link text-center text-info" href="{{ request.path }}?{% if request.GET.q %}{{ encoded_query }}&{% endif %}page={{ pdfs.next_page_number }}">
+                                                <span class="d-none d-md-block">{% trans 'Suivant' %}</span>
+                                                <span class="d-block d-md-none"><i class="fa fa-angle-double-right"></i></span>
                                             </a>
                                         </li>
                                     {% else %}
                                         <li class="page-item disabled">
-                                            <a class="page-link text-center" style="width: 100px" href="#">
-                                                {% trans 'Suivant' %}
+                                            <a class="page-link text-center" href="#">
+                                                <span class="d-none d-md-block">{% trans 'Suivant' %}</span>
+                                                <span class="d-block d-md-none"><i class="fa fa-angle-double-right"></i></span>
                                             </a>
                                         </li>
                                     {% endif %}
@@ -165,7 +129,7 @@
         </div>
         
         <!-- Side filter -->
-        <div class="col-2" id="side-filter">
+        <div class="col-2 d-none d-xl-block" id="side-filter">
             <p class="filter-title">{% trans "Tous les niveaux" %}</p>
 
             {% if level_manager.get_high_school_stage_levels %}
@@ -211,3 +175,46 @@
 </div>
 
 {% endblock content %}
+
+
+{% block extra_body %}
+    <script type="text/javascript">
+        ajaxLevelSubjectsURL = "{% url 'pdfs:ajax-level-subjects' %}";
+        ajaxLevelSectionsURL = "{% url 'pdfs:ajax-level-sections' %}";
+        ajaxSectionSubjectsURL = "{% url 'pdfs:ajax-section-subjects' %}";
+
+        // only for level, e.g 3eme vs 3ème
+        search_queries = [
+            {% for category in categories %}
+                {% for level in levels %}
+                    {% with sections=level.get_sections.all %}
+                        
+                        {% if sections %}
+                            
+                            {% for section in sections %}
+                                {% for subject in section.get_subjects.all %}
+                                    "{{ category.name|safe }} {{ subject.name|safe }} {{ level.name|safe }} {{ section.name|safe }}",
+                                    "{{ category.name|safe }} {{ subject.name|safe }} {{ level.slug|safe }} {{ section.name|safe }}",
+                                {% endfor %}
+                            {% endfor %}
+
+                        {% else %}
+
+                            {% for subject in level.get_subjects.all %}
+                                "{{ category.name|safe }} {{ subject.name|safe }} {{ level.name|safe }} {{ section.name|safe }}",
+                                "{{ category.name|safe }} {{ subject.name|safe }} {{ level.slug|safe }} {{ section.name|safe }}",
+                            {% endfor %}
+
+                        {% endif %}
+
+                    {% endwith %}
+                {% endfor %}
+            {% endfor %}
+        ];
+
+    </script>
+
+    <script type="text/javascript" src="{% static "home/js/similarity-algo.js" %}"></script>
+    <script type="text/javascript" src="{% static "home/js/typeahead.bundle.js" %}"></script>
+    <script type="text/javascript" src="{% static "home/js/search-input.js" %}"></script>
+{% endblock extra_body %}

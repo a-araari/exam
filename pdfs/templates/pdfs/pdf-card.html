@@ -1,0 +1,21 @@
+<!-- An abject named 'pdf' should pe passed while including this template -->
+
+<div class="col-12 col-md-6 col-lg-4 mb-3">
+    <div class="card pdf-item">
+        <a href="{% url 'pdfs:devoir-detail' pdf_slug=pdf.slug %}">
+            {% if pdf.thumbnail %}
+                <img src="{{ pdf.thumbnail.url }}" class="card-img-top" alt="{{ pdf.title }}">
+            {% else %}
+                <img src="https://static.bhphoto.com/images/images500x500/1441903824_45483.jpg" class="card-img-top" alt="{{ pdf.title }}">
+            {% endif %}
+        </a>
+        <span class="badge bg-purple-2 text-white px-4 py-2 position-absolute">PDF</span>
+        <div class="card-body bg-purple-2 text-white ">
+            <p class="card-text">
+                <a href="{% url 'pdfs:devoir-detail' pdf_slug=pdf.slug %}">
+                    {{ pdf.title }}
+                </a>
+            </p>
+        </div>
+    </div>
+</div>

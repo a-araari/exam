@@ -1,3 +1,5 @@
+from django.utils.translation import ugettext_lazy as _
+from django.templatetags.static import static
 from django.contrib.postgres.search import (
     TrigramSimilarity,
     SearchVector,
@@ -34,6 +36,9 @@ class Subject(models.Model):
         max_length=100
     )
 
+    class Meta:
+        ordering = ('name', )
+
     def save(self, *args, **kwargs):
         """
         Save Slug before inserting the row into the DB
@@ -54,6 +59,22 @@ class Subject(models.Model):
     def get_all_exluding_self(self):
         return Subject.objects.exclude(name=self.name)
 
+    def get_preview_image(self):
+        if self.name in ('Sciences EX', 'economie', 'géstion', 'math', 'physique',
+                            'sciences SVT', 'technologie', 'économie gestion', 'الإيـقاظ-العلـمـي'):
+            return static('images/subjects/science-subjects-preview.jpg')
+
+        if self.name in ('allemand', 'anglais', 'arabe', 'dictée', 'espagnol',
+                            'français', 'italien', 'langue', 'lecture', 'lettre',
+                            'production-écrite', 'الإنـتاج-الكتابـي', 'الـقـراءة', 'قـواعـد-الـلـغـة'):
+            return static('images/subjects/language-subjects-preview.jpg')
+
+        if self.name in ('algorithme et programmation', 'informatique', 'tic'):
+            return static('images/subjects/programmation-subjects-preview.jpg')
+
+        # Default preview for the rest of subjects
+        return static('images/subjects/human-subjects-preview.jpg')
+
 
 class Section(models.Model):
     """
@@ -69,6 +90,11 @@ class Section(models.Model):
     name = models.CharField(
         'Section name',
         max_length=100
+    )
+    subjects = models.ManyToManyField(
+        Subject,
+        blank=True,
+        related_name='section_subjects'
     )
 
     def save(self, *args, **kwargs):
@@ -94,8 +120,15 @@ class Section(models.Model):
     def get_all_exluding_self(self):
         return Section.objects.exclude(name=self.name)
 
+    def get_name(self):
+        return f"{_('Section')} {self.name}"
+
+    def get_subjects(self):
+        return self.subjects
+
 
 class Level(models.Model):
+    """ Should change section to ManyToMany Field as well and change the dropdowns in Index template """
     ELEMENTARY_SCHOOL_STAGE = 'elementary'
     MIDDLE_SCHOOL_STAGE = 'middle'
     HIGH_SCHOOL_STAGE = 'high'
@@ -121,6 +154,16 @@ class Level(models.Model):
         choices=PDF_SCHOOL_STAGES,
         default=HIGH_SCHOOL_STAGE,
     )
+    subjects = models.ManyToManyField(
+        Subject,
+        blank=True,
+        related_name='subjects'
+    )
+    sections = models.ManyToManyField(
+        Section,
+        blank=True,
+        related_name='sections'
+    )
 
     def save(self, *args, **kwargs):
         """
@@ -144,6 +187,15 @@ class Level(models.Model):
     def get_all_exluding_self(self):
         return Level.objects.exclude(name=self.name)
 
+    def get_name(self):
+        return f"{self.name} {_('année')}"
+
+    def get_subjects(self):
+        return self.subjects
+
+    def get_sections(self):
+        return self.sections
+
 
 class Category(models.Model):
     slug = models.SlugField(
@@ -155,6 +207,9 @@ class Category(models.Model):
         'Category name',
         max_length=100
     )
+
+    class Meta:
+        ordering = ('id', )
 
     def save(self, *args, **kwargs):
         """
@@ -176,6 +231,9 @@ class Category(models.Model):
     def get_all_exluding_self(self):
         return Category.objects.exclude(name=self.name)
 
+    def get_preview_image(self):
+        return static(f'images/categories/{self.slug}-preview.jpg')
+
 
 def pdf_upload_path(instance, filename):
     try:
@@ -191,15 +249,20 @@ def html_upload_path(instance, filename):
         return 'docs/{}.html'.format(filename)
 
 
-class PDFManager(models.Manager):
-    """Manager for PDF Model"""
+def thumbnail_upload_path(instance, filename):
+    try:
+        return 'docs/{}.jpeg'.format(instance.id)
+    except:
+        return 'docs/{}.jpeg'.format(filename)
+
+class PDFQuerySet(models.QuerySet):
     def search(self, query):
         """
         Search for PDFs with ranking and Trigram similarity
         """
         search_vector = SearchVector('title')
         search_query = SearchQuery(query)
-        pdfs = PDF.objects.annotate(
+        pdfs = self.annotate(
             similarity=TrigramSimilarity('title', query),
             rank=SearchRank(search_vector, search_query)
         ).filter(
@@ -207,6 +270,12 @@ class PDFManager(models.Manager):
         ).order_by('-rank')
 
         return pdfs
+
+
+class PDFManager(models.Manager):
+    """Manager for PDF Model"""
+    def get_queryset(self):
+        return PDFQuerySet(self.model, using=self._db)
 
 
 class PDF(models.Model):
@@ -249,13 +318,10 @@ class PDF(models.Model):
         default=HIGH_SCHOOL_STAGE,
     )
 
-    name = models.CharField(
-        "File name",
-        max_length=250
-    )
     slug = models.SlugField(
         'SlugField',
-        max_length=250
+        unique=True,
+        max_length=250,
     )
     title = models.CharField(
         "Title",
@@ -286,6 +352,12 @@ class PDF(models.Model):
         null=True,
         blank=True,
         upload_to=html_upload_path,
+    )
+    thumbnail = models.ImageField(
+        "PDF thumbnail",
+        null=True,
+        blank=True,
+        upload_to=thumbnail_upload_path,
     )
     origin = models.URLField(
         'The origin link that this PDF comes from',
