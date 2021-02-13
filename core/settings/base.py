@@ -36,6 +36,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_cleanup.apps.CleanupConfig',
+    
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
 ]
 
 MIDDLEWARE = [
@@ -67,6 +70,11 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'core.wsgi.application'
+
+
+# Sitemap
+
+SITE_ID = 1
 
 
 # Internationalization
